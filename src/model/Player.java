@@ -7,7 +7,7 @@ import src.event.EventCardDraw;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 
-public class Player(){
+public class Player{
     private String name;
     private int mana = 0;
     private int fullMana = 0;
@@ -58,7 +58,7 @@ public class Player(){
         return this.deck;
     }
 
-    public List<Card> setDeck(List<Card> deck){
+    public void setDeck(List<Card> deck){
         this.deck = deck;
     }
 
@@ -66,11 +66,11 @@ public class Player(){
         return this.handCard;
     }
 
-    public List<Card> setHandCard(List<Card> handCard){
+    public void setHandCard(List<Card> handCard){
         this.handCard = handCard;
     }
 
-    public List<Card> addHandCard(Card card){
+    public void addHandCard(Card card){
         this.handCard.add(card);
     }
 
@@ -89,7 +89,7 @@ public class Player(){
                 Card newCard = this.deck.get(0);
                 this.deck.remove(0);
                 if(this.handCard.size() < Const.MAX_HAND_SIZE){
-                    this.handCard.add(newCard);
+                    this.addHandCard(newCard);
                     this.game.cardDrew(false,false);
                 }
                 else
@@ -103,6 +103,7 @@ public class Player(){
             }
         }
     }
+
     public void throwCard(Card throwedCard){
         for(int i = 0; i < this.handCard.size(); i++){
             Card c = this.handCard.get(i);
@@ -112,6 +113,7 @@ public class Player(){
             }
         }
     }
+
     public boolean checkValidCard(int index){
         Card card = this.handCard.get(index);
         if(card.getCost() > this.mana)

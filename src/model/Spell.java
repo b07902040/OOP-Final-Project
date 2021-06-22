@@ -1,5 +1,5 @@
 package src.model;
 
-public interface Spell(){
+public interface Spell{
 
 }

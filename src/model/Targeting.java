@@ -1,7 +1,8 @@
 package src.model;
+import java.util.List;
 
-public interface Targeting(){
+public interface Targeting{
 
-    List<Minion> getCandidate(Player player);
+    List<Minion> getCandidates(Player player);
 
 }

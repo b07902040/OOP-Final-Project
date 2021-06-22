@@ -37,10 +37,10 @@ public class Game implements EventListener{
     }
 
     public void run(){
-        this.post(EventInitialize());
+        this.eventManager.post(new EventInitialize());
         this.running = true;
         while(this.running){
-            self.eventManager.post(EventEveryTick());
+            this.eventManager.post(new EventEveryTick());
             //TODO:
             //sleep
         }
@@ -74,7 +74,7 @@ public class Game implements EventListener{
         else if(event instanceof EventCardClicked){
             if(this.isState(Const.STATE_PENDING)){
                 this.clickedCardIndex = ((EventCardClicked) event).getClickedIndex();
-                if(this.currentPlayer.checkValidCard(this.clickedCardIndex)))
+                if(this.currentPlayer.checkValidCard(this.clickedCardIndex))
                     this.state.push(Const.STATE_VALID_CARD);                           
                 else
                     this.state.push(Const.STATE_INVALID_CARD);    
@@ -108,7 +108,7 @@ public class Game implements EventListener{
                 boolean canAttack = false;
                 if(this.clickedAttackerAlly){
                     Minion attacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);
-                    canAttack = attacker.canAttack()                    
+                    canAttack = attacker.canAttack();                
                 }
                 if(canAttack) this.state.push(Const.STATE_VALID_ATTACKER); 
                 else this.state.push(Const.STATE_INVALID_ATTACKER); 
@@ -120,7 +120,7 @@ public class Game implements EventListener{
                 boolean canAttacked = false;
                 if(!this.clickedAttackerAlly){
                     Minion attacked = this.currentPlayer.getEnemy().get(this.clickedAttackerIndex);
-                    canAttacked = attacked.canAttacked()                    
+                    canAttacked = attacked.canAttacked();                    
                 }
                 if(canAttacked) this.state.push(Const.STATE_VALID_ATTACKED); 
                 else this.state.push(Const.STATE_INVALID_ATTACKED); 
@@ -168,7 +168,7 @@ public class Game implements EventListener{
         this.players.add(new Player("player0", this));
         this.players.add(new Player("player1", this));
         for(int i = 0; i < 2; i++)
-            this.players.get(i).setOpponent(this.players.get((i + 1) % 2);        
+            this.players.get(i).setOpponent(this.players.get((i + 1) % 2));        
         this.currentPlayer = this.players.get(0);
         //TODO:
         //add hero to minions
@@ -184,7 +184,7 @@ public class Game implements EventListener{
     private void turnStart(){
         if(firstPlayerTurn)
             this.turn += 1; 
-        int mana = this.currentPlayer.getfullMana(); 
+        int mana = this.currentPlayer.getFullMana(); 
         this.currentPlayer.setFullMana(Math.max(mana + 1, Const.MAX_MANA));      
         this.currentPlayer.fillMana();
     }
@@ -197,8 +197,11 @@ public class Game implements EventListener{
         Minion target = (this.clickedMinionAlly)? 
             this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
             this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
-        List<Minion> candidates = this.selectedCard.getCandidates();
-        return candidates.contains(target);
+        if(this.selectedCard instanceof Targeting){
+            List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer);
+            return candidates.contains(target);
+        }
+        else return false;
     }
 
     private void turnEnd(){

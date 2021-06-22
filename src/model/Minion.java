@@ -1,6 +1,6 @@
 package src.model;
 
-public interface Minion(){
+public interface Minion {
     Player getMaster();
 
     int getHP();
