@@ -14,4 +14,8 @@ public interface Minion(){
     boolean isAlive();
 
     boolean canAttack();
+
+    boolean canAttacked();
+
+    void attackTarget(Minion target);
 }
