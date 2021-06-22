@@ -1,4 +1,6 @@
 package src.model;
+import java.util.List;
+import java.util.ArrayList;
 
 public interface Card(){
 
@@ -8,4 +10,8 @@ public interface Card(){
 
     String getDescription();
     
+    List<Minion> getCandidates();
+    
+    void playedEffect(Player user, Minion target);
+
 }

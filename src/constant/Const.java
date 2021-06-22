@@ -4,8 +4,8 @@ public class Const{
     public static final int STATE_PENDING = 1;
     public static final int STATE_TARGETING = 5; 
 
-    public static final int STATE_SHOW_VALID_CARD = 2;
-    public static final int STATE_SHOW_INVALID_CARD = 3;
+    public static final int STATE_VALID_CARD = 2;
+    public static final int STATE_INVALID_CARD = 3;
     public static final int STATE_VALID_TARGET = 8;  
     public static final int STATE_INVALID_TARGET = 9;
     public static final int STATE_EFFECTING = 12; 

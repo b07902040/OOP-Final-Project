@@ -1,7 +1,7 @@
 package src.event;
 
-public class EventTargetMarked implements Event{
-    private String name = "EventTargetMarked";
+public class EventCardEffected implements Event{
+    private String name = "EventCardEffected";
 
     @Override
     public String getName(){

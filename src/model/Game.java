@@ -6,14 +6,17 @@ import src.constant.*;
 
 public class Game implements EventListener{    
     private EventManager eventManager;
+    private StateMachine state = new StateMachine();
     private List<Player> players;
     private Player currentPlayer;
     private int turn = 0;
     private boolean firstPlayerTurn = true;
-    private float time = 0;
-    private StateMachine state = new StateMachine();
-    private int markedIndex = -1;
+    private float time = 0;    
+    private int clickedCardIndex = -1;
+    private int clickedMinionIndex = -1;
+    private boolean clickedMinionAlly = false;
     private Card selectedCard;
+    private Minion selectedMinion;
     private boolean running = false;
 
     public Game(EventManager eventManager){
@@ -39,39 +42,81 @@ public class Game implements EventListener{
            this.eventManager.post(new EventGameStart());
         }
         else if(event instanceof EventGameStart){
-            state.push(Const.STATE_PENDING);
             this.gameStart();
             this.eventManager.post(new EventTurnStart());       
         }
         else if(event instanceof EventTurnStart){
             this.turnStart();
-            this.eventManager.post(new EventCardDraw());       
+            this.state.push(Const.STATE_PENDING);
+            this.currentPlayer.drawCards(1);                  
         }
-        else if(event instanceof EventCardDraw){
-            this.cardDraw();            
+        else if(event instanceof EventClickedEmpty){
+            if(this.isState(Const.STATE_VALID_CARD) || this.isState(Const.STATE_INVALID_CARD))
+                this.state.push(Const.STATE_PENDING);        
+            else if(this.isState(Const.STATE_VALID_TARGET) || this.isState(Const.STATE_INVALID_TARGET))
+                this.state.push(Const.STATE_TARGETING);       
         }
         else if(event instanceof EventCardClicked){
-            int clickedIndex = ((EventCardClicked) event).getClickedIndex();
-            if(this.cardClicked(clickedIndex)){ 
-                this.markedIndex = clickedIndex;
-                this.eventManager.post(new EventCardMarked(clickedIndex)); 
-            }  
-        }
+            if(this.isState(Const.STATE_PENDING)){
+                this.clickedCardIndex = ((EventCardClicked) event).getClickedIndex();
+                if(this.currentPlayer.checkValidCard(this.clickedCardIndex)))
+                    this.state.push(Const.STATE_VALID_CARD);                           
+                else
+                    this.state.push(Const.STATE_INVALID_CARD);    
+            }        
+        }        
         else if(event instanceof EventCardSelected){
-            if(this.cardSelected()) this.eventManager.post(new EventChooseTarget()); 
-            else //playcard
+            if(this.isState(Const.STATE_VALID_CARD)){
+                this.selectedCard = this.currentPlayer.getHandCard().get(this.clickedCardIndex);
+                if(this.selectedCard instanceof Targeting) 
+                    this.state.push(Const.STATE_TARGETING);
+                else{
+                    this.selectedCard.playedEffect(this.currentPlayer,null);
+                    this.state.push(Const.STATE_EFFECTING);                    
+                }  
+            }
+        }   
+        else if(event instanceof EventMinionClicked){
+            if(this.isState(Const.STATE_TARGETING)){
+                this.clickedMinionIndex = ((EventMinionClicked) event).getClickedIndex();
+                this.clickedMinionAlly = ((EventMinionClicked) event).getIsAlly();
+                if(this.checkValidMinion())
+                    this.state.push(Const.STATE_VALID_TARGET);                           
+                else
+                    this.state.push(Const.STATE_INVALID_TARGET); 
+            }
+        }      
+        else if(event instanceof EventMinionSelected){
+            if(this.isState(Const.STATE_VALID_TARGET)){
+                this.selectedMinion = (this.clickedMinionAlly)? 
+                    this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
+                    this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
+                this.selectedCard.playedEffect(this.currentPlayer,this.selectedMinion);
+                this.currentPlayer.throwCard(this.selectedCard);
+                this.state.push(Const.STATE_EFFECTING);
+            }
+        } 
+        else if(event instanceof EventCardEffected){
+            if(this.isState(Const.STATE_EFFECTING))
+                this.state.push(Const.STATE_PENDING);                
         }        
         else if(event instanceof EventTurnEnd){
-            this.turnEnd();
+            if(this.isState(Const.STATE_PENDING))
+                this.turnEnd();      
         }
     }
     
+    
+    public boolean isState(int state){
+        return (this.state.peek() == state);
+    }
+
     private void initialize(){
-        players.add(new Player("player0"));
-        players.add(new Player("player1"));
+        this.players.add(new Player("player0", this));
+        this.players.add(new Player("player1", this));
         for(int i = 0; i < 2; i++)
-            players.get(i).setOpponent(players.get((i + 1) % 2);
-        this.currentPlayer = players.get(0);
+            this.players.get(i).setOpponent(this.players.get((i + 1) % 2);        
+        this.currentPlayer = this.players.get(0);
         //TODO:
         //add hero to minions
         //deal  
@@ -79,37 +124,28 @@ public class Game implements EventListener{
     
     private void gameStart(){
         for(int i = 0; i < 2; i++){
-            players.get(i).drawCards(Const.STARTING_HAND_SIZE + i);
+            this.players.get(i).drawCards(Const.STARTING_HAND_SIZE + i);
         }
     }
 
     private void turnStart(){
         if(firstPlayerTurn)
             this.turn += 1; 
-        int mana = currentPlayer.getfullMana(); 
-        currentPlayer.setFullMana(Math.max(mana + 1, Const.MAX_MANA));      
-        currentPlayer.fillMana();
+        int mana = this.currentPlayer.getfullMana(); 
+        this.currentPlayer.setFullMana(Math.max(mana + 1, Const.MAX_MANA));      
+        this.currentPlayer.fillMana();
     }
 
-    private void cardDraw(){
-        currentPlayer.drawCards(1);
+    public void cardDrew(boolean fatigue, boolean full){
+        this.eventManager.post(new EventCardDraw(fatigue, full));
     }
-
-    private boolean cardClicked(int index){
-        return currentPlayer.checkValid(index);
+    private boolean checkValidMinion(){
+        Minion target = (this.clickedMinionAlly)? 
+            this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
+            this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
+        List<Minion> candidates = this.selectedCard.getCandidates();
+        return candidates.contains(target);
     }
-
-    private boolean cardSelected(){
-        this.selectedCard = currentPlayer.getHandCard().get(markedIndex);
-        if(this.selectedCard instanceof Targeting) 
-            return true;
-        return false;
-    }
-
-
-
-
-
     private void turnEnd(){
         this.currentPlayer = this.currentPlayer.getOpponent();
         this.firstPlayerTurn = !this.firstPlayerTurn;
