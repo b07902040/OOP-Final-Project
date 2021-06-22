@@ -1,22 +1,21 @@
-package event;
+package src.event;
 import java.util.List;
 import java.util.ArrayList;
 
 /**
  * Coordinate communication between the Model, View, and Controller. 
  */
-class EventManager {
+public class  EventManager {
     /**
      * list of listeners that registered
      */
     private List<EventListener> listeners = new ArrayList<EventListener> ();
-
     /**
      * Add a listener to the listeners list
      * it receives Post()ed event through its notify() method
      */
     public void register(EventListener listener) {
-        self.listeners.add(listener);
+        this.listeners.add(listener);
     }
 
     /**
