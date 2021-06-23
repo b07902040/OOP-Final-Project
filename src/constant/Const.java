@@ -2,6 +2,7 @@ package src.constant;
 public class Const{
     //StateMachine
     public static final int STATE_PENDING = 1;
+    public static final int STATE_GAME_END = 111;
     //Play card
     public static final int STATE_VALID_CARD = 2;
     public static final int STATE_INVALID_CARD = 3;
@@ -18,6 +19,7 @@ public class Const{
     public static final int STATE_ATTACKING = 13; 
     
     
+    
 
 
 
@@ -28,4 +30,8 @@ public class Const{
     public static final int DECK_SIZE = 30; 
     public static final int MAX_MANA = 10;
     public static final int BOARD_SPACE = 5;
+    public static final int HERO_HP = 30;
+    public static final int PLAYER1_WIN = 1;
+    public static final int PLAYER2_WIN = 2;
+    public static final int PLAYER_DRAW= 3;
 }

@@ -11,6 +11,5 @@ public interface Card{
     String getDescription();
     
     
-    void playedEffect(Player user, Minion target);
 
 }

@@ -1,21 +1,30 @@
 package src.model;
 
 public interface Minion {
+    //todo
+    //MAXHP
     Player getMaster();
 
     int getHP();
 
-    int setHP();
+    void setHP(int HP);
 
     int getATK();
 
-    int setATK();
+    void setATK(int ATK);
     
+    int getPlayedOrder();
+
+    void setPlayedOrder(int order);
+
     boolean isAlive();
+
+    void setAlive(boolean alive);
 
     boolean canAttack();
 
     boolean canAttacked();
 
-    void attackTarget(Minion target);
+
+    void attack(Minion target);
 }

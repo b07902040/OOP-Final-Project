@@ -1,6 +1,10 @@
 package src.model;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import src.model.minion.*;
+//import src.model.spell.*;
 import src.event.*;
 import src.constant.*;
 
@@ -8,25 +12,27 @@ public class Game implements EventListener{
     private EventManager eventManager;
     private StateMachine state = new StateMachine();
     private boolean running = false;
+    private int winner;
 
     private List<Player> players;
     private Player currentPlayer;
     private int turn = 0;
     private boolean firstPlayerTurn = true;
-    private float time = 0;    
+    private float timer = 0; 
+    private int minionSummoned = 0;   
     //play card
     private int clickedCardIndex = -1;
     private int clickedMinionIndex = -1;
     private boolean clickedMinionAlly = false;
-    private Card selectedCard;
-    private Minion selectedMinion;
+    private Card selectedCard = null;
+    private Minion selectedMinion = null;
     //minion attack
     private int clickedAttackerIndex = -1;
     private boolean clickedAttackerAlly = false;
     private int clickedAttackedIndex = -1;
     private boolean clickedAttackedAlly = false;
-    private Minion selectedAttacker;
-    private Minion selectedAttacked;
+    private Minion selectedAttacker = null;
+    private Minion selectedAttacked = null;
 
    
 
@@ -35,7 +41,7 @@ public class Game implements EventListener{
         this.eventManager.register(this);
         
     }
-
+    
     public void run(){
         this.eventManager.post(new EventInitialize());
         this.running = true;
@@ -86,7 +92,10 @@ public class Game implements EventListener{
                 if(this.selectedCard instanceof Targeting) 
                     this.state.push(Const.STATE_CARD_TARGETING);
                 else{
-                    this.selectedCard.playedEffect(this.currentPlayer,null);
+                    if(this.selectedCard instanceof BattleCry)
+                        ((BattleCry) this.selectedCard).doBattleCryEffect(null);
+                    else if(this.selectedCard instanceof Spell)
+                        ((Spell) this.selectedCard).takeEffect(this.currentPlayer,null); 
                     this.state.push(Const.STATE_EFFECTING);                    
                 }  
             }
@@ -118,7 +127,7 @@ public class Game implements EventListener{
                 this.clickedAttackedIndex = ((EventMinionClicked) event).getClickedIndex();
                 this.clickedAttackedAlly = ((EventMinionClicked) event).getIsAlly();
                 boolean canAttacked = false;
-                if(!this.clickedAttackerAlly){
+                if(!this.clickedAttackedAlly){
                     Minion attacked = this.currentPlayer.getEnemy().get(this.clickedAttackerIndex);
                     canAttacked = attacked.canAttacked();                    
                 }
@@ -131,8 +140,11 @@ public class Game implements EventListener{
                 this.selectedMinion = (this.clickedMinionAlly)? 
                     this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
                     this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
-                this.selectedCard.playedEffect(this.currentPlayer,this.selectedMinion);
-                this.currentPlayer.throwCard(this.selectedCard);
+                if(this.selectedCard instanceof BattleCry)
+                    ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);
+                else if(this.selectedCard instanceof Spell)
+                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion); 
+                this.currentPlayer.throwCard(this.clickedCardIndex);
                 this.state.push(Const.STATE_EFFECTING);
             }
             else if(this.isState(Const.STATE_VALID_ATTACKER)){
@@ -141,18 +153,29 @@ public class Game implements EventListener{
             }
             else if(this.isState(Const.STATE_VALID_ATTACKED)){
                 this.selectedAttacked = this.currentPlayer.getEnemy().get(this.clickedAttackedIndex);     
-                this.selectedAttacker.attackTarget(this.selectedAttacked);           
+                this.selectedAttacker.attack(this.selectedAttacked);  
                 this.state.push(Const.STATE_ATTACKING);
             }
         } 
         else if(event instanceof EventCardEffected){
-            if(this.isState(Const.STATE_EFFECTING))
-                this.state.push(Const.STATE_PENDING);                
+            if(this.isState(Const.STATE_EFFECTING)){
+                this.checkDeadStatus();
+                this.state.push(Const.STATE_PENDING);
+            }                
         }  
         else if(event instanceof EventMinionAttacked){
-            if(this.isState(Const.STATE_ATTACKING))
-                this.state.push(Const.STATE_PENDING);               
-        }               
+            if(this.isState(Const.STATE_ATTACKING)){
+                this.checkDeadStatus();
+                this.state.push(Const.STATE_PENDING);             
+            }
+        }   
+        else if(event instanceof EventDeathRattleTriggered){
+            this.checkDeadStatus();
+            if(winner > 0){
+                this.eventManager.post(new EventGameEnd());
+                this.state.push(Const.STATE_GAME_END);  
+            }
+        }              
         else if(event instanceof EventTurnEnd){
             if(this.isState(Const.STATE_PENDING))
                 this.turnEnd();      
@@ -172,6 +195,7 @@ public class Game implements EventListener{
         this.currentPlayer = this.players.get(0);
         //TODO:
         //add hero to minions
+        //load deck & shuffle
         //deal  
     } 
     
@@ -187,6 +211,7 @@ public class Game implements EventListener{
         int mana = this.currentPlayer.getFullMana(); 
         this.currentPlayer.setFullMana(Math.max(mana + 1, Const.MAX_MANA));      
         this.currentPlayer.fillMana();
+        this.timer = 0;
     }
 
     public void cardDrew(boolean fatigue, boolean full){
@@ -204,9 +229,76 @@ public class Game implements EventListener{
         else return false;
     }
 
+    private void checkDeadStatus(){
+        List<Minion> deadMinions = new ArrayList<Minion>();
+        for(Player player : players){
+            List<Minion> ally = player.getAlly();
+            for(int i = ally.size() - 1; i >= 0; i--){
+                Minion minion = ally.get(i);
+                if(!minion.isAlive()){
+                    deadMinions.add(minion);
+                    player.removeAlly(minion);
+                }
+            }
+        }
+        boolean p1Die = !(players.get(0).getHero().isAlive());
+        boolean p2Die = !(players.get(1).getHero().isAlive());
+        if(p1Die && p2Die){
+            this.winner = Const.PLAYER_DRAW; 
+            return;
+        }
+        else if(p1Die){
+            this.winner = Const.PLAYER1_WIN; 
+            return;
+        }
+        else if(p2Die){
+            this.winner = Const.PLAYER2_WIN; 
+            return;
+        }
+        Collections.sort(deadMinions, new CompareByPlayedOrder());
+        boolean triggered = false;
+        for(Minion minion : deadMinions){
+            if (minion instanceof DeathRattle){
+                triggered = true;
+                ((DeathRattle)minion).doDeathRattleEffect();
+            }
+        }
+        if(triggered)
+            this.eventManager.post(new EventDeathRattleTriggered());
+    }
+
     private void turnEnd(){
         this.currentPlayer = this.currentPlayer.getOpponent();
         this.firstPlayerTurn = !this.firstPlayerTurn;
     }
    
+    private void reset(){
+        this.clickedCardIndex = -1;
+        this.clickedMinionIndex = -1;
+        this.clickedMinionAlly = false;
+        this.selectedCard = null;
+        this.selectedMinion = null;
+
+        this.clickedAttackerIndex = -1;
+        this.clickedAttackerAlly = false;
+        this.clickedAttackedIndex = -1;
+        this.clickedAttackedAlly = false;
+        this.selectedAttacker = null;
+        this.selectedAttacked = null;
+    }
+
+    public int getMinionSummoned(){
+        return this.minionSummoned;
+    }
+
+    public void addMinionSummoned(){
+        this.minionSummoned++;
+    } 
+}   
+class CompareByPlayedOrder implements Comparator<Minion>{
+    
+    @Override
+    public int compare(Minion minion1, Minion minion2) {
+        return minion1.getPlayedOrder() - minion2.getPlayedOrder();
+    }
 }

@@ -1,6 +1,7 @@
 package src.model;
 import java.util.List;
-
+import src.model.minion.*;
+//import src.model.spell.*;
 import src.constant.Const;
 import src.event.EventCardDraw;
 
@@ -18,16 +19,23 @@ public class Player{
     private List<Minion> ally;
     private List<Minion> enemy; 
     private Game game;
-    public Player(String name, Game game){
+    private Minion hero;
+    public Player(String name, Game game){     
         this.name = name;
         this.game = game;
         this.handCard = new ArrayList<Card>();
         this.ally = new ArrayList<Minion>();
+        this.hero = new Hero(this);
+        this.ally.add(this.hero);
     }
 
     public String getName(){
         return this.name;
     } 
+
+    public Minion  getHero(){
+        return this.hero;
+    }
 
     public int getMana(){
         return this.mana;
@@ -78,6 +86,16 @@ public class Player{
         return this.ally;
     }
 
+    public void addAlly(Minion minion){
+        minion.setPlayedOrder(this.game.getMinionSummoned());
+        this.ally.add(minion);
+        this.game.addMinionSummoned();
+    }
+
+    public void removeAlly(Minion minion){
+        this.ally.remove(minion);
+    }
+
     public List<Minion> getEnemy(){
         return this.enemy;
     }
@@ -104,14 +122,8 @@ public class Player{
         }
     }
 
-    public void throwCard(Card throwedCard){
-        for(int i = 0; i < this.handCard.size(); i++){
-            Card c = this.handCard.get(i);
-            if(c.equals(throwedCard)){
-                this.handCard.remove(i);
-                break;
-            }
-        }
+    public void throwCard(int index){
+        this.handCard.remove(index);
     }
 
     public boolean checkValidCard(int index){
