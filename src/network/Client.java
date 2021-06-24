@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 public class Client  {
 
-	  private static final int numOfPlayers = 4;
 	  private static final int WAITING_TIME_JOIN = 500;
 
 	  private String playerName = "";
