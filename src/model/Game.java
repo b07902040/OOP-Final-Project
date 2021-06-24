@@ -58,6 +58,7 @@ public class Game implements EventListener{
 
     @Override 
     public void notify(Event event){
+        //ADD FOR TEST
         if(event instanceof EventEveryTick) return;
         System.out.printf("Get event: %s.\n",event.getName());
         if(event instanceof EventInitialize){            
@@ -98,9 +99,10 @@ public class Game implements EventListener{
                 if(this.selectedCard instanceof Targeting) 
                     this.state.push(Const.STATE_CARD_TARGETING);
                 else{
+                    this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                     if(this.selectedCard instanceof Minion){
                         if(this.selectedCard instanceof BattleCry)
-                            ((BattleCry) this.selectedCard).doBattleCryEffect(null);
+                            ((BattleCry) this.selectedCard).doBattleCryEffect(null);                    
                         this.currentPlayer.addAlly((Minion)this.selectedCard);
                         this.currentPlayer.throwCard(this.clickedCardIndex);
                     }
@@ -170,27 +172,44 @@ public class Game implements EventListener{
             }
         } 
         else if(event instanceof EventCardEffected){
-            if(this.isState(Const.STATE_EFFECTING)){
+            if(this.isState(Const.STATE_EFFECTING)){                
                 this.checkDeadStatus();
-                this.state.push(Const.STATE_PENDING);
+                this.currentPlayer.printPlayerStatus();
+                if(winner > 0){
+                    this.eventManager.post(new EventGameEnd());
+                    this.state.push(Const.STATE_GAME_END);  
+                }
+                else 
+                    this.state.push(Const.STATE_PENDING);
             }                
         }  
         else if(event instanceof EventMinionAttacked){
             if(this.isState(Const.STATE_ATTACKING)){
                 this.checkDeadStatus();
-                this.state.push(Const.STATE_PENDING);             
+                this.currentPlayer.printPlayerStatus();
+                if(winner > 0){
+                    this.eventManager.post(new EventGameEnd());
+                    this.state.push(Const.STATE_GAME_END);  
+                }
+                else
+                    this.state.push(Const.STATE_PENDING);             
             }
         }   
         else if(event instanceof EventDeathRattleTriggered){
             this.checkDeadStatus();
+            this.currentPlayer.printPlayerStatus();
             if(winner > 0){
                 this.eventManager.post(new EventGameEnd());
                 this.state.push(Const.STATE_GAME_END);  
-            }
+            }            
         }              
         else if(event instanceof EventTurnEnd){
             if(this.isState(Const.STATE_PENDING))
-                this.turnEnd();      
+                this.turnEnd();   
+            this.eventManager.post(new EventTurnStart());
+        }
+        else if(event instanceof EventGameEnd){
+            System.out.printf("Game End!! Player %d win.\n",winner);       
         }
     }
     
@@ -268,11 +287,11 @@ public class Game implements EventListener{
             return;
         }
         else if(p1Die){
-            this.winner = Const.PLAYER1_WIN; 
+            this.winner = Const.PLAYER2_WIN; 
             return;
         }
         else if(p2Die){
-            this.winner = Const.PLAYER2_WIN; 
+            this.winner = Const.PLAYER1_WIN; 
             return;
         }
         Collections.sort(deadMinions, new CompareByPlayedOrder());

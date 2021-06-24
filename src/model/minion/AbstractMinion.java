@@ -32,8 +32,10 @@ public abstract class AbstractMinion implements Minion, Card{
         this.HP = baseHP;
         this.buffHP = baseHP;
         this.baseATK = baseATK;
-        this.ATK = baseATK;        
+        this.ATK = baseATK;
+        this.attackLimit = 1;      
     }
+
     //card
     @Override   
     public String getName(){
@@ -83,13 +85,17 @@ public abstract class AbstractMinion implements Minion, Card{
     @Override
     public void setHP(int HP){
         //Heal
-        if(this.HP < HP) 
+        if(this.HP < HP){
+            System.out.printf("%s +%d HP.\n",this.name,HP-this.HP);
             this.HP = Math.min(HP, this.buffHP);    
-        else{
+        }
+        else if(this.HP > HP){
             if(this.devineShield){
+                System.out.printf("%s deny damage by shield.\n",this.name);
                 this.devineShield = false;
             }
             else{
+                System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
                 this.HP = HP;    
             }
         }            
@@ -196,6 +202,7 @@ public abstract class AbstractMinion implements Minion, Card{
 
     @Override
     public void attack(Minion target){
+        System.out.printf("%s attack %s\n",this.name,((AbstractMinion)target).getName());
         if(this instanceof Poisonous)
             target.setHP(0);
         else

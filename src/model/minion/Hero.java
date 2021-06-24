@@ -8,8 +8,11 @@ public class Hero extends AbstractMinion implements Minion, Card{
     static private int baseCost = 0;
     static private int baseHP = Const.HERO_HP;
     static private int baseATK = 0;
+
+
     public Hero(){
         super(Hero.name, Hero.description, Hero.baseCost, Hero.baseHP, Hero.baseATK); 
+        super.setAttackLimit(0);
     }
 
     

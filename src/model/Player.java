@@ -1,5 +1,8 @@
 package src.model;
 import java.util.List;
+
+import javax.swing.AbstractAction;
+
 import src.model.minion.*;
 //import src.model.spell.*;
 import src.constant.Const;
@@ -41,6 +44,10 @@ public class Player{
 
     public int getMana(){
         return this.mana;
+    }
+
+    public void setMana(int mana){
+        this.mana = Math.min(mana, this.fullMana);
     }
 
     public void fillMana(){
@@ -97,10 +104,10 @@ public class Player{
     }
 
     public void addAlly(Minion minion){
-        minion.setPlayedOrder(this.game.getMinionSummoned());
+        minion.setMaster(this);
+        minion.setPlayedOrder(this.game.getMinionSummoned());     
         this.ally.add(minion);     
         System.out.printf("%s add %s to ally.\n", this.name, ((AbstractMinion)minion).getName());  
-        this.printPlayerStatus();
         this.game.addMinionSummoned();
     }
 
@@ -120,6 +127,7 @@ public class Player{
                 this.deck.remove(0);
                 if(this.handCard.size() < Const.MAX_HAND_SIZE){
                     this.addHandCard(newCard);
+                    //TODO
                     this.game.cardDrew(false,false);
                 }
                 else
@@ -156,10 +164,13 @@ public class Player{
     }
 
     public void printPlayerStatus(){
-       System.out.printf("%s's turn , Mana: %d , DeckNum: %d , Cardplayed: %d\n",
+        System.out.printf("----------------------------------------\n");
+        System.out.printf("%s's turn , Mana: %d , DeckNum: %d , Cardplayed: %d\n",
             this.name, this.mana, this.deck.size(),this.cardPlayed);
         this.printHandCard();
         this.printAlly();
+        this.printEnemy();
+        System.out.printf("----------------------------------------\n");
     }
     
     public void printHandCard(){
@@ -175,7 +186,17 @@ public class Player{
     public void printAlly(){
         System.out.printf("Ally(%d): ",this.ally.size());
         for(Minion minion : this.ally){
-            System.out.printf("%s ",((AbstractMinion) minion).getName());
+            AbstractMinion m = ((AbstractMinion) minion);
+            System.out.printf("%s (ATK:%d HP:%d) ", m.getName(), m.getATK(), m.getHP());
+        }
+        System.out.printf("\n");
+    }
+
+    public void printEnemy(){
+        System.out.printf("Enemy(%d): ",this.enemy.size());
+        for(Minion minion : this.enemy){
+            AbstractMinion m = ((AbstractMinion) minion);
+            System.out.printf("%s (ATK:%d HP:%d) ", m.getName(), m.getATK(), m.getHP());
         }
         System.out.printf("\n");
     }

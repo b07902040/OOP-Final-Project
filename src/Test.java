@@ -14,35 +14,64 @@ public class Test {
     }
     public void run(){
         game.run();
-        this.cardClicked();
-        this.printState();
-        this.clickedEmpty();
-        this.printState();
-        this.cardClicked();
-        this.printState();
-        this.cardSelected();
-        this.printState();
-        /*while(true){
+        while(true){
+            this.getMessage();
+            System.out.println(this.getState());
+            if(this.getState().equals("STATE_GAME_END")) 
+                break;
+        }
+    }
+    public void getMessage(){
+        String msg = Inputs.in.nextLine();
+        String segMsg[] = msg.split(" ");
+        if(segMsg[0].equals("clk")){
+            if(segMsg[1].equals("m")){
+                boolean ally = segMsg[2].equals("0");
+                int index = Integer.parseInt(segMsg[3]);
+                eventManager.post(new EventMinionClicked(ally, index));
+            }
+            else if(segMsg[1].equals("c")){
+                int index = Integer.parseInt(segMsg[2]);
+                eventManager.post(new EventCardClicked(index));
+            }
+            else if(segMsg[1].equals("e")){
+                eventManager.post(new EventClickedEmpty());
+            }
+        }
+        else if(segMsg[0].equals("s")){
+            if(this.getState().equals("STATE_VALID_ATTACKER")){
+                eventManager.post(new EventMinionSelected());
+            }
+            else if(this.getState().equals("STATE_VALID_ATTACKED")){
+                eventManager.post(new EventMinionSelected());
+            }
+            else if(this.getState().equals("STATE_VALID_CARD")){
+                eventManager.post(new EventCardSelected());
+            }
+            else if(this.getState().equals("STATE_VALID_TARGET")){
+                eventManager.post(new EventMinionSelected());
+            }
+        }    
+        else if(segMsg[0].equals("next")){
+            if(this.getState().equals("STATE_ATTACKING")){
+                eventManager.post(new EventMinionAttacked());
+            }
+            else if(this.getState().equals("STATE_EFFECTING")){
+                eventManager.post(new EventCardEffected());
+            }
+        }   
+        else if(segMsg[0].equals("end")){
+            eventManager.post(new EventTurnEnd());
+        }
+        
+    }
 
-        }*/
-    }
-    private void cardClicked(){
-        int clickedIndex = Inputs.in.nextInt();
-        eventManager.post(new EventCardClicked(clickedIndex));     
-    }
-    private void cardSelected(){
-        eventManager.post(new EventCardSelected());    
-    }
-    private void clickedEmpty(){
-        eventManager.post(new EventClickedEmpty());     
-    }
-    private void printState(){
+    private String getState(){
         String state = "NO_STATE";
         if(game.isState(Const.STATE_PENDING)) 
             state ="STATE_PENDING";
         else if(game.isState(Const.STATE_GAME_END))
             state ="STATE_GAME_END";
-
         else if(game.isState(Const.STATE_VALID_CARD))
             state ="STATE_VALID_CARD";
         else if(game.isState(Const.STATE_INVALID_CARD))
@@ -55,7 +84,6 @@ public class Test {
             state ="STATE_INVALID_TARGET";
         else if(game.isState(Const.STATE_EFFECTING))
             state ="STATE_EFFECTING";
-
         else if(game.isState(Const.STATE_VALID_ATTACKER))
             state ="STATE_VALID_ATTACKER";
         else if(game.isState(Const.STATE_INVALID_ATTACKER))
@@ -68,7 +96,7 @@ public class Test {
             state ="STATE_INVALID_ATTACKED";
         else if(game.isState(Const.STATE_ATTACKING))
             state ="STATE_ATTACKING";
-        System.out.println(state);
+        return state;
     }
         
     

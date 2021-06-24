@@ -9,8 +9,8 @@ public class Main {
       	EventManager eventManager=new EventManager();
       	Game game = new Game(eventManager);
       	Test test =new Test(eventManager,game);
-		//game.run();
 		test.run();
+		System.out.println("GGGGGGGGGG");
     }
 
 	
