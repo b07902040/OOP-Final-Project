@@ -1,5 +1,3 @@
-package network;
-
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -54,7 +52,6 @@ public class Server {
 				break;
 			}
 		}
-		System.out.println("Server is full: cannot establish a connection with a client at " + newcs.getRemoteSocketAddress());
 	}
 
 	private class Listener extends Thread {
