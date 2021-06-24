@@ -1,3 +1,5 @@
+package network;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -56,8 +58,8 @@ public class Server {
 	}
 
 	private class Listener extends Thread {
-		private Socket cs; // socket connection to the client
-		private ObjectInputStream oistream; // ObjectInputStream of the client
+		private Socket cs;
+		private ObjectInputStream oistream;
 
 		public Listener (Socket newcs) {
 			this.cs = newcs;
@@ -71,7 +73,6 @@ public class Server {
 		public void run() {
 			Message receiveObj;
 			try {
-				// waits for messages from the client
 				while ((receiveObj = (Message) oistream.readObject()) != null) {
 					System.out.println("Object received from " + cs.getRemoteSocketAddress());
 					// =====Do something=====

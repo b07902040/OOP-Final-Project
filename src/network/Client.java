@@ -1,9 +1,8 @@
-import java.util.ArrayList;
+package network;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.InetAddress;
-import java.net.Inet4Address;
 
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -12,15 +11,11 @@ import javax.swing.JOptionPane;
 
 public class Client  {
 
-	  private static final int numOfPlayers = 4;
-	  private static final int WAITING_TIME_JOIN = 500;
-
 	  private String playerName = "";
 	  private int playerID = -2;
 	  private String serverIP;
 	  private int serverPort;
-	  private Socket serverSocket;
-	  private ObjectOutputStream oos;
+	private ObjectOutputStream oos;
 
 	public static void main(String[] args)
 	{
@@ -54,9 +49,8 @@ public class Client  {
 	public void makeConnection()
 	{
 		try {
-			this.serverSocket = new Socket(InetAddress.getByName(serverIP), serverPort);
+			Socket serverSocket = new Socket(InetAddress.getByName(serverIP), serverPort);
 			oos = new ObjectOutputStream(serverSocket.getOutputStream());
-			PrintWriter writer = new PrintWriter(oos);
 
 			Thread t = new Thread(new serverListener(serverSocket));
 			t.start();
@@ -65,27 +59,19 @@ public class Client  {
 
 			this.sendMessage(new Message(Message.JOIN, playerID));
 
-			Thread.sleep(WAITING_TIME_JOIN);
+			Thread.sleep(500);
 
 		} catch(Exception ex) {
-			System.out.println("Server non-responding, please check connetion.");
-			JOptionPane.showConfirmDialog(null,
-			"Server is not responding, please re-connect.",
-			"Error",
-			JOptionPane.OK_OPTION,
-			JOptionPane.ERROR_MESSAGE);
-
+			System.out.println("Server no respond.");
 		}
 	}
 
 	private class serverListener implements Runnable
 	{
-		private Socket socket;
 		private ObjectInputStream oistream;
 
 		private serverListener(Socket socket)
 		{
-			this.socket = socket;
 			try{
 				oistream = new ObjectInputStream(socket.getInputStream());
 			} catch (Exception ex) {
