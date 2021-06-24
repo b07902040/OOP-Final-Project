@@ -49,11 +49,11 @@ public class Game implements EventListener{
         Event e = new EventInitialize();
         this.eventManager.post(new EventInitialize());
         this.running = true;
-        while(this.running){
-            this.eventManager.post(new EventEveryTick());
+       /* while(this.running){
+            //this.eventManager.post(new EventEveryTick());
             //TODO:
             //sleep
-        }     
+        }     */
     }
 
     @Override 
@@ -98,10 +98,15 @@ public class Game implements EventListener{
                 if(this.selectedCard instanceof Targeting) 
                     this.state.push(Const.STATE_CARD_TARGETING);
                 else{
-                    if(this.selectedCard instanceof BattleCry)
-                        ((BattleCry) this.selectedCard).doBattleCryEffect(null);
+                    if(this.selectedCard instanceof Minion){
+                        if(this.selectedCard instanceof BattleCry)
+                            ((BattleCry) this.selectedCard).doBattleCryEffect(null);
+                        this.currentPlayer.addAlly((Minion)this.selectedCard);
+                        this.currentPlayer.throwCard(this.clickedCardIndex);
+                    }
                     else if(this.selectedCard instanceof Spell)
                         ((Spell) this.selectedCard).takeEffect(this.currentPlayer,null); 
+                    
                     this.state.push(Const.STATE_EFFECTING);                    
                 }  
             }

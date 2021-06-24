@@ -98,7 +98,9 @@ public class Player{
 
     public void addAlly(Minion minion){
         minion.setPlayedOrder(this.game.getMinionSummoned());
-        this.ally.add(minion);
+        this.ally.add(minion);     
+        System.out.printf("%s add %s to ally.\n", this.name, ((AbstractMinion)minion).getName());  
+        this.printPlayerStatus();
         this.game.addMinionSummoned();
     }
 
@@ -133,7 +135,9 @@ public class Player{
     }
 
     public void throwCard(int index){
+        System.out.printf("%s throw %d.\n", this.name,index);          
         this.handCard.remove(index);
+        this.printPlayerStatus();
     }
 
     public boolean checkValidCard(int index){
