@@ -9,8 +9,7 @@ public class Goblin extends AbstractMinion implements Minion, Card{
     static private int baseHP = 1;
     static private int baseATK = 1;
     public Goblin (){
-        super(Goblin.name, Goblin.description, Goblin.baseCost, Goblin.baseHP, Goblin.baseATK); 
-        
+        super(Goblin.name, Goblin.description, Goblin.baseCost, Goblin.baseHP, Goblin.baseATK);    
     }
     
 }
