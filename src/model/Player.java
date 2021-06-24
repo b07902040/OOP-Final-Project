@@ -161,6 +161,7 @@ public class Player{
         this.printHandCard();
         this.printAlly();
     }
+    
     public void printHandCard(){
         System.out.printf("Handcards(%d): ",this.handCard.size());
         for(Card card : this.handCard){
@@ -170,6 +171,7 @@ public class Player{
         }
         System.out.printf("\n");
     }
+
     public void printAlly(){
         System.out.printf("Ally(%d): ",this.ally.size());
         for(Minion minion : this.ally){
