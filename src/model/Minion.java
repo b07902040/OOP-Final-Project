@@ -5,13 +5,27 @@ public interface Minion {
     //MAXHP
     Player getMaster();
 
+    void setMaster(Player master);
+
     int getHP();
 
     void setHP(int HP);
 
+    int getBaseHP();
+
+    int getBuffHP();
+
+    void setBuffHP(int buffHP);
+     
     int getATK();
 
     void setATK(int ATK);
+
+    void setAttackLimit(int attackLimit);
+
+    void resetAttackCount();
+
+    int getBaseATK();
     
     int getPlayedOrder();
 
@@ -25,6 +39,9 @@ public interface Minion {
 
     boolean canAttacked();
 
+    int getAliveTime();
+
+    void addAliveTime();
 
     void attack(Minion target);
 }

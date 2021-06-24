@@ -18,14 +18,16 @@ public class Player{
     private int fatigueDamge = 0;
     private List<Minion> ally;
     private List<Minion> enemy; 
+    private int cardPlayed = 0;
     private Game game;
     private Minion hero;
-    public Player(String name, Game game){     
+    public Player(String name, Game game){         
         this.name = name;
         this.game = game;
         this.handCard = new ArrayList<Card>();
         this.ally = new ArrayList<Minion>();
-        this.hero = new Hero(this);
+        this.hero = new Hero();
+        this.hero.setMaster(this);
         this.ally.add(this.hero);
     }
 
@@ -53,6 +55,14 @@ public class Player{
         this.fullMana = fullMana;
     }
 
+    public int getCardPlayed(){
+        return this.cardPlayed;
+    }
+
+    public void setCardPlayed(int cardPlayed){
+        this.cardPlayed =cardPlayed;
+    }
+
     public Player getOpponent(){
         return this.opponent;
     }
@@ -66,7 +76,7 @@ public class Player{
         return this.deck;
     }
 
-    public void setDeck(List<Card> deck){
+    public void setDeck(ArrayList<Card> deck){
         this.deck = deck;
     }
 
@@ -88,7 +98,9 @@ public class Player{
 
     public void addAlly(Minion minion){
         minion.setPlayedOrder(this.game.getMinionSummoned());
-        this.ally.add(minion);
+        this.ally.add(minion);     
+        System.out.printf("%s add %s to ally.\n", this.name, ((AbstractMinion)minion).getName());  
+        this.printPlayerStatus();
         this.game.addMinionSummoned();
     }
 
@@ -123,7 +135,9 @@ public class Player{
     }
 
     public void throwCard(int index){
+        System.out.printf("%s throw %d.\n", this.name,index);          
         this.handCard.remove(index);
+        this.printPlayerStatus();
     }
 
     public boolean checkValidCard(int index){
@@ -139,5 +153,28 @@ public class Player{
                 return false;
         }
         return true;
+    }
+
+    public void printPlayerStatus(){
+       System.out.printf("%s's turn , Mana: %d , DeckNum: %d , Cardplayed: %d\n",
+            this.name, this.mana, this.deck.size(),this.cardPlayed);
+        this.printHandCard();
+        this.printAlly();
+    }
+    public void printHandCard(){
+        System.out.printf("Handcards(%d): ",this.handCard.size());
+        for(Card card : this.handCard){
+            //System.out.printf("%s ",((AbstractMinion)card).getName());
+            //System.out.println(card);
+            System.out.printf("%s ",((AbstractMinion) card).getName());
+        }
+        System.out.printf("\n");
+    }
+    public void printAlly(){
+        System.out.printf("Ally(%d): ",this.ally.size());
+        for(Minion minion : this.ally){
+            System.out.printf("%s ",((AbstractMinion) minion).getName());
+        }
+        System.out.printf("\n");
     }
 }
