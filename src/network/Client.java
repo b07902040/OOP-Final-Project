@@ -88,7 +88,6 @@ public class Client  {
 						System.out.println("My ID is " + playerID);
 					}
 				}
-				System.out.println("hi");
 			} catch(Exception ex) {
 				System.out.println("Connection lost");
 				ex.printStackTrace();
