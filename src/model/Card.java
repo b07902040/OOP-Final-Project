@@ -8,8 +8,13 @@ public interface Card{
 
     int getCost();
 
+    void setCost(int cost);
+
+    int getBaseCost();
+    
     String getDescription();
-    
-    
+
+    void setDescription(String description);
+
 
 }

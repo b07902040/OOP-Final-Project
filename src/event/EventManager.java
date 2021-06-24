@@ -14,7 +14,7 @@ public class  EventManager {
      * Add a listener to the listeners list
      * it receives Post()ed event through its notify() method
      */
-    public void register(EventListener listener) {
+    public void register(EventListener listener) {       
         this.listeners.add(listener);
     }
 

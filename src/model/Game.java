@@ -1,8 +1,11 @@
 package src.model;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Collections;
 import java.util.Comparator;
+
+import src.model.DeckMaker;
 import src.model.minion.*;
 //import src.model.spell.*;
 import src.event.*;
@@ -13,7 +16,8 @@ public class Game implements EventListener{
     private StateMachine state = new StateMachine();
     private boolean running = false;
     private int winner;
-
+    
+    private DeckMaker deckMaker;
     private List<Player> players;
     private Player currentPlayer;
     private int turn = 0;
@@ -38,24 +42,26 @@ public class Game implements EventListener{
 
     public Game(EventManager eventManager){
         this.eventManager = eventManager;
-        this.eventManager.register(this);
-        
+        this.eventManager.register(this);        
     }
     
     public void run(){
+        Event e = new EventInitialize();
         this.eventManager.post(new EventInitialize());
         this.running = true;
         while(this.running){
             this.eventManager.post(new EventEveryTick());
             //TODO:
             //sleep
-        }
+        }     
     }
 
     @Override 
     public void notify(Event event){
-        if(event instanceof EventInitialize){
-           this.initialize();
+        if(event instanceof EventEveryTick) return;
+        System.out.printf("Get event: %s.\n",event.getName());
+        if(event instanceof EventInitialize){            
+           this.initialize();        
            this.eventManager.post(new EventGameStart());
         }
         else if(event instanceof EventGameStart){
@@ -143,7 +149,8 @@ public class Game implements EventListener{
                 if(this.selectedCard instanceof BattleCry)
                     ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);
                 else if(this.selectedCard instanceof Spell)
-                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion); 
+                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion);
+                this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1); 
                 this.currentPlayer.throwCard(this.clickedCardIndex);
                 this.state.push(Const.STATE_EFFECTING);
             }
@@ -188,15 +195,17 @@ public class Game implements EventListener{
     }
 
     private void initialize(){
+        this.deckMaker = new DeckMaker();
+        this.players = new ArrayList<Player>();
         this.players.add(new Player("player0", this));
         this.players.add(new Player("player1", this));
-        for(int i = 0; i < 2; i++)
-            this.players.get(i).setOpponent(this.players.get((i + 1) % 2));        
+        for(int i = 0; i < 2; i++){
+            this.players.get(i).setOpponent(this.players.get((i + 1) % 2));  
+            ArrayList<Card> deck = this.deckMaker.loadDeck0();
+            Collections.shuffle(deck,new Random());
+            this.players.get(i).setDeck(deck);
+        }      
         this.currentPlayer = this.players.get(0);
-        //TODO:
-        //add hero to minions
-        //load deck & shuffle
-        //deal  
     } 
     
     private void gameStart(){
@@ -209,11 +218,17 @@ public class Game implements EventListener{
         if(firstPlayerTurn)
             this.turn += 1; 
         int mana = this.currentPlayer.getFullMana(); 
-        this.currentPlayer.setFullMana(Math.max(mana + 1, Const.MAX_MANA));      
+        this.currentPlayer.setFullMana(Math.min(mana + 1, Const.MAX_MANA));
+        this.currentPlayer.setCardPlayed(0);      
         this.currentPlayer.fillMana();
+        for(Minion minion : this.currentPlayer.getAlly()){
+            minion.addAliveTime();
+            minion.resetAttackCount();
+        }
+        this.currentPlayer.printPlayerStatus();
         this.timer = 0;
     }
-
+    
     public void cardDrew(boolean fatigue, boolean full){
         this.eventManager.post(new EventCardDraw(fatigue, full));
     }
@@ -294,6 +309,10 @@ public class Game implements EventListener{
     public void addMinionSummoned(){
         this.minionSummoned++;
     } 
+
+    public int getRandom(int range){
+        return ((int)(Math.random()*range+1));
+    }
 }   
 class CompareByPlayedOrder implements Comparator<Minion>{
     
