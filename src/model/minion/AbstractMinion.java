@@ -161,6 +161,11 @@ public abstract class AbstractMinion implements Minion, Card{
     }
 
     @Override
+    public boolean getAlive(){
+        return this.alive;
+    }
+
+    @Override
     public void setAlive(boolean alive){
         this.alive = alive;
     }

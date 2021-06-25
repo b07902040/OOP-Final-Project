@@ -12,12 +12,13 @@ import java.lang.annotation.Target;
 import java.util.ArrayList;
 
 public class Player{
+
     private String name;
     private int mana = 0;
     private int fullMana = 0;
     private Player opponent;
     private List<Card> deck;
-    private List<Card> handCard;
+    private List<Card> handCards;
     private int fatigueDamge = 1;
     private List<Minion> ally;
     private List<Minion> enemy; 
@@ -25,11 +26,11 @@ public class Player{
     private Game game;
     private Minion hero;
     private boolean firstPlayer;
-    public Player(String name, Game game,boolean firstPlayer){         
+    public Player(String name, Game game, boolean firstPlayer){         
         this.firstPlayer = firstPlayer;
         this.name = name;
         this.game = game;
-        this.handCard = new ArrayList<Card>();
+        this.handCards = new ArrayList<Card>();
         this.ally = new ArrayList<Minion>();
         this.hero = new Hero();
         this.hero.setMaster(this);
@@ -81,9 +82,9 @@ public class Player{
         return this.opponent;
     }
 
-    public void setOpponent(Player oppenent){
-        this.opponent = oppenent;
-        this.enemy = oppenent.ally;
+    public void setOpponent(Player opponent){
+        this.opponent = opponent;
+        this.enemy = opponent.ally;
     }
 
     public List<Card> getDeck(){
@@ -94,16 +95,16 @@ public class Player{
         this.deck = deck;
     }
 
-    public List<Card> getHandCard(){
-        return this.handCard;
+    public List<Card> getHandCards(){
+        return this.handCards;
     }
 
-    public void setHandCard(List<Card> handCard){
-        this.handCard = handCard;
+    public void setHandCards(List<Card> handCards){
+        this.handCards = handCards;
     }
 
-    public void addHandCard(Card card){
-        this.handCard.add(card);
+    public void addHandCards(Card card){
+        this.handCards.add(card);
     }
 
     public List<Minion> getAlly(){
@@ -114,7 +115,7 @@ public class Player{
         minion.setMaster(this);
         minion.setPlayedOrder(this.game.getMinionSummoned());     
         this.ally.add(minion);     
-        System.out.printf("%s add %s to ally.\n", this.name, ((AbstractMinion)minion).getName());  
+        System.out.printf("%s add %s to ally.\n", this.name, ((Card) minion).getName());  
         this.game.addMinionSummoned();
     }
 
@@ -133,33 +134,33 @@ public class Player{
             if(this.deck.size() > 0){        
                 Card newCard = this.deck.get(0);
                 this.deck.remove(0);
-                if(this.handCard.size() < Const.MAX_HAND_SIZE){
-                    System.out.printf("%s draws %s.\n",this.name, ((AbstractMinion) newCard).getName());
-                    this.addHandCard(newCard);
-                    this.game.cardDrew(false, false, playerId);                    
+                if(this.handCards.size() < Const.MAX_HAND_SIZE){
+                    System.out.printf("%s draws %s.\n",this.name, newCard.getName());
+                    this.addHandCards(newCard);
+                    this.game.cardDrew(playerId, false, false, newCard);                    
                 }
                 else{                    
-                    System.out.printf("!!!!!!%s draws %s BOOM!!!!!!!\n",this.name, ((AbstractMinion) newCard).getName()); 
-                    this.game.cardDrew(false, true, playerId);
+                    System.out.printf("!!!!!!%s draws %s BOOM!!!!!!!\n",this.name, newCard.getName()); 
+                    this.game.cardDrew(playerId, false, true, newCard);   
                 }
             }
             else{ 
                 System.out.printf("!!!!!!%s draws fatigue!!!!!!\n", this.name);
                 this.hero.setHP(this.hero.getHP() - this.fatigueDamge);
                 this.fatigueDamge += 1;  
-                this.game.cardDrew(true, false, playerId);              
+                this.game.cardDrew(playerId, true, false, null);              
             }
         }
     }
 
     public void throwCard(int index){
         System.out.printf("%s throw %d.\n", this.name,index);          
-        this.handCard.remove(index);
+        this.handCards.remove(index);
         this.printPlayerStatus();
     }
 
     public boolean checkValidCard(int index){
-        Card card = this.handCard.get(index);
+        Card card = this.handCards.get(index);
         if(card.getCost() > this.mana)
             return false;
         if(card instanceof Minion){
@@ -177,15 +178,15 @@ public class Player{
         System.out.printf("-------------------------------------------------------\n");
         System.out.printf("%s's turn , Mana: %d , DeckNum: %d , Cardplayed: %d\n",
             this.name, this.mana, this.deck.size(),this.cardPlayed);
-        this.printHandCard();
+        this.printHandCards();
         this.printAlly();
         this.printEnemy();
         System.out.printf("--------------------------------------------------------\n");
     }
     
-    public void printHandCard(){
-        System.out.printf("Handcards(%d / %d): ", this.handCard.size(), Const.MAX_HAND_SIZE);
-        for(Card card : this.handCard){
+    public void printHandCards(){
+        System.out.printf("handCard:(%d / %d): ", this.handCards.size(), Const.MAX_HAND_SIZE);
+        for(Card card : this.handCards){
             //System.out.printf("%s ",((AbstractMinion)card).getName());
             //System.out.println(card);
             System.out.printf("%s ",((AbstractMinion) card).getName());

@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import src.model.minion.*;
 import src.constant.*;
-public class DeckMaker{
+public class DeckLoader{
     private ArrayList<ArrayList<Card>> decks;
     
     public ArrayList<Card> loadDeck0(){

@@ -33,6 +33,8 @@ public interface Minion {
 
     boolean isAlive();
 
+    boolean getAlive();
+    
     void setAlive(boolean alive);
 
     boolean canAttack();

@@ -1,10 +1,11 @@
 package src.model.minion;
 import src.model.*;
 import src.constant.*;
-
+//Complete
 public class Goblin extends AbstractMinion implements Card, Minion, DeathRattle{
+    
     private static String name = "Goblin";
-    private static String description = "DeathRattle: Deal 2 damage to the enemy Goblin.";
+    private static String description = "DeathRattle: Deal 2 damage to the enemy Hero.";
     private static int baseCost = 1;
     private static int baseHP = 1;
     private static int baseATK = 1;
