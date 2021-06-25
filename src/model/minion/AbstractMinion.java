@@ -85,6 +85,7 @@ public abstract class AbstractMinion implements Minion, Card{
     @Override
     public void setHP(int HP){
         //Heal
+        
         if(this.HP < HP){
             System.out.printf("%s +%d HP.\n",this.name,HP-this.HP);
             this.HP = Math.min(HP, this.buffHP);    
@@ -98,7 +99,8 @@ public abstract class AbstractMinion implements Minion, Card{
                 System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
                 this.HP = HP;    
             }
-        }            
+        }    
+
     }
 
     @Override

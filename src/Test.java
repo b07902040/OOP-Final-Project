@@ -24,7 +24,7 @@ public class Test {
     public void getMessage(){
         String msg = Inputs.in.nextLine();
         String segMsg[] = msg.split(" ");
-        if(segMsg[0].equals("clk")){
+        if(segMsg[0].equals("c")){
             if(segMsg[1].equals("m")){
                 boolean ally = segMsg[2].equals("0");
                 int index = Integer.parseInt(segMsg[3]);
@@ -52,7 +52,7 @@ public class Test {
                 eventManager.post(new EventMinionSelected());
             }
         }    
-        else if(segMsg[0].equals("next")){
+        else if(segMsg[0].equals("n")){
             if(this.getState().equals("STATE_ATTACKING")){
                 eventManager.post(new EventMinionAttacked());
             }
@@ -60,8 +60,9 @@ public class Test {
                 eventManager.post(new EventCardEffected());
             }
         }   
-        else if(segMsg[0].equals("end")){
-            eventManager.post(new EventTurnEnd());
+        else if(segMsg[0].equals("e")){
+            if(this.getState().equals("STATE_PENDING"))
+                eventManager.post(new EventTurnEnd());
         }
         
     }

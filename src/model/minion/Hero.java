@@ -2,7 +2,7 @@ package src.model.minion;
 import src.model.*;
 import src.constant.*;
 
-public class Hero extends AbstractMinion implements Minion, Card{
+public class Hero extends AbstractMinion implements Card, Minion{
     static private String name = "HERO";
     static private String description = "I'm HERO!";
     static private int baseCost = 0;

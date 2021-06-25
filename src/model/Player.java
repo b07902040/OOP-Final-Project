@@ -18,13 +18,15 @@ public class Player{
     private Player opponent;
     private List<Card> deck;
     private List<Card> handCard;
-    private int fatigueDamge = 0;
+    private int fatigueDamge = 1;
     private List<Minion> ally;
     private List<Minion> enemy; 
     private int cardPlayed = 0;
     private Game game;
     private Minion hero;
-    public Player(String name, Game game){         
+    private boolean firstPlayer;
+    public Player(String name, Game game,boolean firstPlayer){         
+        this.firstPlayer = firstPlayer;
         this.name = name;
         this.game = game;
         this.handCard = new ArrayList<Card>();
@@ -33,6 +35,10 @@ public class Player{
         this.hero.setMaster(this);
         this.ally.add(this.hero);
     }
+
+    public boolean getFirstPlayer(){
+        return this.firstPlayer;
+    } 
 
     public String getName(){
         return this.name;
@@ -47,6 +53,7 @@ public class Player{
     }
 
     public void setMana(int mana){
+        System.out.printf("%s %d mana.\n", this.name, this.mana - mana);
         this.mana = Math.min(mana, this.fullMana);
     }
 
@@ -121,23 +128,26 @@ public class Player{
 
 
     public void drawCards(int cardNum) {
+        int playerId = (this.firstPlayer)? 0 : 1;
         for(int i = 0; i < cardNum; i++){
             if(this.deck.size() > 0){        
                 Card newCard = this.deck.get(0);
                 this.deck.remove(0);
                 if(this.handCard.size() < Const.MAX_HAND_SIZE){
+                    System.out.printf("%s draws %s.\n",this.name, ((AbstractMinion) newCard).getName());
                     this.addHandCard(newCard);
-                    //TODO
-                    this.game.cardDrew(false,false);
+                    this.game.cardDrew(false, false, playerId);                    
                 }
-                else
-                    this.game.cardDrew(false,true);
+                else{                    
+                    System.out.printf("!!!!!!%s draws %s BOOM!!!!!!!\n",this.name, ((AbstractMinion) newCard).getName()); 
+                    this.game.cardDrew(false, true, playerId);
+                }
             }
-            else{
-                this.game.cardDrew(true,false);
-                //TODO:
-                //take fatigue damge
-                this.fatigueDamge += 1;                
+            else{ 
+                System.out.printf("!!!!!!%s draws fatigue!!!!!!\n", this.name);
+                this.hero.setHP(this.hero.getHP() - this.fatigueDamge);
+                this.fatigueDamge += 1;  
+                this.game.cardDrew(true, false, playerId);              
             }
         }
     }
@@ -164,17 +174,17 @@ public class Player{
     }
 
     public void printPlayerStatus(){
-        System.out.printf("----------------------------------------\n");
+        System.out.printf("-------------------------------------------------------\n");
         System.out.printf("%s's turn , Mana: %d , DeckNum: %d , Cardplayed: %d\n",
             this.name, this.mana, this.deck.size(),this.cardPlayed);
         this.printHandCard();
         this.printAlly();
         this.printEnemy();
-        System.out.printf("----------------------------------------\n");
+        System.out.printf("--------------------------------------------------------\n");
     }
     
     public void printHandCard(){
-        System.out.printf("Handcards(%d): ",this.handCard.size());
+        System.out.printf("Handcards(%d / %d): ", this.handCard.size(), Const.MAX_HAND_SIZE);
         for(Card card : this.handCard){
             //System.out.printf("%s ",((AbstractMinion)card).getName());
             //System.out.println(card);
@@ -184,7 +194,7 @@ public class Player{
     }
 
     public void printAlly(){
-        System.out.printf("Ally(%d): ",this.ally.size());
+        System.out.printf("Ally(%d / %d): ", this.ally.size(), Const.BOARD_SPACE);
         for(Minion minion : this.ally){
             AbstractMinion m = ((AbstractMinion) minion);
             System.out.printf("%s (ATK:%d HP:%d) ", m.getName(), m.getATK(), m.getHP());
@@ -193,7 +203,7 @@ public class Player{
     }
 
     public void printEnemy(){
-        System.out.printf("Enemy(%d): ",this.enemy.size());
+        System.out.printf("Enemy(%d / %d): ",this.enemy.size(), Const.BOARD_SPACE);
         for(Minion minion : this.enemy){
             AbstractMinion m = ((AbstractMinion) minion);
             System.out.printf("%s (ATK:%d HP:%d) ", m.getName(), m.getATK(), m.getHP());

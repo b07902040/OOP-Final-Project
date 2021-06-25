@@ -17,11 +17,6 @@ public class Const{
     public static final int STATE_VALID_ATTACKED = 11;  
     public static final int STATE_INVALID_ATTACKED = 12; 
     public static final int STATE_ATTACKING = 13; 
-    
-    
-    
-
-
 
     public static final int STATE_END = 99;
     //Game

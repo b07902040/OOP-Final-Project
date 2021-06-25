@@ -74,6 +74,16 @@ public class Game implements EventListener{
             this.state.push(Const.STATE_PENDING);
             this.currentPlayer.drawCards(1);                  
         }
+        else if(event instanceof EventCardDraw){                
+            this.checkDeadStatus();
+            this.currentPlayer.printPlayerStatus();
+            if(winner > 0){
+                this.eventManager.post(new EventGameEnd());
+                this.state.push(Const.STATE_GAME_END);  
+            }
+            else 
+                this.state.push(Const.STATE_PENDING);
+        }
         else if(event instanceof EventClickedEmpty){
             if(this.isState(Const.STATE_VALID_CARD) || this.isState(Const.STATE_INVALID_CARD))
                 this.state.push(Const.STATE_PENDING);        
@@ -221,8 +231,8 @@ public class Game implements EventListener{
     private void initialize(){
         this.deckMaker = new DeckMaker();
         this.players = new ArrayList<Player>();
-        this.players.add(new Player("player0", this));
-        this.players.add(new Player("player1", this));
+        this.players.add(new Player("player0", this, true));
+        this.players.add(new Player("player1", this, false));
         for(int i = 0; i < 2; i++){
             this.players.get(i).setOpponent(this.players.get((i + 1) % 2));  
             ArrayList<Card> deck = this.deckMaker.loadDeck0();
@@ -253,8 +263,8 @@ public class Game implements EventListener{
         this.timer = 0;
     }
     
-    public void cardDrew(boolean fatigue, boolean full){
-        this.eventManager.post(new EventCardDraw(fatigue, full));
+    public void cardDrew(boolean fatigue, boolean full, int playerId){
+        this.eventManager.post(new EventCardDraw(fatigue, full, playerId));
     }
 
     private boolean checkValidMinion(){

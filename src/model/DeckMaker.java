@@ -5,9 +5,10 @@ import src.model.minion.*;
 import src.constant.*;
 public class DeckMaker{
     private ArrayList<ArrayList<Card>> decks;
+    
     public ArrayList<Card> loadDeck0(){
         ArrayList<Card> deck = new ArrayList<Card>();
-        for(int i = 0; i < Const.DECK_SIZE; i++){
+        for(int i = 0; i < 5; i++){
             deck.add(new Goblin());
         }
         return deck;
