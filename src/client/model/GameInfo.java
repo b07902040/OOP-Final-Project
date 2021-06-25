@@ -83,27 +83,29 @@ public class GameInfo implements EventListener{
             this.handSize[id]++;
             if(id == this.playerId)
                 this.handCards.add(card);
-        }
-            
+        }         
     }    
 
     public void checkChange(boolean ally, int index, Minion minion){
-        Minion oldMinion;
-        if(this.myTurn)
-            oldMinion = (ally)? this.ally.get(index) : this.enemy.get(index);
-        else
-            oldMinion = (ally)? this.enemy.get(index) : this.ally.get(index);
         int playerId;
         if(this.myturn) 
             playerId = (ally)? this.playerId : ((this.playerId + 1) % 2);
         else
-            playerId = (ally)? ((this.playerId + 1) % 2) : this.playerId ;    
-        if(!minion.getAlive())
+            playerId = (ally)? ((this.playerId + 1) % 2) : this.playerId ; 
+        List<Minion> minions; 
+        if(this.myTurn)
+            minions = (ally)? this.ally : this.enemy;
+        else
+            minions = (ally)? this.enemy : this.ally;  
+
+        if(minions.get(index).getAlive() != minion.getAlive())
             this.eventManager.post(new EventMinionDestroy(playerId, index));
         else{
-            int hpDiff = minion.getHP() - oldMinion.getHP();
-            this.eventManager.post(new EventMinionChangeHP(playerId, index, hpDiff));
-        }        
+            int hpDiff = minion.getHP() - minions.get(index).getHP();
+            if(hpDiff != 0)
+                this.eventManager.post(new EventMinionChangeHP(playerId, index, hpDiff));
+        }       
+        this.minions.get(index) = minon;
     }
 
 
