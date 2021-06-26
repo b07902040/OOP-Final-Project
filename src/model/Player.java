@@ -6,13 +6,12 @@ import javax.swing.AbstractAction;
 import src.model.minion.*;
 //import src.model.spell.*;
 import src.constant.Const;
-import src.event.EventCardDraw;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 
 public class Player{
 
+    private int playerId;
     private String name;
     private int mana = 0;
     private int fullMana = Const.INIT_MANA;
@@ -37,6 +36,7 @@ public class Player{
         this.ally.add(this.hero);
     }
 
+ 
     public boolean getFirstPlayer(){
         return this.firstPlayer;
     } 
@@ -131,7 +131,6 @@ public class Player{
         return this.enemy;
     }
 
-
     public void drawCards(int cardNum) {
         int playerId = (this.firstPlayer)? 0 : 1;
         for(int i = 0; i < cardNum; i++){
@@ -141,24 +140,25 @@ public class Player{
                 if(this.handCards.size() < Const.MAX_HAND_SIZE){
                     System.out.printf("%s draws %s.\n",this.name, newCard.getName());
                     this.addHandCards(newCard);
-                    this.game.cardDrew(playerId, false, false, newCard);                    
+                    this.game.cardDrew(playerId, false, false);                    
                 }
                 else{                    
                     System.out.printf("!!!!!!%s draws %s BOOM!!!!!!!\n",this.name, newCard.getName()); 
-                    this.game.cardDrew(playerId, false, true, newCard);   
+                    this.game.cardDrew(playerId, false, true);   
                 }
             }
             else{ 
                 System.out.printf("!!!!!!%s draws fatigue!!!!!!\n", this.name);
                 this.hero.setHP(this.hero.getHP() - this.fatigueDamge);
                 this.fatigueDamge += 1;  
-                this.game.cardDrew(playerId, true, false, null);              
+                this.game.cardDrew(playerId, true, false);              
             }
         }
     }
 
     public void throwCard(int index){    
         this.handCards.remove(index);
+        this.game.handCardRemove(this.playerId, index);
         this.printPlayerStatus();
     }
 

@@ -2,7 +2,7 @@ package src.event;
 import src.model.*;
 
 public class EventHandCardChange implements Event{
-    
+
     private String name = "EventHandCardChange";
     private int playerId;
     private int index;
@@ -20,7 +20,7 @@ public class EventHandCardChange implements Event{
         this.card = card;
     }
     
-    public boolean getplayerId(){
+    public int getplayerId(){
         return this.playerId;
     }
 

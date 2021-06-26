@@ -287,8 +287,16 @@ public class Game implements EventListener{
         this.timer = 0;
     }
     
-    public void cardDrew(int playerId, boolean fatigue, boolean full, Card card){
-        this.eventManager.post(new EventCardDraw(playerId, fatigue, full, card));
+    public void cardDrew(int playerId, boolean fatigue, boolean full){
+        this.eventManager.post(new EventCardDraw(playerId, fatigue, full));
+    }
+
+    public void handCardAdd(int playerId, Card card){
+        this.eventManager.post(new EventHandCardChange(playerId, card));
+    }
+
+    public void handCardRemove(int playerId, int index){
+        this.eventManager.post(new EventHandCardChange(playerId, index));
     }
 
     private boolean checkValidMinion(){
@@ -301,11 +309,15 @@ public class Game implements EventListener{
         }
         else return false;
     }
-    private void playedMinion(Card card){                  
-        this.currentPlayer.summonAlly((Minion) card, this.currentPlayer.getAlly().size());
-        this.currentPlayer.throwCard(this.clickedCardIndex);
+
+    private void playedMinion(Card card){ 
+        //TODO
+        //post boardchange  
+        this.currentPlayer.throwCard(this.clickedCardIndex);             
+        this.currentPlayer.summonAlly((Minion) card, this.currentPlayer.getAlly().size());        
         this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1);
     }
+
     private void playedSpell(Card card){        
         this.currentPlayer.throwCard(this.clickedCardIndex);
         this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1);
@@ -320,6 +332,8 @@ public class Game implements EventListener{
                 if(!minion.isAlive()){
                     deadMinions.add(minion);
                     player.removeAlly(minion);
+                    //TODO
+                    //post boardchange
                 }
             }
         }
@@ -399,8 +413,8 @@ public class Game implements EventListener{
         this.eventManager.post(new EventStateChange(state));
     }
 
-    public void minionChange(boolean ally, int id, Minion minion){
-        this.eventManager.post(new EventMinionChange(ally, id, minion));
+    public void minionChange(int playerId, int id, Minion minion){
+        this.eventManager.post(new EventMinionChange(playerId, id, minion));
     }
 
     public static int getRandom(int range){

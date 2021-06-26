@@ -26,7 +26,16 @@ public class GameInfo implements EventListener{
     
     private int turn;
     private float timer;
-
+    
+    private int clickedCardIndex = -1;
+    private int clickedMinionIndex = -1;
+    private boolean clickedMinionAlly = false;
+    private int clickedAttackerIndex = -1;
+    private boolean clickedAttackerAlly = false;
+    private int clickedAttackedIndex = -1;
+    private boolean clickedAttackedAlly = false;
+    
+    
     public GameInfo(EventManager eventManager){
 
         this.eventManager = eventManager;
@@ -43,7 +52,7 @@ public class GameInfo implements EventListener{
         }
         else if(event instanceof EventCardDraw){
             EventCardDraw e = (EventCardDraw) event;
-            this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull(), e.getCard());
+            this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull());
         }
         else if(event instanceof EventTurnStart){
             this.turnStart();
@@ -75,15 +84,13 @@ public class GameInfo implements EventListener{
         
     }
     
-    private void cardDraw(int id, boolean fatigue, boolean full,Card card){
+    private void cardDraw(int id, boolean fatigue, boolean full){
         if(fatigue) return;
         if(full)
             this.deckSize[id]--;        
         else{
             this.deckSize[id]--;
             this.handSize[id]++;
-            if(id == this.playerId)
-                this.handCards.add(card);
         }         
     }
 
