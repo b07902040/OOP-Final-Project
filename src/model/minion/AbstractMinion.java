@@ -15,8 +15,7 @@ public abstract class AbstractMinion implements Minion, Card{
     protected boolean alive = true;
     protected Player master;
     protected int aliveTime = 0;
-    protected boolean divineShield;
-
+    
     //card property
     protected int cost;
     protected int baseCost;
@@ -34,7 +33,6 @@ public abstract class AbstractMinion implements Minion, Card{
         this.baseATK = baseATK;
         this.ATK = baseATK;
         this.attackLimit = (this instanceof WindFury)? 2 : 1;   
-        this.divineShield = (this instanceof DivineShield)? true : false;   
     }
 
     //card
@@ -91,17 +89,10 @@ public abstract class AbstractMinion implements Minion, Card{
             this.HP = Math.min(HP, this.buffHP);    
         }
         //damage
-        else if(this.HP > HP){
-            if(this.divineShield){
-                System.out.printf("%s deny damage by DivineShield.\n",this.name);
-                this.divineShield = false;
-            }
-            else{
+        else if(this.HP > HP){         
                 System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
-                this.HP = HP;    
-            }
-        }    
-
+                this.HP = HP;     
+        }   
     }
     
     @Override
@@ -206,13 +197,17 @@ public abstract class AbstractMinion implements Minion, Card{
 
     @Override
     public boolean canAttacked(){
-        if(this instanceof Taunt){
+        if(this instanceof Taunt)
             return true;
-        }
         for(Minion minion : this.master.getAlly()){
-            if(minion instanceof Taunt) 
+            if((minion instanceof Taunt)) 
                 return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean canTargeted(){
         return true;
     }
 

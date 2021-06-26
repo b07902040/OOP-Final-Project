@@ -112,6 +112,10 @@ public class Player{
     }
 
     public void addAlly(Minion minion){
+        if(this.ally.size() >= Const.BOARD_SPACE + 1){
+            System.out.printf("Board is full, can't add ally.");
+            return;
+        }
         minion.setMaster(this);
         minion.setPlayedOrder(this.game.getMinionSummoned());     
         this.ally.add(minion);     

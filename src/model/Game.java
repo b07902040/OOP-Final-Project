@@ -377,10 +377,6 @@ public class Game implements EventListener{
         this.minionSummoned++;
     } 
 
-    public int getRandom(int range){
-        return ((int)(Math.random()*range+1));
-    }
-
     public void stateChange(int state){
         this.state.push(state); 
         this.eventManager.post(new EventStateChange(state));

@@ -43,6 +43,8 @@ public interface Minion {
 
     boolean canAttacked();
 
+    boolean canTargeted();
+
     int getAliveTime();
 
     void addAliveTime();
