@@ -9,6 +9,8 @@ public class Const {
     public static final int[] BOTTOM_BAR = {0, 850, 1200, 8};
     public static final int[] OPPONENT_CARD_REGION = {350, 0, 500, 100};
     public static final int[] SELECT_BUTTON = {1030, 870, 100, 40};
+    public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
+    public static final int[] MANA_BOX = {750, 805, 450, 50};
 
     public static final int HANDCARD_GAP = 30;
     public static final int CARD_W = 60;
@@ -23,6 +25,7 @@ public class Const {
     public static final String OPPONENT_CARD_REGION_PATH = "image/opponent_card_region.png";
     public static final String SELECT_BUTTON_PATH = "image/select.png";
     public static final String ENDTURN_BUTTON_PATH = "image/end_turn.png";
+    public static final String MANA_BOX_IMG_PATH = "image/mana_box.png";
     public static final String FULL_MANA_PATH = "image/end_turn.png";
     public static final String EMPTY_MANA_PATH = "image/end_turn.png";
 }

@@ -4,7 +4,7 @@ import src.client.viewconstant.Const;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
-public class BoardPainter implements Painter {
+public class ManaPainter implements Painter {
     @Override
     public void draw(GameInfo game, BufferedImage screenImg){
         Graphics g = screenImg.getGraphics();

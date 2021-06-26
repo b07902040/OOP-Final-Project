@@ -54,7 +54,7 @@ public class View implements EventListener{
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
-        this.screen.setSize(Const.SCREEN_W, Const.SCREEN_H);
+        this.screen.pack();
         update();
         this.screen.setVisible(true);
         return;
@@ -112,7 +112,7 @@ class Board extends JPanel {
     private View view;
     public Board(View view){
         this.view = view;
-        this.setSize(Const.SCREEN_W, Const.SCREEN_H);
+        this.setPreferredSize(new Dimension(Const.SCREEN_W, Const.SCREEN_H));
     }
 
     @Override
