@@ -16,15 +16,12 @@ public class BoomBot extends AbstractMinion implements Card, Minion, DeathRattle
                  BoomBot.baseHP, BoomBot.baseATK);    
     }
 
-    private int getRandom(int range){
-        return ((int) (Math.random() * range + 1));
-    }
     
     @Override
     public void doDeathRattleEffect(){
         List<Minion> enemy = this.master.getEnemy();
-        int targetId = this.getRandom(enemy.size()) - 1;
-        int dmg = this.getRandom(4);
+        int targetId = Game.getRandom(enemy.size()) - 1;
+        int dmg = Game.getRandom(4);
         Minion e = enemy.get(targetId);
         e.setHP(e.getHP() - dmg);
     }

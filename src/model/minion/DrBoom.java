@@ -18,8 +18,8 @@ public class DrBoom extends AbstractMinion implements Card, Minion, BattleCry{
     @Override   
     public void doBattleCryEffect(Minion target){ 
         System.out.printf("%s BattleCry!\n",this.name);
-        for(int i = 0; i < 2; i++)
-            this.master.addAlly(new BoomBot());
+        this.master.summonAlly(new BoomBot(), this.master.getAlly().size()-1);
+        this.master.summonAlly(new BoomBot(),this.master.getAlly().size());
     }
     
 }

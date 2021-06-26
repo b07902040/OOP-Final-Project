@@ -9,6 +9,7 @@ public class AnnoyRobot extends AbstractMinion implements Card, Minion, DivineSh
     private static int baseATK = 1;
     private static int baseHP = 2;
     private boolean divineShield = true;
+    
     public AnnoyRobot (){
         super(AnnoyRobot.name, AnnoyRobot.description, AnnoyRobot.baseCost,
                  AnnoyRobot.baseHP, AnnoyRobot.baseATK);    
@@ -28,7 +29,7 @@ public class AnnoyRobot extends AbstractMinion implements Card, Minion, DivineSh
                 this.divineShield = false;
             }
             else{
-                System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
+                System.out.printf("%s -%d HP.\n",this.name,this.HP - HP);
                 this.HP = HP;    
             }
         }    

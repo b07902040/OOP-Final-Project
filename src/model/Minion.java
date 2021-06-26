@@ -32,7 +32,9 @@ public interface Minion {
     int getPlayedOrder();
 
     void setPlayedOrder(int order);
-
+    
+    boolean isDamaged();
+    
     boolean isAlive();
 
     boolean getAlive();
@@ -50,4 +52,7 @@ public interface Minion {
     void addAliveTime();
 
     void attack(Minion target);
+    
+    void doTurnEnd();
+
 }

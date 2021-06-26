@@ -350,6 +350,23 @@ public class Game implements EventListener{
     }
 
     private void turnEnd(){
+        //TODO
+        //turnend
+        List<Minion> turnEndMinions = new ArrayList<Minion>();
+        for(Minion minion : this.currentPlayer.getAlly())
+            turnEndMinions.add(minion);
+        Collections.sort(turnEndMinions, new CompareByPlayedOrder());
+        for(Minion minion : turnEndMinions){
+            if(minion.isAlive())
+                minion.doTurnEnd();
+            this.checkDeadStatus();
+            if(winner > 0){
+                this.eventManager.post(new EventGameEnd(winner -1));
+                this.stateChange(Const.STATE_GAME_END); 
+                break; 
+            }
+        }
+        //end
         this.currentPlayer = this.currentPlayer.getOpponent();
         this.firstPlayerTurn = !this.firstPlayerTurn;
     }
@@ -384,6 +401,10 @@ public class Game implements EventListener{
 
     public void minionChange(boolean ally, int id, Minion minion){
         this.eventManager.post(new EventMinionChange(ally, id, minion));
+    }
+
+    public static int getRandom(int range){
+        return ((int) (Math.random() * range + 1));
     }
 }   
 class CompareByPlayedOrder implements Comparator<Minion>{

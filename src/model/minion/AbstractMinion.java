@@ -149,7 +149,11 @@ public abstract class AbstractMinion implements Minion, Card{
     public void setPlayedOrder(int order){
         this.playedOrder = order;
     }
-    
+    @Override
+    public boolean isDamaged(){
+        return this.HP < this.buffHP;
+    }
+
     @Override
     public boolean isAlive(){
         if(this.HP <= 0) 
@@ -225,4 +229,8 @@ public abstract class AbstractMinion implements Minion, Card{
         this.attackCount++;
     }
 
+    @Override
+    public void doTurnEnd(){
+        return;
+    }
 }
