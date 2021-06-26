@@ -19,7 +19,7 @@ public class UldmanKeeper extends AbstractMinion implements Card, Minion, Battle
 
     @Override 
     public List<Minion> getCandidates(Player player){ 
-        List<Minion> candidates =new ArrayList<Minion>();
+        List<Minion> candidates = new ArrayList<Minion>();
         for(Minion minion : player.getAlly()){
             if(!(minion instanceof Hero) &&  minion.canTargeted())
                     candidates.add(minion);              

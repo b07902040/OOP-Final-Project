@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 
 import src.model.minion.*;
-//import src.model.spell.*;
+import src.model.spell.*;
 import src.event.*;
 import src.constant.*;
 
@@ -133,7 +133,7 @@ public class Game implements EventListener{
                     }
                     else if(this.selectedCard instanceof Spell){  
                         this.playedSpell(this.selectedCard);                      
-                        ((Spell) this.selectedCard).takeEffect(this.currentPlayer,null);
+                        ((Spell) this.selectedCard).takeEffect(this.currentPlayer, null);
                         
                     }
                     this.stateChange(Const.STATE_EFFECTING);

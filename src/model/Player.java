@@ -206,7 +206,7 @@ public class Player{
         for(Card card : this.handCards){
             //System.out.printf("%s ",((AbstractMinion)card).getName());
             //System.out.println(card);
-            System.out.printf("%s ",((AbstractMinion) card).getName());
+            System.out.printf("%s ",card.getName());
         }
         System.out.printf("\n");
     }

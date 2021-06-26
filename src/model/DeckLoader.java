@@ -2,6 +2,8 @@ package src.model;
 import java.util.List;
 import java.util.ArrayList;
 import src.model.minion.*;
+import src.model.spell.PyroBlast;
+import src.model.spell.TheCoin;
 import src.constant.*;
 public class DeckLoader{
     private ArrayList<ArrayList<Card>> decks;
@@ -9,8 +11,9 @@ public class DeckLoader{
     public ArrayList<Card> loadDeck0(){
         ArrayList<Card> deck = new ArrayList<Card>();
         for(int i = 0; i < 5; i++){
-            deck.add(new DrBoom());
-            deck.add(new LightRagnaros());
+            deck.add(new Goblin());
+            deck.add(new PatientAssassin());
+            deck.add(new PyroBlast());
         }
         return deck;
     }
