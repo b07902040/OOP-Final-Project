@@ -15,7 +15,7 @@ public class Player{
 
     private String name;
     private int mana = 0;
-    private int fullMana = 0;
+    private int fullMana = Const.INIT_MANA;
     private Player opponent;
     private List<Card> deck;
     private List<Card> handCards;
@@ -54,8 +54,8 @@ public class Player{
     }
 
     public void setMana(int mana){
-        System.out.printf("%s %d mana.\n", this.name, this.mana - mana);
-        this.mana = Math.min(mana, this.fullMana);
+        System.out.printf("%s %d mana.\n", this.name, mana - this.mana);
+        this.mana = mana;
     }
 
     public void fillMana(){
@@ -75,7 +75,7 @@ public class Player{
     }
 
     public void setCardPlayed(int cardPlayed){
-        this.cardPlayed =cardPlayed;
+        this.cardPlayed = cardPlayed;
     }
 
     public Player getOpponent(){
@@ -153,8 +153,7 @@ public class Player{
         }
     }
 
-    public void throwCard(int index){
-        System.out.printf("%s throw %d.\n", this.name,index);          
+    public void throwCard(int index){    
         this.handCards.remove(index);
         this.printPlayerStatus();
     }
@@ -168,8 +167,10 @@ public class Player{
                 return false;      
         }
         if(card instanceof Spell && card instanceof Targeting){
-            if(((Targeting)card).getCandidates(this) == null)
-                return false;
+            if(((Targeting)card).getCandidates(this) == null){
+                if(card instanceof BattleCry) return true;
+                else return false;
+            }                
         }
         return true;
     }
@@ -195,7 +196,7 @@ public class Player{
     }
 
     public void printAlly(){
-        System.out.printf("Ally(%d / %d): ", this.ally.size(), Const.BOARD_SPACE);
+        System.out.printf("Ally(%d / %d): ", this.ally.size(), Const.BOARD_SPACE + 1);
         for(Minion minion : this.ally){
             AbstractMinion m = ((AbstractMinion) minion);
             System.out.printf("%s (ATK:%d HP:%d) ", m.getName(), m.getATK(), m.getHP());
@@ -204,7 +205,7 @@ public class Player{
     }
 
     public void printEnemy(){
-        System.out.printf("Enemy(%d / %d): ",this.enemy.size(), Const.BOARD_SPACE);
+        System.out.printf("Enemy(%d / %d): ",this.enemy.size(), Const.BOARD_SPACE + 1);
         for(Minion minion : this.enemy){
             AbstractMinion m = ((AbstractMinion) minion);
             System.out.printf("%s (ATK:%d HP:%d) ", m.getName(), m.getATK(), m.getHP());

@@ -10,6 +10,8 @@ public interface Minion {
     int getHP();
 
     void setHP(int HP);
+    
+    void reWriteHP(int HP);
 
     int getBaseHP();
 

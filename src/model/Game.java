@@ -79,7 +79,7 @@ public class Game implements EventListener{
             this.checkDeadStatus();
             this.currentPlayer.printPlayerStatus();
             if(winner > 0){
-                this.eventManager.post(new EventGameEnd());
+                this.eventManager.post(new EventGameEnd(winner -1));
                 this.stateChange(Const.STATE_GAME_END);  
             }
             else 
@@ -107,20 +107,37 @@ public class Game implements EventListener{
         else if(event instanceof EventCardSelected){
             if(this.isState(Const.STATE_VALID_CARD)){
                 this.selectedCard = this.currentPlayer.getHandCards().get(this.clickedCardIndex);
-                if(this.selectedCard instanceof Targeting) 
-                    this.stateChange(Const.STATE_CARD_TARGETING);
+                if(this.selectedCard instanceof Targeting){
+                    List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer);
+                    if(this.selectedCard instanceof BattleCry &&  candidates.size() == 0){                        
+                        System.out.printf("BattleCry no target!\n");
+                        this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
+                        ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                        this.playedMinion(this.selectedCard);
+                        this.stateChange(Const.STATE_EFFECTING);
+                        this.reset();                        
+                    }
+                    else
+                        this.stateChange(Const.STATE_CARD_TARGETING);                                       
+                }
                 else{
                     this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                     if(this.selectedCard instanceof Minion){
-                        if(this.selectedCard instanceof BattleCry)
-                            ((BattleCry) this.selectedCard).doBattleCryEffect(null);                    
-                        this.currentPlayer.addAlly((Minion)this.selectedCard);
-                        this.currentPlayer.throwCard(this.clickedCardIndex);
+                        if(this.selectedCard instanceof BattleCry){
+                            ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                            this.playedMinion(this.selectedCard);
+                            ((BattleCry) this.selectedCard).doBattleCryEffect(null); 
+                        }                                              
+                        else 
+                            this.playedMinion(this.selectedCard);      
                     }
-                    else if(this.selectedCard instanceof Spell)
-                        ((Spell) this.selectedCard).takeEffect(this.currentPlayer,null); 
-                    
-                    this.stateChange(Const.STATE_EFFECTING);                    
+                    else if(this.selectedCard instanceof Spell){  
+                        this.playedSpell(this.selectedCard);                      
+                        ((Spell) this.selectedCard).takeEffect(this.currentPlayer,null);
+                        
+                    }
+                    this.stateChange(Const.STATE_EFFECTING);
+                    this.reset();                    
                 }  
             }
         }   
@@ -152,7 +169,7 @@ public class Game implements EventListener{
                 this.clickedAttackedAlly = ((EventMinionClicked) event).getIsAlly();
                 boolean canAttacked = false;
                 if(!this.clickedAttackedAlly){
-                    Minion attacked = this.currentPlayer.getEnemy().get(this.clickedAttackerIndex);
+                    Minion attacked = this.currentPlayer.getEnemy().get(this.clickedAttackedIndex);
                     canAttacked = attacked.canAttacked();                    
                 }
                 if(canAttacked) this.stateChange(Const.STATE_VALID_ATTACKED); 
@@ -164,13 +181,18 @@ public class Game implements EventListener{
                 this.selectedMinion = (this.clickedMinionAlly)? 
                     this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
                     this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
-                if(this.selectedCard instanceof BattleCry)
-                    ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);
-                else if(this.selectedCard instanceof Spell)
-                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion);
-                this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1); 
-                this.currentPlayer.throwCard(this.clickedCardIndex);
+                this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
+                if(this.selectedCard instanceof BattleCry){
+                    ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                    this.playedMinion(this.selectedCard);
+                    ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);                    
+                }
+                else if(this.selectedCard instanceof Spell){
+                    this.playedSpell(this.selectedCard);                    
+                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion);                    
+                }
                 this.stateChange(Const.STATE_EFFECTING);
+                this.reset();
             }
             else if(this.isState(Const.STATE_VALID_ATTACKER)){
                 this.selectedAttacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);                
@@ -180,6 +202,7 @@ public class Game implements EventListener{
                 this.selectedAttacked = this.currentPlayer.getEnemy().get(this.clickedAttackedIndex);     
                 this.selectedAttacker.attack(this.selectedAttacked);  
                 this.stateChange(Const.STATE_ATTACKING);
+                this.reset();
             }
         } 
         else if(event instanceof EventCardEffected){
@@ -187,7 +210,7 @@ public class Game implements EventListener{
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if(winner > 0){
-                    this.eventManager.post(new EventGameEnd());
+                    this.eventManager.post(new EventGameEnd(winner - 1));
                     this.stateChange(Const.STATE_GAME_END);  
                 }
                 else 
@@ -199,7 +222,7 @@ public class Game implements EventListener{
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if(winner > 0){
-                    this.eventManager.post(new EventGameEnd());
+                    this.eventManager.post(new EventGameEnd(winner - 1));
                     this.stateChange(Const.STATE_GAME_END);  
                 }
                 else
@@ -210,7 +233,7 @@ public class Game implements EventListener{
             this.checkDeadStatus();
             this.currentPlayer.printPlayerStatus();
             if(winner > 0){
-                this.eventManager.post(new EventGameEnd());
+                this.eventManager.post(new EventGameEnd(winner - 1));
                 this.stateChange(Const.STATE_GAME_END);  
             }            
         }              
@@ -232,12 +255,12 @@ public class Game implements EventListener{
     private void initialize(){
         this.deckLoader = new DeckLoader();
         this.players = new ArrayList<Player>();
-        this.players.add(new Player("player0", this, true));
-        this.players.add(new Player("player1", this, false));
+        this.players.add(new Player("PLAYER1", this, true));
+        this.players.add(new Player("PLAYER2", this, false));
         for(int i = 0; i < 2; i++){
             this.players.get(i).setOpponent(this.players.get((i + 1) % 2));  
             ArrayList<Card> deck = this.deckLoader.loadDeck0();
-            Collections.shuffle(deck,new Random());
+            //Collections.shuffle(deck,new Random());
             this.players.get(i).setDeck(deck);
         }      
         this.currentPlayer = this.players.get(0);
@@ -277,6 +300,15 @@ public class Game implements EventListener{
             return candidates.contains(target);
         }
         else return false;
+    }
+    private void playedMinion(Card card){                  
+        this.currentPlayer.addAlly((Minion) card);
+        this.currentPlayer.throwCard(this.clickedCardIndex);
+        this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1);
+    }
+    private void playedSpell(Card card){        
+        this.currentPlayer.throwCard(this.clickedCardIndex);
+        this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1);
     }
 
     private void checkDeadStatus(){

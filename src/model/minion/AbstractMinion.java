@@ -15,7 +15,7 @@ public abstract class AbstractMinion implements Minion, Card{
     protected boolean alive = true;
     protected Player master;
     protected int aliveTime = 0;
-    protected boolean devineShield = false;
+    protected boolean divineShield;
 
     //card property
     protected int cost;
@@ -33,7 +33,8 @@ public abstract class AbstractMinion implements Minion, Card{
         this.buffHP = baseHP;
         this.baseATK = baseATK;
         this.ATK = baseATK;
-        this.attackLimit = 1;      
+        this.attackLimit = (this instanceof WindFury)? 2 : 1;   
+        this.divineShield = (this instanceof DivineShield)? true : false;   
     }
 
     //card
@@ -84,16 +85,16 @@ public abstract class AbstractMinion implements Minion, Card{
 
     @Override
     public void setHP(int HP){
-        //Heal
-        
+        //Heal        
         if(this.HP < HP){
             System.out.printf("%s +%d HP.\n",this.name,HP-this.HP);
             this.HP = Math.min(HP, this.buffHP);    
         }
+        //damage
         else if(this.HP > HP){
-            if(this.devineShield){
-                System.out.printf("%s deny damage by shield.\n",this.name);
-                this.devineShield = false;
+            if(this.divineShield){
+                System.out.printf("%s deny damage by DivineShield.\n",this.name);
+                this.divineShield = false;
             }
             else{
                 System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
@@ -101,6 +102,11 @@ public abstract class AbstractMinion implements Minion, Card{
             }
         }    
 
+    }
+    
+    @Override
+    public void reWriteHP(int HP){
+        this.HP = HP;
     }
 
     @Override
@@ -184,6 +190,8 @@ public abstract class AbstractMinion implements Minion, Card{
     public boolean canAttack(){        
         //TODO 
         //FROZEN return false;
+        if(this.ATK == 0)
+            return false;
         if(this.attackCount < this.attackLimit){
             if(this.aliveTime == 0){
                 if(this instanceof Charge)
@@ -198,8 +206,9 @@ public abstract class AbstractMinion implements Minion, Card{
 
     @Override
     public boolean canAttacked(){
-        if(this instanceof Taunt)
+        if(this instanceof Taunt){
             return true;
+        }
         for(Minion minion : this.master.getAlly()){
             if(minion instanceof Taunt) 
                 return false;
@@ -210,11 +219,14 @@ public abstract class AbstractMinion implements Minion, Card{
     @Override
     public void attack(Minion target){
         System.out.printf("%s attack %s\n",this.name,((AbstractMinion)target).getName());
-        if(this instanceof Poisonous)
+        if(this instanceof Poisonous && !(target instanceof Hero))
             target.setHP(0);
         else
             target.setHP(target.getHP() - this.getATK());
-        this.setHP(this.getHP() - target.getATK());
+        if(target instanceof Poisonous && !(this instanceof Hero))
+            this.setHP(0);
+        else
+            this.setHP(this.getHP() - target.getATK());        
         this.attackCount++;
     }
 

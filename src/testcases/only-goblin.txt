@@ -2,6 +2,7 @@ c c 0
 s
 n
 e
+
 c c 0
 s
 n
@@ -11,3 +12,14 @@ c c 0
 s
 n
 e
+
+c c 0
+s
+n
+e
+
+c m 0 1
+s
+c m 1 0
+s
+n

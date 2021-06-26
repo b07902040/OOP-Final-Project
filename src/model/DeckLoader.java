@@ -10,6 +10,8 @@ public class DeckLoader{
         ArrayList<Card> deck = new ArrayList<Card>();
         for(int i = 0; i < 5; i++){
             deck.add(new Goblin());
+            deck.add(new VanCleef());
+            deck.add(new UldmanKeeper());
         }
         return deck;
     }
