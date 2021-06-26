@@ -103,6 +103,10 @@ public class GameInfo implements EventListener{
         return this.mana[id];
     }
 
+    public List<Card> getHandCards(){
+        return this.handCards;
+    }
+
     public int getHandSize(int id){
         return this.handSize[id];
     }
