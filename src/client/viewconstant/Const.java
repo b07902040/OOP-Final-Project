@@ -16,6 +16,9 @@ public class Const {
     public static final int MANA_Y = 815;
     public static final int MANA_SIZE = 30;
     public static final int MANA_GAP = 4;
+    public static final int MANA_FONT_SIZE = 26;
+    public static final int MANA_FONT_Y = 840;
+    public static final int MAX_MANA = 10;
 
     public static final int HANDCARD_GAP = 30;
     public static final int CARD_W = 60;
