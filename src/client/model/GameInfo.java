@@ -85,7 +85,47 @@ public class GameInfo implements EventListener{
             if(id == this.playerId)
                 this.handCards.add(card);
         }         
-    }    
+    }
+
+    public int getState(){
+        return this.state;
+    }
+
+    public int getPlayerId(){
+        return this.playerId;
+    }
+
+    public int getFullMana(int id){
+        return this.fullMana[id];
+    }
+
+    public int getMana(int id){
+        return this.mana[id];
+    }
+
+    public int getHandSize(int id){
+        return this.handSize[id];
+    }
+
+    public int getDeckSize(int id){
+        return this.deckSize[id];
+    }
+    
+    public List<Minion> getAlly(){
+        return this.ally;
+    }
+
+    public List<Minion> getEnemy(){
+        return this.enemy;
+    }
+
+    public Minion getHero(){
+        return this.hero;
+    }
+
+    public Minion getOpponentHero(){
+        return this.opponentHero;
+    }
     /*
     public void checkChange(boolean ally, int index, Minion minion){
         int playerId;
