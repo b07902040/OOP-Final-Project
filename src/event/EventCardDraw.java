@@ -2,17 +2,17 @@ package src.event;
 import src.model.Card;
 
 public class EventCardDraw implements Event{
+
+    //to deck
     private String name = "EventCardDraw";
     private int playerId;
     private boolean fatigue;
     private boolean full;
-    private Card card;
 
-    public EventCardDraw(int playerId, boolean fatigue, boolean full, Card card){
+    public EventCardDraw(int playerId, boolean fatigue, boolean full){
         this.playerId = playerId;
         this.fatigue = fatigue;
         this.full = full;
-        this.card =card;
     }
 
     public boolean getFatigue(){
@@ -26,11 +26,6 @@ public class EventCardDraw implements Event{
     public int getPlayerId(){
         return this.playerId;
     }
-
-    public Card getCard(){
-        return this.card;
-    }
-
 
     @Override
     public String getName(){
