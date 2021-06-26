@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import src.model.Minion;
+import src.model.Card;
 import src.model.minion.*;
 //import src.model.spell.*;
 import src.event.*;
@@ -35,13 +36,13 @@ public class GameInfo implements EventListener{
     @Override
     public void notify(Event event) {
         if(event instanceof EventClientInitalize){            
-            this.initialize(((EventClientInitalize) event).getClientId);
+            this.initialize(((EventClientInitalize) event).getClientId());
         }
         else if(event instanceof EventStateChange){
             this.state = ((EventStateChange) event).getState();
         }
         else if(event instanceof EventCardDraw){
-            EventCardDraw e = (EventCardDraw) event
+            EventCardDraw e = (EventCardDraw) event;
             this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull(), e.getCard());
         }
         else if(event instanceof EventTurnStart){
@@ -49,23 +50,23 @@ public class GameInfo implements EventListener{
         }
         else if (event instanceof EventMinionChange){            
             EventMinionChange e = (EventMinionChange) event;
-            this.checkChange(e.getAlly(), e.getIndex(), e.getMinion());
+            //this.checkChange(e.getAlly(), e.getIndex(), e.getMinion());
         }     
     }
     private void initialize(int id){
         this.myTurn = (id == 0)? false : true;
         this.playerId = id;
-        this.mana = {0, 0};
-        this.fullMana = {0, 0};
+        this.mana = new int[] {0, 0};
+        this.fullMana = new int[] {0, 0};
         this.turn = 0;
-        this.deckSize = {Const.DECK_SIZE, Const.DECK_SIZE};
-        this.handSize = {0, 0};
+        this.deckSize = new int[] {Const.DECK_SIZE, Const.DECK_SIZE};
+        this.handSize = new int[] {0, 0};
         
     }
 
     private void turnStart(){
-        this.myturn = !this.myTurn;
-        if(this.myturn){
+        this.myTurn = !this.myTurn;
+        if(this.myTurn){
             this.fullMana[this.playerId] = Math.min(this.fullMana[this.playerId] + 1, Const.MAX_MANA);
             this.mana[this.playerId] = this.fullMana[this.playerId];
             if(this.playerId == 0) 
@@ -85,10 +86,10 @@ public class GameInfo implements EventListener{
                 this.handCards.add(card);
         }         
     }    
-
+    /*
     public void checkChange(boolean ally, int index, Minion minion){
         int playerId;
-        if(this.myturn) 
+        if(this.myTurn) 
             playerId = (ally)? this.playerId : ((this.playerId + 1) % 2);
         else
             playerId = (ally)? ((this.playerId + 1) % 2) : this.playerId ; 
@@ -107,6 +108,6 @@ public class GameInfo implements EventListener{
         }       
         this.minions.get(index) = minon;
     }
-
+    */
 
 }
