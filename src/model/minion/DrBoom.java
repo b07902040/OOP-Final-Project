@@ -8,7 +8,6 @@ public class DrBoom extends AbstractMinion implements Card, Minion, BattleCry{
     private static int baseCost = 7;
     private static int baseATK = 7;
     private static int baseHP = 7;
-   
 
     public DrBoom (){
         super(DrBoom.name, DrBoom.description, DrBoom.baseCost,

@@ -26,7 +26,7 @@ public class GameInfo implements EventListener{
     
     private int turn;
     private float timer;
-    
+    /*
     private int clickedCardIndex = -1;
     private int clickedMinionIndex = -1;
     private boolean clickedMinionAlly = false;
@@ -34,7 +34,7 @@ public class GameInfo implements EventListener{
     private boolean clickedAttackerAlly = false;
     private int clickedAttackedIndex = -1;
     private boolean clickedAttackedAlly = false;   
-    
+    */
     public GameInfo(EventManager eventManager){
         this.eventManager = eventManager;
         this.eventManager.register(this);
@@ -48,18 +48,31 @@ public class GameInfo implements EventListener{
         else if(event instanceof EventStateChange){
             this.state = ((EventStateChange) event).getState();
         }
-        else if(event instanceof EventCardDraw){
-            EventCardDraw e = (EventCardDraw) event;
-            this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull());
-        }
         else if(event instanceof EventTurnStart){
             this.turnStart();
         }
+        else if(event instanceof EventCardDraw){
+            EventCardDraw e = (EventCardDraw) event;
+            this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull());
+        }        
+        else if (event instanceof EventManaChange){ 
+            EventManaChange e = (EventManaChange) event; 
+            this.manaChange(e.getPlayerId(), e.getMana(), e.getFullMana());
+        }
+        else if (event instanceof EventHandCardChange){ 
+            EventHandCardChange e = (EventHandCardChange) event;  
+            this.handCardChange(e.getPlayerId(), e.getIndex(), e.getCard());
+        }
+        else if (event instanceof EventBoardChange){ 
+            EventBoardChange e = (EventBoardChange) event; 
+            this.boardChange(e.getPlayerId(), e.getIndex(), e.getMinion());
+        }
         else if (event instanceof EventMinionChange){            
             EventMinionChange e = (EventMinionChange) event;
-            //this.checkChange(e.getAlly(), e.getIndex(), e.getMinion());
-        }     
+            this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
+        }    
     }
+    
     private void initialize(int id){
         this.myTurn = (id == 0)? false : true;
         this.playerId = id;
@@ -73,21 +86,18 @@ public class GameInfo implements EventListener{
 
     private void turnStart(){
         this.myTurn = !this.myTurn;
-        if(this.myTurn){
-            this.fullMana[this.playerId] = Math.min(this.fullMana[this.playerId] + 1, Const.MAX_MANA);
-            this.mana[this.playerId] = this.fullMana[this.playerId];
+        if(this.myTurn)
             if(this.playerId == 0) 
-                this.turn++;
-        }
+                this.turn++;        
     }
     
     private void cardDraw(int id, boolean fatigue, boolean full){
         if(fatigue) return;
         if(full)
             this.deckSize[id]--;        
-        else{
+        else
             this.deckSize[id]--;
-        }         
+                
     }
 
     public int getState(){
@@ -133,19 +143,31 @@ public class GameInfo implements EventListener{
     public Minion getOpponentHero(){
         return this.opponentHero;
     }
-    /*
-    public void checkChange(boolean ally, int index, Minion minion){
-        int playerId;
-        if(this.myTurn) 
-            playerId = (ally)? this.playerId : ((this.playerId + 1) % 2);
-        else
-            playerId = (ally)? ((this.playerId + 1) % 2) : this.playerId ; 
-        List<Minion> minions; 
-        if(this.myTurn)
-            minions = (ally)? this.ally : this.enemy;
-        else
-            minions = (ally)? this.enemy : this.ally;  
 
+    public void manaChange(int playerId, int mana, int fullMana){
+        this.mana[playerId] = mana;
+        this.fullMana[playerId] = fullMana;
+    }
+
+    public void handCardChange(int playerId, int index, Card card){
+        if(playerId == this.playerId){            
+            if(card == null)
+                this.handCards.remove(index);                
+            else
+                this.handCards.add(card);
+            this.handSize[playerId] = this.handCards.size();
+        }
+        else{
+            if(card == null)
+                this.handSize[playerId]--;                
+            else
+                this.handSize[playerId]++;
+        }        
+    }
+    
+    public void minionChange(int playerId, int index, Minion minion){
+        List<Minion> minions; 
+        minions = (playerId == this.playerId)? this.ally : this.enemy;
         if(minions.get(index).getAlive() != minion.getAlive())
             this.eventManager.post(new EventMinionDestroy(playerId, index));
         else{
@@ -153,8 +175,16 @@ public class GameInfo implements EventListener{
             if(hpDiff != 0)
                 this.eventManager.post(new EventMinionChangeHP(playerId, index, hpDiff));
         }       
-        this.minions.get(index) = minon;
+        minions.set(index, minion);
     }
-    */
+    
+    public void boardChange(int playerId, int index, Minion minion){
+        List<Minion> minions; 
+        minions = (playerId == this.playerId)? this.ally : this.enemy;
+        if(minion == null)
+            minions.remove(index);
+        else
+            minions.add(index, minion);        
+    }
 
 }

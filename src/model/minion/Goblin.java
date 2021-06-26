@@ -9,7 +9,6 @@ public class Goblin extends AbstractMinion implements Card, Minion, DeathRattle{
     private static int baseATK = 1;
     private static int baseHP = 1;
     
-
     public Goblin (){
         super(Goblin.name, Goblin.description, Goblin.baseCost,
                  Goblin.baseHP, Goblin.baseATK);    

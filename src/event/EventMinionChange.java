@@ -13,7 +13,7 @@ public class EventMinionChange implements Event{
         this.minion = minion;
     }
     
-    public int getplayerId(){
+    public int getPlayerId(){
         return this.playerId;
     }
 

@@ -11,7 +11,6 @@ public class LightRagnaros extends AbstractMinion implements Card, Minion{
     private static int baseATK = 8;
     private static int baseHP = 8;
    
-
     public LightRagnaros (){
         super(LightRagnaros.name, LightRagnaros.description, LightRagnaros.baseCost,
                  LightRagnaros.baseHP, LightRagnaros.baseATK);    

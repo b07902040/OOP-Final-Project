@@ -11,7 +11,5 @@ public class Hero extends AbstractMinion implements Card, Minion{
     
     public Hero(){
         super(Hero.name, Hero.description, Hero.baseCost, Hero.baseHP, Hero.baseATK); 
-    }
-
-    
+    } 
 }

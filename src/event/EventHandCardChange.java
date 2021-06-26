@@ -19,7 +19,7 @@ public class EventHandCardChange implements Event{
         this.card = card;
     }
     
-    public int getplayerId(){
+    public int getPlayerId(){
         return this.playerId;
     }
 

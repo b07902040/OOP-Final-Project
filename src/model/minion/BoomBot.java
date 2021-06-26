@@ -10,13 +10,11 @@ public class BoomBot extends AbstractMinion implements Card, Minion, DeathRattle
     private static int baseATK = 1;
     private static int baseHP = 1;
    
-
     public BoomBot (){
         super(BoomBot.name, BoomBot.description, BoomBot.baseCost,
                  BoomBot.baseHP, BoomBot.baseATK);    
     }
 
-    
     @Override
     public void doDeathRattleEffect(){
         List<Minion> enemy = this.master.getEnemy();

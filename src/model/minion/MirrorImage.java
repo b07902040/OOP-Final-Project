@@ -9,12 +9,9 @@ public class MirrorImage extends AbstractMinion implements Card, Minion, Taunt{
     private static int baseATK = 0;
     private static int baseHP = 2;
     
-
     public MirrorImage (){
         super(MirrorImage.name, MirrorImage.description, MirrorImage.baseCost,
                  MirrorImage.baseHP, MirrorImage.baseATK);   
                  
-    }
-
-    
+    } 
 }

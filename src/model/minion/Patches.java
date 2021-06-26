@@ -9,10 +9,9 @@ public class Patches extends AbstractMinion implements Card, Minion, Charge{
     private static int baseATK = 2;
     private static int baseHP = 2;
    
-
     public Patches (){
         super(Patches.name, Patches.description, Patches.baseCost,
                  Patches.baseHP, Patches.baseATK);    
     }
-    
+   
 }

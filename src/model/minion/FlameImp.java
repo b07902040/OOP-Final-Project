@@ -9,7 +9,6 @@ public class FlameImp extends AbstractMinion implements Card, Minion, BattleCry{
     private static int baseATK = 3;
     private static int baseHP = 2;
    
-
     public FlameImp (){
         super(FlameImp.name, FlameImp.description, FlameImp.baseCost,
                  FlameImp.baseHP, FlameImp.baseATK);    

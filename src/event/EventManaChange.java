@@ -12,7 +12,7 @@ public class EventManaChange implements Event{
         this.fullMana = fullMana;
     }
 
-    public int getplayerId(){
+    public int getPlayerId(){
         return this.playerId;
     }
     
