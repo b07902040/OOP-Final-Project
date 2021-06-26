@@ -51,6 +51,7 @@ public class View implements EventListener{
         this.painters = new ArrayList<Painter>();
 
         painters.add(new BoardPainter());
+        painters.add(new ManaPainter());
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
