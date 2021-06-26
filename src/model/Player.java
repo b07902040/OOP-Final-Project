@@ -111,18 +111,6 @@ public class Player{
         return this.ally;
     }
 
-    public void addAlly(Minion minion){
-        if(this.ally.size() >= Const.BOARD_SPACE + 1){
-            System.out.printf("Board is full, can't add ally.");
-            return;
-        }
-        minion.setMaster(this);
-        minion.setPlayedOrder(this.game.getMinionSummoned());     
-        this.ally.add(minion);     
-        System.out.printf("%s add %s to ally.\n", this.name, ((Card) minion).getName());  
-        this.game.addMinionSummoned();
-    }
-
     public void summonAlly(Minion minion, int index){
         if(this.ally.size() >= Const.BOARD_SPACE + 1){
             System.out.printf("Board is full, can't summon ally.\n");

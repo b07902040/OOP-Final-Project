@@ -302,7 +302,7 @@ public class Game implements EventListener{
         else return false;
     }
     private void playedMinion(Card card){                  
-        this.currentPlayer.addAlly((Minion) card);
+        this.currentPlayer.summonAlly((Minion) card, this.currentPlayer.getAlly().size());
         this.currentPlayer.throwCard(this.clickedCardIndex);
         this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1);
     }
