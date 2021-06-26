@@ -25,8 +25,10 @@ public class Player{
     private Game game;
     private Minion hero;
     private boolean firstPlayer;
+
     public Player(String name, Game game, boolean firstPlayer){         
         this.firstPlayer = firstPlayer;
+        this.playerId = firstPlayer? 0 : 1;
         this.name = name;
         this.game = game;
         this.handCards = new ArrayList<Card>();
@@ -36,10 +38,17 @@ public class Player{
         this.ally.add(this.hero);
     }
 
- 
+    public Game getGame(){
+        return this.game;
+    }
+
     public boolean getFirstPlayer(){
         return this.firstPlayer;
     } 
+
+    public int getPlayerId(){
+        return this.playerId;
+    }
 
     public String getName(){
         return this.name;
@@ -56,10 +65,12 @@ public class Player{
     public void setMana(int mana){
         System.out.printf("%s %d mana.\n", this.name, mana - this.mana);
         this.mana = mana;
+        this.game.manaChange(this.playerId, this.mana, this.fullMana);
     }
 
     public void fillMana(){
         this.mana = this.fullMana;
+        this.game.manaChange(this.playerId, this.mana, this.fullMana);
     }
 
     public int getFullMana(){
@@ -68,6 +79,7 @@ public class Player{
 
     public void setFullMana(int fullMana){
         this.fullMana = fullMana;
+        this.game.manaChange(this.playerId, this.mana, this.fullMana);
     }
 
     public int getCardPlayed(){
@@ -105,8 +117,15 @@ public class Player{
 
     public void addHandCards(Card card){
         this.handCards.add(card);
+        this.game.handCardAdd(this.playerId, card);
     }
 
+    public void throwCard(int index){    
+        this.handCards.remove(index);
+        this.game.handCardRemove(this.playerId, index);
+        this.printPlayerStatus();
+    }
+    
     public List<Minion> getAlly(){
         return this.ally;
     }
@@ -120,7 +139,7 @@ public class Player{
         minion.setPlayedOrder(this.game.getMinionSummoned());     
         this.ally.add(index, minion);     
         System.out.printf("%s summon %s to ally.\n", this.name, ((Card) minion).getName());  
-        this.game.addMinionSummoned();
+        this.game.boardAdd(this.playerId, index, minion);
     }
 
     public void removeAlly(Minion minion){
@@ -132,34 +151,27 @@ public class Player{
     }
 
     public void drawCards(int cardNum) {
-        int playerId = (this.firstPlayer)? 0 : 1;
         for(int i = 0; i < cardNum; i++){
             if(this.deck.size() > 0){        
                 Card newCard = this.deck.get(0);
                 this.deck.remove(0);
                 if(this.handCards.size() < Const.MAX_HAND_SIZE){
                     System.out.printf("%s draws %s.\n",this.name, newCard.getName());
-                    this.addHandCards(newCard);
-                    this.game.cardDrew(playerId, false, false);                    
+                    this.game.cardDrew(this.playerId, false, false);
+                    this.addHandCards(newCard);                 
                 }
                 else{                    
                     System.out.printf("!!!!!!%s draws %s BOOM!!!!!!!\n",this.name, newCard.getName()); 
-                    this.game.cardDrew(playerId, false, true);   
+                    this.game.cardDrew(this.playerId, false, true);   
                 }
             }
             else{ 
                 System.out.printf("!!!!!!%s draws fatigue!!!!!!\n", this.name);
                 this.hero.setHP(this.hero.getHP() - this.fatigueDamge);
                 this.fatigueDamge += 1;  
-                this.game.cardDrew(playerId, true, false);              
+                this.game.cardDrew(this.playerId, true, false);              
             }
         }
-    }
-
-    public void throwCard(int index){    
-        this.handCards.remove(index);
-        this.game.handCardRemove(this.playerId, index);
-        this.printPlayerStatus();
     }
 
     public boolean checkValidCard(int index){

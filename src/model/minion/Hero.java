@@ -9,8 +9,6 @@ public class Hero extends AbstractMinion implements Card, Minion{
     static private int baseATK = 0;
     static private int baseHP = Const.HERO_HP;
     
-
-
     public Hero(){
         super(Hero.name, Hero.description, Hero.baseCost, Hero.baseHP, Hero.baseATK); 
     }

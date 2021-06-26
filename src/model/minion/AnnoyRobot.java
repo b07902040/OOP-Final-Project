@@ -33,7 +33,7 @@ public class AnnoyRobot extends AbstractMinion implements Card, Minion, DivineSh
                 this.HP = HP;    
             }
         }    
-
+        this.minionChange();
     }
 
     

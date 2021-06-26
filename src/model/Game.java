@@ -247,7 +247,6 @@ public class Game implements EventListener{
         }
     }
     
-    
     public boolean isState(int state){
         return (this.state.peek() == state);
     }
@@ -286,17 +285,9 @@ public class Game implements EventListener{
         this.currentPlayer.printPlayerStatus();
         this.timer = 0;
     }
-    
-    public void cardDrew(int playerId, boolean fatigue, boolean full){
-        this.eventManager.post(new EventCardDraw(playerId, fatigue, full));
-    }
 
-    public void handCardAdd(int playerId, Card card){
-        this.eventManager.post(new EventHandCardChange(playerId, card));
-    }
-
-    public void handCardRemove(int playerId, int index){
-        this.eventManager.post(new EventHandCardChange(playerId, index));
+    public int getMinionSummoned(){
+        return this.minionSummoned;
     }
 
     private boolean checkValidMinion(){
@@ -311,8 +302,6 @@ public class Game implements EventListener{
     }
 
     private void playedMinion(Card card){ 
-        //TODO
-        //post boardchange  
         this.currentPlayer.throwCard(this.clickedCardIndex);             
         this.currentPlayer.summonAlly((Minion) card, this.currentPlayer.getAlly().size());        
         this.currentPlayer.setCardPlayed(this.currentPlayer.getCardPlayed() + 1);
@@ -332,8 +321,7 @@ public class Game implements EventListener{
                 if(!minion.isAlive()){
                     deadMinions.add(minion);
                     player.removeAlly(minion);
-                    //TODO
-                    //post boardchange
+                    this.boardRemove(player.getPlayerId(), i);
                 }
             }
         }
@@ -398,29 +386,46 @@ public class Game implements EventListener{
         this.clickedAttackedAlly = false;
         this.selectedAttacker = null;
         this.selectedAttacked = null;
-    }
-
-    public int getMinionSummoned(){
-        return this.minionSummoned;
-    }
-
-    public void addMinionSummoned(){
-        this.minionSummoned++;
     } 
 
     public void stateChange(int state){
         this.state.push(state); 
         this.eventManager.post(new EventStateChange(state));
     }
+    public void cardDrew(int playerId, boolean fatigue, boolean full){
+        this.eventManager.post(new EventCardDraw(playerId, fatigue, full));
+    }
 
+    public void handCardAdd(int playerId, Card card){
+        this.eventManager.post(new EventHandCardChange(playerId, card));
+    }
+
+    public void handCardRemove(int playerId, int index){
+        this.eventManager.post(new EventHandCardChange(playerId, index));
+    }
+
+    public void manaChange(int playerId, int mana, int fullMana){
+        this.eventManager.post(new EventManaChange(playerId, mana, fullMana));
+    }
+
+    public void boardRemove(int playerId, int index){
+        this.eventManager.post(new EventBoardChange(playerId, index));
+    }   
+
+    public void boardAdd(int playerId, int index, Minion minion){
+        this.minionSummoned++;
+        this.eventManager.post(new EventBoardChange(playerId, index, minion));
+    }
+    
     public void minionChange(int playerId, int id, Minion minion){
         this.eventManager.post(new EventMinionChange(playerId, id, minion));
     }
-
+    
     public static int getRandom(int range){
         return ((int) (Math.random() * range + 1));
     }
 }   
+
 class CompareByPlayedOrder implements Comparator<Minion>{
     
     @Override

@@ -7,7 +7,6 @@ public class EventHandCardChange implements Event{
     private int playerId;
     private int index;
     private Card card;
-    //FATIGUE DONT SEND
     //REMOVE
     public EventHandCardChange(int playerId, int index){
         this.playerId = playerId;

@@ -50,6 +50,7 @@ public abstract class AbstractMinion implements Minion, Card{
     public void setCost(int cost){
         this.cost = cost;
     }
+
     @Override
     public int getBaseCost(){
         return this.baseCost;
@@ -93,6 +94,8 @@ public abstract class AbstractMinion implements Minion, Card{
                 System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
                 this.HP = HP;     
         }   
+        int index = this.master.getAlly().indexOf(this);
+        this.minionChange();
     }
     
     @Override
@@ -122,7 +125,8 @@ public abstract class AbstractMinion implements Minion, Card{
 
     @Override
     public void setATK(int ATK){
-        this.ATK = ATK;
+        this.ATK = ATK;        
+        this.minionChange();
     }
 
     @Override
@@ -233,4 +237,11 @@ public abstract class AbstractMinion implements Minion, Card{
     public void doTurnEnd(){
         return;
     }
+
+    @Override
+    public void minionChange(){
+        int index = this.master.getAlly().indexOf(this);
+        this.master.getGame().minionChange(this.master.getPlayerId(), index, this);
+    }
+
 }

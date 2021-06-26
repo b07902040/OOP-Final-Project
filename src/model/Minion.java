@@ -55,4 +55,5 @@ public interface Minion {
     
     void doTurnEnd();
 
+    void minionChange();
 }

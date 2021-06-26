@@ -7,12 +7,13 @@ public class EventBoardChange implements Event{
     private int index;
     private Minion minion;
 
+    //remove
     public EventBoardChange(int playerId, int index){
         this.playerId = playerId;
         this.index = index;
         this.minion = null;
     }
-
+    //summon
     public EventBoardChange(int playerId, int index, Minion minion){
         this.playerId = playerId;
         this.index = index;

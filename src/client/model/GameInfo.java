@@ -33,11 +33,9 @@ public class GameInfo implements EventListener{
     private int clickedAttackerIndex = -1;
     private boolean clickedAttackerAlly = false;
     private int clickedAttackedIndex = -1;
-    private boolean clickedAttackedAlly = false;
-    
+    private boolean clickedAttackedAlly = false;   
     
     public GameInfo(EventManager eventManager){
-
         this.eventManager = eventManager;
         this.eventManager.register(this);
     }
@@ -81,7 +79,6 @@ public class GameInfo implements EventListener{
             if(this.playerId == 0) 
                 this.turn++;
         }
-        
     }
     
     private void cardDraw(int id, boolean fatigue, boolean full){
@@ -90,7 +87,6 @@ public class GameInfo implements EventListener{
             this.deckSize[id]--;        
         else{
             this.deckSize[id]--;
-            this.handSize[id]++;
         }         
     }
 
