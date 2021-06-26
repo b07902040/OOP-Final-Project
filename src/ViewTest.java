@@ -12,6 +12,8 @@ public class ViewTest {
         EventManager eventManager = new EventManager();
         GameInfo game = new GameInfo(eventManager);
         eventManager.post(new EventClientInitalize(0));
+        for (int i = 0; i < 30; i++)
+            eventManager.post(new EventTurnStart());
         Controller controller = new Controller(eventManager, game);
       	View view = new View(eventManager, game, controller);
         
