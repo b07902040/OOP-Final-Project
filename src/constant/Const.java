@@ -31,5 +31,5 @@ public class Const{
     public static final int PLAYER_DRAW= 3;
 
     //FOR TESTING
-    public static final int INIT_MANA = 1;
+    public static final int INIT_MANA = 10;
 }

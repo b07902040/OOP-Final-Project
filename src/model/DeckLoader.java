@@ -13,7 +13,8 @@ public class DeckLoader{
             deck.add(new DrBoom());
             deck.add(new TheCoin());
             deck.add(new SoulFire());
-            deck.add(new Goblin());
+            deck.add(new HellFire());
+            deck.add(new Intellect());
         }
         return deck;
     }

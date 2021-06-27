@@ -10,6 +10,7 @@ import java.awt.Font;
 public class ShowCardPainter implements Painter {
     @Override
     public void draw(GameInfo game, BufferedImage screenImg){
+        if(!game.isMyTurn()) return;
         Graphics g = screenImg.getGraphics();
         int state = game.getState();
         Card card;
