@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Collections;
 import java.util.Comparator;
-
+import java.lang.Thread;
 
 import src.model.minion.*;
 import src.model.spell.*;
@@ -49,10 +49,14 @@ public class Game implements EventListener{
         Event e = new EventInitialize();
         this.eventManager.post(new EventInitialize());
         this.running = true;
-       /* while(this.running){
-            //this.eventManager.post(new EventEveryTick());
+        while(this.running){
+            this.eventManager.post(new EventEveryTick());
             //sleep
-        }     */
+            try{
+                Thread.sleep(50);                
+            }
+            catch (Exception e){};
+        }    
     }
 
     @Override 
@@ -248,6 +252,7 @@ public class Game implements EventListener{
             }
         }
         else if(event instanceof EventGameEnd){
+            this.running = false;
             System.out.printf("Game End!! Player %d win.\n",winner);       
         }
     }
