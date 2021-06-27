@@ -52,6 +52,7 @@ public class View implements EventListener{
         painters.add(new HandCardPainter());
         painters.add(new MinionPainter());
         painters.add(new ShowCardPainter());
+        painters.add(new MessagePainter());
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
