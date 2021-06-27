@@ -25,7 +25,8 @@ public class Const {
 
     public static final int MANA_FONT_SIZE = 26;
     public static final int HANDCARD_NAME_FONT_SIZE = 10;
-    public static final int SHOWEDCARD_NAME_FONT_SIZE = 26;
+    public static final int SHOWEDCARD_NAME_FONT_SIZE = 20;
+    public static final int MESSAGE_FONT_SIZE = 26;
 
     public static final int HANDCARD_GAP = 15;
     public static final int MINION_GAP = 15;
@@ -41,6 +42,10 @@ public class Const {
 
     public static final double CARD_NAME_Y_RATIO = 0.6;
     public static final double CARD_NAME_X_RATIO = 0.15;
+
+    public static final int MESSAGE_X = 950;
+    public static final int MESSAGE_Y = 800;
+
     //Path
     public static final String BACKGROUND_IMG_PATH = "image/background.png";
     public static final String BAR_IMG_PATH = "image/bar.png";
