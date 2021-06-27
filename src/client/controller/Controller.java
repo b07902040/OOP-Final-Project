@@ -225,6 +225,12 @@ public class Controller extends MouseAdapter implements EventListener {
     }
 
     private int position2MinionIndex(int x, int y){
+        // my hero
+        if((x >= Const.HERO[0]) && (x < Const.HERO[0] + Const.HERO[2]) && (y >= Const.HERO[1]) && (y < Const.HERO[1] + Const.HERO[3]))
+            return 0;
+        // oponent hero
+        if((x >= Const.OP_HERO[0]) && (x < Const.OP_HERO[0] + Const.OP_HERO[2]) && (y >= Const.OP_HERO[1]) && (y < Const.OP_HERO[1] + Const.OP_HERO[3]))
+            return 0;
         // on my side
         if(y >= Const.BOARD_REGION[1] && y < Const.BOARD_REGION[1] + Const.BOARD_REGION[3]){
             int boardSize = this.model.getAlly().size() - 1;
@@ -254,6 +260,12 @@ public class Controller extends MouseAdapter implements EventListener {
     }
 
     private int position2MinionPlayerId(int x, int y){
+        // my hero
+        if((x >= Const.HERO[0]) && (x < Const.HERO[0] + Const.HERO[2]) && (y >= Const.HERO[1]) && (y < Const.HERO[1] + Const.HERO[3]))
+            return this.model.getPlayerId();
+        // oponent hero
+        if((x >= Const.OP_HERO[0]) && (x < Const.OP_HERO[0] + Const.OP_HERO[2]) && (y >= Const.OP_HERO[1]) && (y < Const.OP_HERO[1] + Const.OP_HERO[3]))
+            return 1 - this.model.getPlayerId();
         if(y >= Const.BOARD_REGION[1] && y < Const.BOARD_REGION[1] + Const.BOARD_REGION[3]){
             int boardSize = this.model.getAlly().size() - 1;
             int boardLX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (boardSize-1)*Const.MINION_GAP - boardSize*Const.MINION_W)/2;

@@ -53,6 +53,7 @@ public class View implements EventListener{
         painters.add(new ManaPainter());
         painters.add(new HandCardPainter());
         painters.add(new MinionPainter());
+        painters.add(new HeroPainter());
         painters.add(new ShowCardPainter());
         painters.add(new MessagePainter());
 

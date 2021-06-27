@@ -17,6 +17,8 @@ public class Const {
     public static final int[] CARD_SHOW = {50, 200, 375, 600};
     public static final int[] BOARD_REGION = {0, 520, 1200, 125};
     public static final int[] OP_BOARD_REGION = {0, 330, 1200, 125};
+    public static final int[] HERO = {525, 690, 150, 150};
+    public static final int[] OP_HERO = {525, 120, 150, 150};
     
     public static final int MANA_X = 770;
     public static final int MANA_Y = 815;
