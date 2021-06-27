@@ -139,6 +139,9 @@ public class Game implements EventListener{
                         
                     }
                     this.stateChange(Const.STATE_EFFECTING);
+                    int cardPlayerId = this.currentPlayerid;
+                    int targetPlayerId = (this.currentPlayerid + 1) % 2;
+                    this.eventManager.post(new EventAttacking(cardPlayerId, this.clickedCardIndex, targetPlayerId,this.clickedMinionIndex));
                     this.reset();                    
                 }  
             }
@@ -196,7 +199,7 @@ public class Game implements EventListener{
                     this.playedSpell(this.selectedCard);                    
                     ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion);                    
                 }
-                this.stateChange(Const.STATE_EFFECTING);
+                this.stateChange(Const.STATE_EFFECTING);                
                 this.reset();
             }
             else if(this.isState(Const.STATE_VALID_ATTACKER)){
