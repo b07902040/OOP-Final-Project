@@ -10,10 +10,11 @@ public class DeckLoader{
     public ArrayList<Card> loadDeck0(){
         ArrayList<Card> deck = new ArrayList<Card>();
         for(int i = 0; i < 5; i++){
-            deck.add(new Goblin());
-            deck.add(new Goblin());
-            deck.add(new Goblin());
-            deck.add(new Brawl());
+            deck.add(new FriedChicken());
+            deck.add(new Antonidas());
+            deck.add(new PoisonSnail());
+            deck.add(new DrBoom());
+            deck.add(new DrBoom());
         }
         return deck;
     }

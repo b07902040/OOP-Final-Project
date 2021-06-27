@@ -101,6 +101,7 @@ public abstract class AbstractMinion implements Minion, Card{
     @Override
     public void reWriteHP(int HP){
         this.HP = HP;
+        this.minionChange();
     }
 
     @Override
@@ -187,8 +188,6 @@ public abstract class AbstractMinion implements Minion, Card{
 
     @Override
     public boolean canAttack(){        
-        //TODO 
-        //FROZEN return false;
         if(this.ATK == 0)
             return false;
         if(this.attackCount < this.attackLimit){

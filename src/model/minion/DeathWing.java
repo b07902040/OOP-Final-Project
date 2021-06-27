@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class DeathWing extends AbstractMinion implements Card, Minion, BattleCry{
     
     private static String name = "DeathWing";
-    private static String description = "Battlecry: Destroy all other minions and discard your hand";
+    private static String description = "BattleCry: Destroy all other minions and discard your hand";
     private static int baseCost = 10;
     private static int baseATK = 12;
     private static int baseHP = 12;

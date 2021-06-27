@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Brawl extends AbstractSpell implements Card, Spell{
     
     private static String name = "Brawl";
-    private static String description = "Destroy all minions except one. (chosen randomly)";
+    private static String description = "Destroy all minions except one (chosen randomly)";
     private static int baseCost = 5;
 
     public Brawl(){
