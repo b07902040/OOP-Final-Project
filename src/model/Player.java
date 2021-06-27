@@ -33,7 +33,7 @@ public class Player{
         this.game = game;
         this.handCards = new ArrayList<Card>();
         this.ally = new ArrayList<Minion>();
-        this.hero = new Hero();
+        this.hero = new Hero(name);
         this.hero.setMaster(this);
         this.ally.add(this.hero);
     }

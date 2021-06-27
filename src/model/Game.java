@@ -265,8 +265,8 @@ public class Game implements EventListener{
     private void initialize(){      
         this.deckLoader = new DeckLoader();
         this.players = new ArrayList<Player>();
-        this.players.add(new Player("PLAYER1", this, true));
-        this.players.add(new Player("PLAYER2", this, false));
+        this.players.add(new Player("Jaina", this, true));
+        this.players.add(new Player("Guldan", this, false));
         for(int i = 0; i < 2; i++){
             this.players.get(i).setOpponent(this.players.get((i + 1) % 2));  
             ArrayList<Card> deck = this.deckLoader.loadDeck0();
