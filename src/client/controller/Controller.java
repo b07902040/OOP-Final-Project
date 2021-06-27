@@ -19,6 +19,8 @@ import src.model.spell.*;
 public class Controller extends MouseAdapter implements EventListener {
     private EventManager eventManager;
     private GameInfo model;
+    private int lastPressedX = -1000;
+    private int lastPressedY = -1000;
 
     public Controller(EventManager eventManager, GameInfo model) {
         this.eventManager = eventManager;
@@ -132,6 +134,8 @@ public class Controller extends MouseAdapter implements EventListener {
         /**
          * Invoked when a mouse button has been pressed on a component.
          */
+        lastPressedX = e.getX();
+        lastPressedY = e.getY();
     }
     
     @Override
@@ -139,6 +143,12 @@ public class Controller extends MouseAdapter implements EventListener {
         /**
          * Invoked when a mouse button has been released on a component.
          */
+        int x = e.getX();
+        int y = e.getY();
+        if(x == lastPressedX && y ==lastPressedY)
+            return;
+        if(Math.abs(x - lastPressedX) < Const.MOUSE_CLICK_THRESHOLD && Math.abs(y - lastPressedY) < Const.MOUSE_CLICK_THRESHOLD)
+            mouseClicked(e);
     }
     
     @Override

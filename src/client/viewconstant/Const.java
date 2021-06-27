@@ -1,6 +1,8 @@
 package src.client.viewconstant;
 
 public class Const {
+    //Controller
+    public static final int MOUSE_CLICK_THRESHOLD = 10;
     //View
     public static final int SCREEN_W = 1200;
     public static final int SCREEN_H = 1000;
@@ -42,6 +44,8 @@ public class Const {
 
     public static final double CARD_NAME_Y_RATIO = 0.6;
     public static final double CARD_NAME_X_RATIO = 0.15;
+    public static final double CARD_HEALTH_Y_RATIO = 0.95;
+
 
     public static final int MESSAGE_X = 950;
     public static final int MESSAGE_Y = 800;
