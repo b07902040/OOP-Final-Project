@@ -46,7 +46,6 @@ public class Game implements EventListener{
     }
     
     public void run(){
-        Event e = new EventInitialize();
         this.eventManager.post(new EventInitialize());
         this.running = true;
         while(this.running){
@@ -64,6 +63,7 @@ public class Game implements EventListener{
         //ADD FOR TEST
         if(event instanceof EventEveryTick) return;
         System.out.printf("Get event: %s.\n",event.getName());
+        System.out.printf("Current state: %s.\n",this.getState());
         if(event instanceof EventInitialize){            
            this.initialize();        
            this.eventManager.post(new EventGameStart());
@@ -255,6 +255,7 @@ public class Game implements EventListener{
             this.running = false;
             System.out.printf("Game End!! Player %d win.\n",winner);       
         }
+        
     }
     
     public boolean isState(int state){
@@ -430,6 +431,38 @@ public class Game implements EventListener{
     
     public static int getRandom(int range){
         return ((int) (Math.random() * range + 1));
+    }
+    private String getState(){
+        String state = "NO_STATE";
+        if(this.isState(Const.STATE_PENDING)) 
+            state ="STATE_PENDING";
+        else if(this.isState(Const.STATE_GAME_END))
+            state ="STATE_GAME_END";
+        else if(this.isState(Const.STATE_VALID_CARD))
+            state ="STATE_VALID_CARD";
+        else if(this.isState(Const.STATE_INVALID_CARD))
+            state ="STATE_INVALID_CARD";
+        else if(this.isState(Const.STATE_CARD_TARGETING))
+            state ="STATE_CARD_TARGETING";
+        else if(this.isState(Const.STATE_VALID_TARGET))
+            state ="STATE_VALID_TARGET";
+        else if(this.isState(Const.STATE_INVALID_TARGET))
+            state ="STATE_INVALID_TARGET";
+        else if(this.isState(Const.STATE_EFFECTING))
+            state ="STATE_EFFECTING";
+        else if(this.isState(Const.STATE_VALID_ATTACKER))
+            state ="STATE_VALID_ATTACKER";
+        else if(this.isState(Const.STATE_INVALID_ATTACKER))
+            state ="STATE_INVALID_ATTACKER";
+        else if(this.isState(Const.STATE_ATTACKER_TARGETING))
+            state ="STATE_ATTACKER_TARGETING";
+        else if(this.isState(Const.STATE_VALID_ATTACKED))
+            state ="STATE_VALID_ATTACKED";
+        else if(this.isState(Const.STATE_INVALID_ATTACKED))
+            state ="STATE_INVALID_ATTACKED";
+        else if(this.isState(Const.STATE_ATTACKING))
+            state ="STATE_ATTACKING";
+        return state;
     }
 }   
 

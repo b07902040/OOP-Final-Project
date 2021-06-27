@@ -7,7 +7,7 @@ public class SoulFire extends AbstractSpell implements Card, Spell, Targeting{
     
     private static String name = "SoulFire";
     private static String description = "Deal 10 damage";
-    private static int baseCost = 10;
+    private static int baseCost = 1;
 
     public SoulFire(){
         super(SoulFire.name, SoulFire.description, SoulFire.baseCost);    
