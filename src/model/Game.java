@@ -163,6 +163,7 @@ public class Game implements EventListener{
             //choose attacker
             else if(this.isState(Const.STATE_PENDING)){
                 this.clickedAttackerIndex = ((EventMinionClicked) event).getClickedIndex();
+                this.clickedPlayerId = ((EventMinionClicked) event).getPlayerId();
                 boolean canAttack = false;
                 if(((EventMinionClicked) event).getPlayerId() == this.currentPlayerid){
                     Minion attacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);
@@ -170,10 +171,12 @@ public class Game implements EventListener{
                 }
                 if(canAttack) this.stateChange(Const.STATE_VALID_ATTACKER); 
                 else this.stateChange(Const.STATE_INVALID_ATTACKER); 
+                this.eventManager.post(new EventMinionShow(this.clickedPlayerId, this.clickedAttackerIndex, canAttack));
             }
             //choose attacked
             else if(this.isState(Const.STATE_ATTACKER_TARGETING)){
                 this.clickedAttackedIndex = ((EventMinionClicked) event).getClickedIndex();
+                this.clickedPlayerId = ((EventMinionClicked) event).getPlayerId();
                 boolean canAttacked = false;
                 if(!(((EventMinionClicked) event).getPlayerId() == this.currentPlayerid)){
                     Minion attacked = this.currentPlayer.getEnemy().get(this.clickedAttackedIndex);
@@ -181,6 +184,7 @@ public class Game implements EventListener{
                 }
                 if(canAttacked) this.stateChange(Const.STATE_VALID_ATTACKED); 
                 else this.stateChange(Const.STATE_INVALID_ATTACKED); 
+                this.eventManager.post(new EventMinionShow(this.clickedPlayerId, this.clickedAttackedIndex, canAttacked));
             }
         }      
         else if(event instanceof EventMinionSelected){
@@ -196,7 +200,8 @@ public class Game implements EventListener{
                     this.playedSpell(this.selectedCard);                    
                     ((Spell) this.selectedCard).takeEffect(this.currentPlayer,this.selectedMinion);                    
                 }
-                this.stateChange(Const.STATE_EFFECTING);                
+                this.stateChange(Const.STATE_EFFECTING); 
+                this.eventManager.post(new EventEffecting(0, 0, 0, 0));                               
                 this.reset();
             }
             else if(this.isState(Const.STATE_VALID_ATTACKER)){
@@ -238,6 +243,7 @@ public class Game implements EventListener{
             }
         }   
         else if(event instanceof EventDeathRattleTriggered){
+            System.out.printf("DeathRattle!!!!!!!!\n");    
             this.checkDeadStatus();
             this.currentPlayer.printPlayerStatus();
             if(winner > 0){
