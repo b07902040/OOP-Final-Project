@@ -20,6 +20,7 @@ public class Game implements EventListener{
     private DeckLoader deckLoader;
     private List<Player> players;
     private Player currentPlayer;
+    private int currentPlayerid;
     private int turn = 0;
     private boolean firstPlayerTurn = true;
     private float timer = 0; 
@@ -52,7 +53,6 @@ public class Game implements EventListener{
         this.running = true;
        /* while(this.running){
             //this.eventManager.post(new EventEveryTick());
-            //TODO:
             //sleep
         }     */
     }
@@ -98,10 +98,12 @@ public class Game implements EventListener{
         else if(event instanceof EventCardClicked){
             if(this.isState(Const.STATE_PENDING)){
                 this.clickedCardIndex = ((EventCardClicked) event).getClickedIndex();
-                if(this.currentPlayer.checkValidCard(this.clickedCardIndex))
+                boolean valid = this.currentPlayer.checkValidCard(this.clickedCardIndex);
+                if(valid)
                     this.stateChange(Const.STATE_VALID_CARD);                           
                 else
-                    this.stateChange(Const.STATE_INVALID_CARD);    
+                    this.stateChange(Const.STATE_INVALID_CARD);  
+                this.eventManager.post(new EventCardShow(this.clickedCardIndex, valid));  
             }        
         }        
         else if(event instanceof EventCardSelected){
@@ -146,10 +148,13 @@ public class Game implements EventListener{
             if(this.isState(Const.STATE_CARD_TARGETING)){
                 this.clickedMinionIndex = ((EventMinionClicked) event).getClickedIndex();
                 this.clickedMinionAlly = ((EventMinionClicked) event).getIsAlly();
-                if(this.checkValidMinion())
+                boolean valid = this.checkValidMinion();
+                if(valid)
                     this.stateChange(Const.STATE_VALID_TARGET);                           
                 else
                     this.stateChange(Const.STATE_INVALID_TARGET); 
+                int clickedPlayerId = (this.clickedMinionAlly)? this.currentPlayerid : (this.currentPlayerid + 1) % 2;
+                this.eventManager.post(new EventMinionShow(clickedPlayerId, this.clickedMinionIndex, valid));
             }
             //choose attacker
             else if(this.isState(Const.STATE_PENDING)){
@@ -202,6 +207,9 @@ public class Game implements EventListener{
                 this.selectedAttacked = this.currentPlayer.getEnemy().get(this.clickedAttackedIndex);     
                 this.selectedAttacker.attack(this.selectedAttacked);  
                 this.stateChange(Const.STATE_ATTACKING);
+                int attackerPlayerId = this.currentPlayerid;
+                int attackedPlayerId = (this.currentPlayerid + 1) % 2;
+                this.eventManager.post(new EventAttacking(attackerPlayerId, this.clickedAttackerIndex, attackedPlayerId,this.clickedAttackedIndex));
                 this.reset();
             }
         } 
@@ -251,7 +259,7 @@ public class Game implements EventListener{
         return (this.state.peek() == state);
     }
 
-    private void initialize(){
+    private void initialize(){      
         this.deckLoader = new DeckLoader();
         this.players = new ArrayList<Player>();
         this.players.add(new Player("PLAYER1", this, true));
@@ -261,7 +269,9 @@ public class Game implements EventListener{
             ArrayList<Card> deck = this.deckLoader.loadDeck0();
             //Collections.shuffle(deck,new Random());
             this.players.get(i).setDeck(deck);
-        }      
+            this.eventManager.post(new EventBoardChange(i, 0, this.players.get(i).getHero()));
+        }   
+        this.currentPlayerid = 0;   
         this.currentPlayer = this.players.get(0);
     } 
     
@@ -352,8 +362,6 @@ public class Game implements EventListener{
     }
 
     private void turnEnd(){
-        //TODO
-        //turnend
         List<Minion> turnEndMinions = new ArrayList<Minion>();
         for(Minion minion : this.currentPlayer.getAlly())
             turnEndMinions.add(minion);
@@ -370,6 +378,7 @@ public class Game implements EventListener{
         }
         //end
         this.currentPlayer = this.currentPlayer.getOpponent();
+        this.currentPlayerid = this.currentPlayer.getPlayerId(); 
         this.firstPlayerTurn = !this.firstPlayerTurn;
     }
    

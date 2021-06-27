@@ -13,6 +13,7 @@ public class GameInfo implements EventListener{
     private int state; 
     private EventManager eventManager;
     private int playerId;
+    private int winnerId;
     private int[] mana ;
     private int[] fullMana;
     private boolean myTurn;
@@ -26,15 +27,21 @@ public class GameInfo implements EventListener{
     
     private int turn;
     private float timer;
-    /*
-    private int clickedCardIndex = -1;
-    private int clickedMinionIndex = -1;
-    private boolean clickedMinionAlly = false;
-    private int clickedAttackerIndex = -1;
-    private boolean clickedAttackerAlly = false;
-    private int clickedAttackedIndex = -1;
-    private boolean clickedAttackedAlly = false;   
-    */
+    
+    private int showedCardIndex;
+    private boolean showedCardValid;
+    private int showedMinionIndex;
+    private int showedMinionPlayerId;
+    private boolean showedMinionValid;
+
+    private int attackerIndex;
+    private int attackerPlayerIndex;
+    private int attackedIndex;
+    private int attackedPlayerIndex;
+
+
+
+    
     public GameInfo(EventManager eventManager){
         this.eventManager = eventManager;
         this.eventManager.register(this);
@@ -71,6 +78,28 @@ public class GameInfo implements EventListener{
             EventMinionChange e = (EventMinionChange) event;
             this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
         }    
+        else if (event instanceof EventAttacking){            
+            EventAttacking e = (EventAttacking) event;
+            this.attackerIndex = e.getAttackerIndex();
+            this.attackerPlayerIndex = e.getAttackerPlayerIndex();
+            this.attackedIndex = e.getAttackedIndex();
+            this.attackedPlayerIndex = e.getAttackedPlayerIndex();
+        }   
+        else if (event instanceof EventCardShow){            
+            EventCardShow e = (EventCardShow) event;
+            this.showedCardIndex = e.getShowIndex();
+            this.showedCardValid = e.getValid();
+        }
+        else if (event instanceof EventMinionShow){            
+            EventMinionShow e = (EventMinionShow) event;
+            this.showedMinionPlayerId = e.getShowPlayerIndex();
+            this.showedMinionIndex = e.getShowIndex();
+            this.showedMinionValid = e.getValid();
+        }
+        else if (event instanceof EventMinionChange){            
+            EventMinionChange e = (EventMinionChange) event;
+            this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
+        }   
     }
     
     private void initialize(int id){
@@ -80,8 +109,7 @@ public class GameInfo implements EventListener{
         this.fullMana = new int[] {0, 0};
         this.turn = 0;
         this.deckSize = new int[] {Const.DECK_SIZE, Const.DECK_SIZE};
-        this.handSize = new int[] {0, 0};
-        
+        this.handSize = new int[] {0, 0};    
     }
 
     private void turnStart(){
@@ -96,8 +124,7 @@ public class GameInfo implements EventListener{
         if(full)
             this.deckSize[id]--;        
         else
-            this.deckSize[id]--;
-                
+            this.deckSize[id]--;                
     }
 
     public int getState(){
