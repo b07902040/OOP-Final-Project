@@ -36,7 +36,7 @@ public class Const {
 
     public static final int CARD_W = 75;
     public static final int CARD_H = 125;
-    public static final int MINION_W = 75;
+    public static final int MINION_W = 125;
     public static final int MINION_H = 125;
 
     public static final double CARD_NAME_Y_RATIO = 0.6;
