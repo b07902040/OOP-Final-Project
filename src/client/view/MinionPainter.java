@@ -1,7 +1,7 @@
 package src.client.view;
 import src.client.model.GameInfo;
 import src.client.viewconstant.Const;
-import src.model.Minion;
+import src.model.*;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
@@ -18,11 +18,15 @@ public class MinionPainter implements Painter {
         int shiftedX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (ally.size()-2)*Const.MINION_GAP - (ally.size()-1)*Const.MINION_W)/2;
         for(int i = 1; i < ally.size(); i++){
             g.drawImage(View.loadImage(Const.MINION_FRAME_PATH), shiftedX + (i-1)*(Const.MINION_GAP + Const.MINION_W), Const.BOARD_REGION[1], Const.MINION_W, Const.MINION_H, null);
+            View.drawCenteredString(g,((Card) ally.get(i)).getName(), shiftedX + (i-1)*(Const.MINION_GAP + Const.MINION_W) + Const.MINION_W/2, 
+                Const.BOARD_REGION[1] + Const.MINION_H/2, new Font("Consolas", Font.PLAIN, 20));
         }
         // draw enemy minions
         shiftedX = Const.OP_BOARD_REGION[0] + (Const.OP_BOARD_REGION[2] - (enemy.size()-2)*Const.MINION_GAP - (enemy.size()-1)*Const.MINION_W)/2;
         for(int i = 1; i < enemy.size(); i++){
             g.drawImage(View.loadImage(Const.MINION_FRAME_PATH), shiftedX + (enemy.size()-i-1)*(Const.MINION_GAP + Const.MINION_W), Const.OP_BOARD_REGION[1], Const.MINION_W, Const.MINION_H, null);
+            View.drawCenteredString(g,((Card) enemy.get(i)).getName(), shiftedX + (enemy.size()-i-1)*(Const.MINION_GAP + Const.MINION_W) + Const.MINION_W/2, 
+                Const.OP_BOARD_REGION[1] + Const.MINION_H/2, new Font("Consolas", Font.PLAIN, 20));
         }
     }
 }
