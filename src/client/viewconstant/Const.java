@@ -2,7 +2,7 @@ package src.client.viewconstant;
 
 public class Const {
     //Controller
-    public static final int MOUSE_CLICK_THRESHOLD = 10;
+    public static final int MOUSE_CLICK_THRESHOLD = 100;
     //View
     public static final int SCREEN_W = 1200;
     public static final int SCREEN_H = 1000;

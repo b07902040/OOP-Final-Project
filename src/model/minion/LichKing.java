@@ -22,7 +22,7 @@ public class LichKing extends AbstractMinion implements Card, Minion, Taunt{
         deathKnights.add(new DeathCoil());
         deathKnights.add(new Decay());
         deathKnights.add(new Obliterate());
-        int index = Game.getRandom(3) - 1;
+        int index = Game.getRandom(deathKnights.size()) - 1;
         return deathKnights.get(index);
     }
 
