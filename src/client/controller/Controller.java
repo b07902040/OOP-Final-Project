@@ -46,19 +46,28 @@ public class Controller extends MouseAdapter implements EventListener {
         /**
          * Invoked when the mouse button has been clicked (pressed and released) on a component.
          */
+        int x = e.getX();
+        int y = e.getY();
         System.out.printf("Mouse clicked at (%d, %d)\n", e.getX(), e.getY());
-        if(isInEnturnButton(e.getX(), e.getY())){
+        if(isInEnturnButton(x, y)){
             System.out.println("End turn button clicked");
-            this.eventManager.post(new EventTurnStart());
-        }
-        if(isInSelectButton(e.getX(), e.getY())){
-            /*
-            System.out.println("Select button clicked");
-            Card card = new Goblin();
-            this.eventManager.post(new EventHandCardChange(1, card));
-            */
             Minion minion = new Goblin();
             this.eventManager.post(new EventBoardChange(1, 0, minion));
+        }
+        if(isInSelectButton(x, y)){
+            
+            System.out.println("Select button clicked");
+            Card card = new Goblin();
+            this.eventManager.post(new EventHandCardChange(0, card));
+            
+            // Minion minion = new Goblin();
+            // this.eventManager.post(new EventBoardChange(1, 0, minion));
+        }
+        if(position2MinionIndex(x, y) >= 0){
+            System.out.printf("Clicked on Minion with player id: %d, index: %d\n", position2MinionPlayerId(x, y), position2MinionIndex(x, y));
+        }
+        if(position2CardIndex(x, y) >= 0){
+            System.out.printf("Clicked on Card with index: %d\n", position2CardIndex(x, y));
         }
     }
     
@@ -133,7 +142,7 @@ public class Controller extends MouseAdapter implements EventListener {
     private int position2CardIndex(int x, int y){
         int handSize = this.model.getHandSize(this.model.getPlayerId());
         int handCardsLX = Const.HANDCARD_REGION[0] + (Const.HANDCARD_REGION[2] - (handSize-1)*Const.HANDCARD_GAP - handSize*Const.CARD_W)/2;
-        int handCardsRX = Const.HANDCARD_REGION[0] + (Const.HANDCARD_REGION[2] + (handSize-1)*Const.HANDCARD_GAP - handSize*Const.CARD_W)/2;
+        int handCardsRX = Const.HANDCARD_REGION[0] + (Const.HANDCARD_REGION[2] + (handSize-1)*Const.HANDCARD_GAP + handSize*Const.CARD_W)/2;
         // not within hand cards
         if(x < handCardsLX || x >= handCardsRX || y < Const.HANDCARD_REGION[1] || y >= Const.HANDCARD_REGION[1] + Const.HANDCARD_REGION[3])
             return -1;
@@ -145,13 +154,60 @@ public class Controller extends MouseAdapter implements EventListener {
         return (x - handCardsLX)/(Const.HANDCARD_GAP + Const.CARD_W);
     }
 
-    private int position2MinionPlayerId(int x, int y){
-        // int boardLX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (handSize-1)*Const.HANDCARD_GAP - handSize*Const.CARD_W)/2;
-        // int boardRX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] + (handSize-1)*Const.HANDCARD_GAP - handSize*Const.CARD_W)/2;
-        return 0;
+    private int position2MinionIndex(int x, int y){
+        // on my side
+        if(y >= Const.BOARD_REGION[1] && y < Const.BOARD_REGION[1] + Const.BOARD_REGION[3]){
+            int boardSize = this.model.getAlly().size() - 1;
+            int boardLX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (boardSize-1)*Const.MINION_GAP - boardSize*Const.MINION_W)/2;
+            int boardRX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] + (boardSize-1)*Const.MINION_GAP + boardSize*Const.MINION_W)/2;
+            if(x < boardLX || x >= boardRX)
+                return -1;
+            int relative2CardX = (x - boardLX)%(Const.MINION_GAP + Const.MINION_W);
+            if(relative2CardX >= Const.MINION_W)
+                return -1;
+            return (x - boardLX)/(Const.MINION_GAP + Const.MINION_W) + 1;
+        }
+        // on opponent side
+        if(y >= Const.OP_BOARD_REGION[1] && y < Const.OP_BOARD_REGION[1] + Const.OP_BOARD_REGION[3]){
+            int boardSize = this.model.getEnemy().size() - 1;
+            int boardLX = Const.OP_BOARD_REGION[0] + (Const.OP_BOARD_REGION[2] - (boardSize-1)*Const.MINION_GAP - boardSize*Const.MINION_W)/2;
+            int boardRX = Const.OP_BOARD_REGION[0] + (Const.OP_BOARD_REGION[2] + (boardSize-1)*Const.MINION_GAP + boardSize*Const.MINION_W)/2;
+            if(x < boardLX || x >= boardRX)
+                return -1;
+            int relative2CardX = (x - boardLX)%(Const.MINION_GAP + Const.MINION_W);
+            if(relative2CardX >= Const.MINION_W)
+                return -1;
+            return boardSize - (x - boardLX)/(Const.MINION_GAP + Const.MINION_W);
+        }
+        // neither
+        return -1;
     }
 
-    private int position2MinionIndex(int x, int y){
-        return 0;
+    private int position2MinionPlayerId(int x, int y){
+        if(y >= Const.BOARD_REGION[1] && y < Const.BOARD_REGION[1] + Const.BOARD_REGION[3]){
+            int boardSize = this.model.getAlly().size() - 1;
+            int boardLX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (boardSize-1)*Const.MINION_GAP - boardSize*Const.MINION_W)/2;
+            int boardRX = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] + (boardSize-1)*Const.MINION_GAP + boardSize*Const.MINION_W)/2;
+            if(x < boardLX || x >= boardRX)
+                return -1;
+            int relative2CardX = (x - boardLX)%(Const.MINION_GAP + Const.MINION_W);
+            if(relative2CardX >= Const.MINION_W)
+                return -1;
+            return this.model.getPlayerId();
+        }
+        // on opponent side
+        if(y >= Const.OP_BOARD_REGION[1] && y < Const.OP_BOARD_REGION[1] + Const.OP_BOARD_REGION[3]){
+            int boardSize = this.model.getEnemy().size() - 1;
+            int boardLX = Const.OP_BOARD_REGION[0] + (Const.OP_BOARD_REGION[2] - (boardSize-1)*Const.MINION_GAP - boardSize*Const.MINION_W)/2;
+            int boardRX = Const.OP_BOARD_REGION[0] + (Const.OP_BOARD_REGION[2] + (boardSize-1)*Const.MINION_GAP + boardSize*Const.MINION_W)/2;
+            if(x < boardLX || x >= boardRX)
+                return -1;
+            int relative2CardX = (x - boardLX)%(Const.MINION_GAP + Const.MINION_W);
+            if(relative2CardX >= Const.MINION_W)
+                return -1;
+            return 1 - this.model.getPlayerId();
+        }
+        // neither
+        return -1;
     }
 }
