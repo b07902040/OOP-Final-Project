@@ -242,9 +242,10 @@ public class Game implements EventListener{
             }            
         }              
         else if(event instanceof EventTurnEnd){
-            if(this.isState(Const.STATE_PENDING))
+            if(this.isState(Const.STATE_PENDING)){
                 this.turnEnd();   
-            this.eventManager.post(new EventTurnStart());
+                this.eventManager.post(new EventTurnStart());
+            }
         }
         else if(event instanceof EventGameEnd){
             System.out.printf("Game End!! Player %d win.\n",winner);       
