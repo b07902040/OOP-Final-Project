@@ -20,6 +20,8 @@ import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 import java.awt.Image;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 
 
 public class View implements EventListener{
@@ -113,7 +115,13 @@ public class View implements EventListener{
         }
     }
 
-    
+    public static void drawCenteredString(Graphics g, String text, int centerX, int centerY, Font font){
+        FontMetrics metrics = g.getFontMetrics(font);
+        int x = centerX - metrics.stringWidth(text) / 2;
+        int y = centerY;
+        g.setFont(font);
+        g.drawString(text, x, y);
+    }
 }
 
 class Board extends JPanel {

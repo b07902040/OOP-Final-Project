@@ -17,14 +17,7 @@ public class ShowCardPainter implements Painter {
         if(state == Const.STATE_VALID_CARD || state == Const.STATE_INVALID_CARD){
             int index = game.getShowedCardIndex();
             card = game.getHandCards().get(index);
-            // g.drawImage(View.loadImage(Const.CARD_IMG_DIR + card.getName() + ".png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            if(card instanceof Minion)
-                g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            else if(card instanceof Spell)
-                g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            g.setFont(new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
-            g.drawString(card.getName(), Const.CARD_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_SHOW[2]), Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]));
+            
         }
         else if(state == Const.STATE_VALID_ATTACKER || state == Const.STATE_VALID_ATTACKED || state == Const.STATE_VALID_TARGET || 
                 state == Const.STATE_INVALID_ATTACKER || state == Const.STATE_INVALID_ATTACKED || state == Const.STATE_INVALID_TARGET){
@@ -35,11 +28,26 @@ public class ShowCardPainter implements Painter {
                 card = (Card) game.getAlly().get(index);
             else 
                 card = (Card) game.getEnemy().get(index);
-            //g.drawImage(View.loadImage(Const.CARD_IMG_DIR + card.getName() + ".png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-            g.setFont(new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
-            g.drawString(card.getName(), Const.CARD_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_SHOW[2]), Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]));
         }
+        else return;
+        // g.drawImage(View.loadImage(Const.CARD_IMG_DIR + card.getName() + ".png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
+        g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
+        if(card instanceof Minion){
+            g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
+            // draw attack
+            View.drawCenteredString(g, Integer.toString(((Minion)card).getATK()), Const.CARD_SHOW[0] + (int)(Const.CARD_ATTACK_X_RATIO*Const.CARD_SHOW[2])
+                                    , Const.CARD_SHOW[1] + (int)(Const.CARD_ATTACK_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
+            // draw health
+            View.drawCenteredString(g, Integer.toString(((Minion)card).getHP()), Const.CARD_SHOW[0] + (int)(Const.CARD_HEALTH_X_RATIO*Const.CARD_SHOW[2])
+                                    , Const.CARD_SHOW[1] + (int)(Const.CARD_HEALTH_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
+        }
+        else if(card instanceof Spell)
+            g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
+        // draw mana cost
+        View.drawCenteredString(g, Integer.toString(card.getCost()), Const.CARD_SHOW[0] + (int)(Const.CARD_MANA_X_RATIO*Const.CARD_SHOW[2]),
+                                Const.CARD_SHOW[1] + (int)(Const.CARD_MANA_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
+        // drw card name
+        View.drawCenteredString(g, card.getName(), Const.CARD_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_SHOW[2]),
+                                    Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
     }
 }

@@ -23,8 +23,8 @@ public class HandCardPainter implements Painter {
                 g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
             else if(card instanceof Spell)
                 g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
-            g.setFont(new Font("Consolas", Font.PLAIN, Const.HANDCARD_NAME_FONT_SIZE));
-            g.drawString(card.getName(), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_W), Const.HANDCARD_REGION[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_H));
+            View.drawCenteredString(g, card.getName(), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_W),
+                                    Const.HANDCARD_REGION[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_H), new Font("Consolas", Font.PLAIN, Const.HANDCARD_NAME_FONT_SIZE));
         }
         int opponentHandSize = game.getHandSize(opponentId);
         shiftedX = Const.OPPONENT_CARD_REGION[0] + (Const.OPPONENT_CARD_REGION[2] - (opponentHandSize-1)*Const.OP_HANDCARD_GAP - opponentHandSize*Const.CARD_W)/2;
