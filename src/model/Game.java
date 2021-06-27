@@ -141,7 +141,7 @@ public class Game implements EventListener{
                     this.stateChange(Const.STATE_EFFECTING);
                     int cardPlayerId = this.currentPlayerid;
                     int targetPlayerId = (this.currentPlayerid + 1) % 2;
-                    this.eventManager.post(new EventAttacking(cardPlayerId, this.clickedCardIndex, targetPlayerId,this.clickedMinionIndex));
+                    this.eventManager.post(new EventEffecting(cardPlayerId, this.clickedCardIndex, targetPlayerId,this.clickedMinionIndex));
                     this.reset();                    
                 }  
             }
