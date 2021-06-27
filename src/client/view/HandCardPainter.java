@@ -17,7 +17,8 @@ public class HandCardPainter implements Painter {
         int shiftedX = Const.HANDCARD_REGION[0] + (Const.HANDCARD_REGION[2] - (handCards.size()-1)*Const.HANDCARD_GAP - handCards.size()*Const.CARD_W)/2;
         for(int i = 0; i < handCards.size(); i++){
             card = handCards.get(i);
-            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + card.getName() + ".png"), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
+            // g.drawImage(View.loadImage(Const.CARD_IMG_DIR + card.getName() + ".png"), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
+            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
             if(card instanceof Minion)
                 g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
             else if(card instanceof Spell)

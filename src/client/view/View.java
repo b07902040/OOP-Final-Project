@@ -70,8 +70,11 @@ public class View implements EventListener{
             update();
             return;
         }
-        else if(event instanceof EventTurnStart){
-            update();
+        else if(event instanceof EventAttacking){
+            this.eventManager.post(new EventMinionAttacked());
+        }
+        else if(event instanceof EventEffecting){
+            this.eventManager.post(new EventCardEffected());
         }
     }
 

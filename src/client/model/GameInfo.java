@@ -127,6 +127,10 @@ public class GameInfo implements EventListener{
             this.deckSize[id]--;                
     }
 
+    public boolean isMyTurn(){
+        return this.myTurn;
+    }
+
     public int getState(){
         return this.state;
     }

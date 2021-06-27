@@ -50,6 +50,53 @@ public class Controller extends MouseAdapter implements EventListener {
         int x = e.getX();
         int y = e.getY();
         System.out.printf("Mouse clicked at (%d, %d)\n", e.getX(), e.getY());
+        int index, id;
+        
+        //skip any mouse click if it is not my turn
+        if(!this.model.isMyTurn())
+            return;
+        
+        //click on hand card
+        if((index = position2CardIndex(x, y)) >= 0){
+            this.eventManager.post(new EventCardClicked(index));
+        }
+        // click on empty region
+        else if(isEmptyRegion(x, y)){
+            this.eventManager.post(new EventClickedEmpty());
+        }
+        // click on minion
+        else if((id = position2MinionPlayerId(x, y)) >= 0){
+            index = position2MinionIndex(x, y);
+            this.eventManager.post(new EventMinionClicked(id, index));
+        }
+
+
+        // click on select button
+        if(isInSelectButton(x, y)){
+            if(this.model.getState() == Const.STATE_VALID_CARD)
+                this.eventManager.post(new EventCardSelected());
+            else if(this.model.getState() == Const.STATE_VALID_TARGET)
+                this.eventManager.post(new EventMinionSelected());
+            else if(this.model.getState() == Const.STATE_VALID_ATTACKER)
+                this.eventManager.post(new EventMinionSelected());
+            else if(this.model.getState() == Const.STATE_VALID_ATTACKED)
+                this.eventManager.post(new EventMinionSelected());
+        }
+
+        // click on end turn button
+        if(isInEnturnButton(x, y)){
+            this.eventManager.post(new EventTurnEnd());
+        }
+ 
+
+
+
+
+
+
+
+
+        /*
         if(isInEnturnButton(x, y)){
             System.out.println("End turn button clicked");
             Card card = new PyroBlast();
@@ -76,6 +123,7 @@ public class Controller extends MouseAdapter implements EventListener {
             if(this.model.getState() == Const.STATE_VALID_CARD)
                 this.eventManager.post(new EventStateChange(Const.STATE_PENDING));
         }
+        */
     }
     
     @Override
@@ -139,6 +187,10 @@ public class Controller extends MouseAdapter implements EventListener {
     }
 
     private boolean isEmptyRegion(int x, int y){
+        int state = this.model.getState();
+        if(state != Const.STATE_VALID_CARD && state != Const.STATE_INVALID_CARD && state != Const.STATE_VALID_ATTACKER && state != Const.STATE_VALID_ATTACKED && state != Const.STATE_VALID_TARGET && 
+                state != Const.STATE_INVALID_ATTACKER && state != Const.STATE_INVALID_ATTACKED && state != Const.STATE_INVALID_TARGET)
+            return false;
         if(isInSelectButton(x, y))
             return false;
         if((x >= Const.CARD_SHOW[0]) && (x < Const.CARD_SHOW[0] + Const.CARD_SHOW[2]) && (y >= Const.CARD_SHOW[1]) && (y < Const.CARD_SHOW[1] + Const.CARD_SHOW[3]))

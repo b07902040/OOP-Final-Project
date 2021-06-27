@@ -9,23 +9,24 @@ import java.lang.Thread;
 import utils.*;
 
 import src.model.minion.*;
-import src.model.Card;
+import src.model.*;
 
 public class ViewTest {
     public static void main(String[] args) {
         EventManager eventManager = new EventManager();
-        GameInfo game = new GameInfo(eventManager);
-        eventManager.post(new EventClientInitalize(0));
-        for (int i = 0; i < 0; i++)
-            eventManager.post(new EventTurnStart());
-        Controller controller = new Controller(eventManager, game);
-      	View view = new View(eventManager, game, controller);
-        view.initialize();
-        while(true){
-            eventManager.post(new EventEveryTick());
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {};
-        }
+        GameInfo game0 = new GameInfo(eventManager);
+        GameInfo game1 = new GameInfo(eventManager);
+        Game model = new Game(eventManager);
+        Controller controller0 = new Controller(eventManager, game0);
+        Controller controller1 = new Controller(eventManager, game1);
+      	View view0 = new View(eventManager, game0, controller0);
+        View view1 = new View(eventManager, game1, controller1);
+        view0.notify(new EventClientInitalize(0));
+        view1.notify(new EventClientInitalize(1));
+        controller0.notify(new EventClientInitalize(0));
+        controller1.notify(new EventClientInitalize(1));
+        game0.notify(new EventClientInitalize(0));
+        game1.notify(new EventClientInitalize(1));
+        model.run();
     }
 }
