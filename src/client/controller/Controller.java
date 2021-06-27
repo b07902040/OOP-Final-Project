@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 
 import src.model.*;
 import src.model.minion.*;
+import src.model.spell.*;
 
 public class Controller extends MouseAdapter implements EventListener {
     private EventManager eventManager;
@@ -51,23 +52,29 @@ public class Controller extends MouseAdapter implements EventListener {
         System.out.printf("Mouse clicked at (%d, %d)\n", e.getX(), e.getY());
         if(isInEnturnButton(x, y)){
             System.out.println("End turn button clicked");
-            Minion minion = new Goblin();
-            this.eventManager.post(new EventBoardChange(1, 0, minion));
+            Card card = new PyroBlast();
+            this.eventManager.post(new EventHandCardChange(0, card));
         }
         if(isInSelectButton(x, y)){
             
             System.out.println("Select button clicked");
-            Card card = new Goblin();
-            this.eventManager.post(new EventHandCardChange(0, card));
+            //Card card = new Goblin();
+            //this.eventManager.post(new EventHandCardChange(0, card));
             
-            // Minion minion = new Goblin();
-            // this.eventManager.post(new EventBoardChange(1, 0, minion));
+            Minion minion = new Goblin();
+            this.eventManager.post(new EventBoardChange(1, 0, minion));
         }
         if(position2MinionIndex(x, y) >= 0){
             System.out.printf("Clicked on Minion with player id: %d, index: %d\n", position2MinionPlayerId(x, y), position2MinionIndex(x, y));
         }
         if(position2CardIndex(x, y) >= 0){
             System.out.printf("Clicked on Card with index: %d\n", position2CardIndex(x, y));
+            this.eventManager.post(new EventStateChange(Const.STATE_VALID_CARD));
+            this.eventManager.post(new EventCardShow(position2CardIndex(x, y), true));
+        }
+        else if(isEmptyRegion(x, y)){
+            if(this.model.getState() == Const.STATE_VALID_CARD)
+                this.eventManager.post(new EventStateChange(Const.STATE_PENDING));
         }
     }
     
