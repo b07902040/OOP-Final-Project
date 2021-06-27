@@ -171,6 +171,42 @@ public class GameInfo implements EventListener{
         return this.opponentHero;
     }
 
+    public int getShowedCardIndex(){
+        return this.showedCardIndex;
+    }
+
+    public boolean getShowedCardValid(){
+        return this.showedCardValid;
+    }
+
+    public int getShowedMinionIndex(){
+        return this.showedMinionIndex;
+    }
+
+    public int getShowedMinionPlayerId(){
+        return this.showedMinionPlayerId;
+    }
+
+    public boolean getShowedMinionValid(){
+        return this.showedMinionValid;
+    }
+
+    public int getAttackerIndex(){
+        return this.attackedIndex;
+    }
+
+    public int getAttackerPlayerIndex(){
+        return this.attackedPlayerIndex;
+    }
+
+    public int getAttackedIndex(){
+        return this.attackerIndex;
+    }
+
+    public int getAttackedPlayerIndex(){
+        return this.attackedPlayerIndex;
+    }
+
     public void manaChange(int playerId, int mana, int fullMana){
         this.mana[playerId] = mana;
         this.fullMana[playerId] = fullMana;
