@@ -13,6 +13,7 @@ public class Const {
     public static final int[] SELECT_BUTTON = {1030, 870, 100, 40};
     public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
     public static final int[] MANA_BOX = {750, 805, 450, 50};
+    public static final int[] OP_MANA_BOX = {950, 10, 135, 50};
     public static final int[] HANDCARD_REGION = {50, 870, 950, 125};
     public static final int[] CARD_SHOW = {50, 200, 375, 595};
     public static final int[] BOARD_REGION = {0, 520, 1200, 125};
@@ -24,7 +25,8 @@ public class Const {
     public static final int MANA_Y = 815;
     public static final int MANA_SIZE = 30;
     public static final int MANA_GAP = 4;
-    public static final int MANA_FONT_Y = 840;
+    public static final int MANA_FONT_Y = 835;
+    public static final int OP_MANA_FONT_Y = 45;
     public static final int MAX_MANA = 10;
 
     // font size
@@ -52,7 +54,9 @@ public class Const {
     public static final int HANDCARD_IMG_W = 65;
     public static final int HANDCARD_IMG_H = 65;
     public static final int CARDSHOW_IMG_W = 310;
-    public static final int CARDSHOW_IMG_H = 310; 
+    public static final int CARDSHOW_IMG_H = 310;
+    public static final int HERO_IMG_W = 126;
+    public static final int HERO_IMG_H = 126;  
 
     // X Ratio: (x - cardX)/cardW
     // Y Ratio: (y - cardY)/cardH
@@ -86,6 +90,7 @@ public class Const {
     public static final String ENDTURN_BUTTON_PATH = "image/end_turn.png";
     public static final String DIM_ENDTURN_BUTTON_PATH = "image/end_turn_dim.png";
     public static final String MANA_BOX_IMG_PATH = "image/mana_box.png";
+    public static final String OPPONENT_MANA_BOX_IMG_PATH = "image/opponent_mana_box.png";
     
     public static final String FULL_MANA_PATH = "image/full_mana.png";
     public static final String EMPTY_MANA_PATH = "image/empty_mana.png";
