@@ -33,12 +33,9 @@ public class View implements EventListener{
     private List<Painter> painters;
     private static HashMap<String, BufferedImage> imgLib = new HashMap<String, BufferedImage>(128);
     
-    public View(){
-        return;
-    }
-
     public View(EventManager eventManager, GameInfo model, Controller controller) {
         this.eventManager = eventManager;
+        this.eventManager.register(this);
         this.model = model;
         this.controller = controller;
     }
@@ -52,6 +49,8 @@ public class View implements EventListener{
 
         painters.add(new BoardPainter());
         painters.add(new ManaPainter());
+        painters.add(new HandCardPainter());
+        painters.add(new MinionPainter());
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
@@ -67,8 +66,11 @@ public class View implements EventListener{
             this.initialize();
         }
         else if(event instanceof EventEveryTick){
-            //TODO
+            update();
             return;
+        }
+        else if(event instanceof EventTurnStart){
+            update();
         }
     }
 
