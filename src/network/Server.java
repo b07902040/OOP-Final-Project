@@ -1,3 +1,5 @@
+
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -79,6 +81,12 @@ public class Server {
 						}
 						sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, nowPlayerNum));
 						nowPlayerNum++;
+					}
+					else if ( receiveObj.getType() == Message.NEWPLAYER ) {
+						Player a = (Player) receiveObj.getObj();
+						a.showCard();
+						a.addCard(new Card("card2"));
+						a.showCard();
 					}
 				}
 			} catch (Exception ex) {

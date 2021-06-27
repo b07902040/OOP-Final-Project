@@ -1,3 +1,5 @@
+
+
 import java.io.*;
 import java.net.Socket;
 import java.net.InetAddress;
@@ -9,10 +11,10 @@ import javax.swing.JOptionPane;
 
 public class Client  {
 
-	  private String playerName = "";
-	  private int playerID = -2;
-	  private String serverIP;
-	  private int serverPort;
+	private String playerName = "";
+	private int playerID = -2;
+	private String serverIP;
+	private int serverPort;
 	private ObjectOutputStream oos;
 
 	public static void main(String[] args)
@@ -56,6 +58,10 @@ public class Client  {
 			System.out.println("Connected Success to server at " + serverIP);
 
 			this.sendMessage(new Message(Message.JOIN, playerID));
+			Player a = new Player("testa");
+			a.addCard(new Card("card1"));
+			a.showCard();
+			this.sendMessage(new Message(Message.NEWPLAYER, playerID, a));
 
 			Thread.sleep(500);
 
