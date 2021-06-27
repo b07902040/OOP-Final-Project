@@ -26,9 +26,9 @@ public class Test {
         String segMsg[] = msg.split(" ");
         if(segMsg[0].equals("c")){
             if(segMsg[1].equals("m")){
-                boolean ally = segMsg[2].equals("0");
+                int playerId = Integer.parseInt(segMsg[2]);
                 int index = Integer.parseInt(segMsg[3]);
-                eventManager.post(new EventMinionClicked(ally, index));
+                eventManager.post(new EventMinionClicked(playerId, index));
             }
             else if(segMsg[1].equals("c")){
                 int index = Integer.parseInt(segMsg[2]);

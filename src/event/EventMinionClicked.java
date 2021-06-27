@@ -2,16 +2,16 @@ package src.event;
 
 public class EventMinionClicked implements Event{
     private String name = "EventMinionClicked";
-    private boolean isAlly;
+    private int playerId;
     private int clickedIndex;
 
-    public EventMinionClicked(boolean isAlly,int clickedIndex){
-        this.isAlly = isAlly;
+    public EventMinionClicked(int playerId, int clickedIndex){
+        this.playerId = playerId;
         this.clickedIndex = clickedIndex;
     }
 
-    public boolean getIsAlly(){
-        return this.isAlly;
+    public int getPlayerId(){
+        return this.playerId;
     }
 
     public int getClickedIndex(){

@@ -29,14 +29,12 @@ public class Game implements EventListener{
     //play card
     private int clickedCardIndex = -1;
     private int clickedMinionIndex = -1;
-    private boolean clickedMinionAlly = false;
+    private int clickedPlayerId = -1;
     private Card selectedCard = null;
     private Minion selectedMinion = null;
     //minion attack
     private int clickedAttackerIndex = -1;
-    private boolean clickedAttackerAlly = false;
     private int clickedAttackedIndex = -1;
-    private boolean clickedAttackedAlly = false;
     private Minion selectedAttacker = null;
     private Minion selectedAttacked = null;
 
@@ -96,7 +94,7 @@ public class Game implements EventListener{
                 this.stateChange(Const.STATE_ATTACKER_TARGETING);   
         }
         else if(event instanceof EventCardClicked){
-            if(this.isState(Const.STATE_PENDING)){
+            if(this.isState(Const.STATE_PENDING) || this.isState(Const.STATE_VALID_CARD) || this.isState(Const.STATE_INVALID_CARD)){
                 this.clickedCardIndex = ((EventCardClicked) event).getClickedIndex();
                 boolean valid = this.currentPlayer.checkValidCard(this.clickedCardIndex);
                 if(valid)
@@ -104,7 +102,7 @@ public class Game implements EventListener{
                 else
                     this.stateChange(Const.STATE_INVALID_CARD);  
                 this.eventManager.post(new EventCardShow(this.clickedCardIndex, valid));  
-            }        
+            } 
         }        
         else if(event instanceof EventCardSelected){
             if(this.isState(Const.STATE_VALID_CARD)){
@@ -150,21 +148,19 @@ public class Game implements EventListener{
             //play card choose target
             if(this.isState(Const.STATE_CARD_TARGETING)){
                 this.clickedMinionIndex = ((EventMinionClicked) event).getClickedIndex();
-                this.clickedMinionAlly = ((EventMinionClicked) event).getIsAlly();
+                this.clickedPlayerId = ((EventMinionClicked) event).getPlayerId();
                 boolean valid = this.checkValidMinion();
                 if(valid)
                     this.stateChange(Const.STATE_VALID_TARGET);                           
                 else
                     this.stateChange(Const.STATE_INVALID_TARGET); 
-                int clickedPlayerId = (this.clickedMinionAlly)? this.currentPlayerid : (this.currentPlayerid + 1) % 2;
-                this.eventManager.post(new EventMinionShow(clickedPlayerId, this.clickedMinionIndex, valid));
+                this.eventManager.post(new EventMinionShow(this.clickedPlayerId, this.clickedMinionIndex, valid));
             }
             //choose attacker
             else if(this.isState(Const.STATE_PENDING)){
                 this.clickedAttackerIndex = ((EventMinionClicked) event).getClickedIndex();
-                this.clickedAttackerAlly = ((EventMinionClicked) event).getIsAlly();
                 boolean canAttack = false;
-                if(this.clickedAttackerAlly){
+                if(((EventMinionClicked) event).getPlayerId() == this.currentPlayerid){
                     Minion attacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);
                     canAttack = attacker.canAttack();                
                 }
@@ -174,9 +170,8 @@ public class Game implements EventListener{
             //choose attacked
             else if(this.isState(Const.STATE_ATTACKER_TARGETING)){
                 this.clickedAttackedIndex = ((EventMinionClicked) event).getClickedIndex();
-                this.clickedAttackedAlly = ((EventMinionClicked) event).getIsAlly();
                 boolean canAttacked = false;
-                if(!this.clickedAttackedAlly){
+                if(!(((EventMinionClicked) event).getPlayerId() == this.currentPlayerid)){
                     Minion attacked = this.currentPlayer.getEnemy().get(this.clickedAttackedIndex);
                     canAttacked = attacked.canAttacked();                    
                 }
@@ -186,9 +181,7 @@ public class Game implements EventListener{
         }      
         else if(event instanceof EventMinionSelected){
             if(this.isState(Const.STATE_VALID_TARGET)){
-                this.selectedMinion = (this.clickedMinionAlly)? 
-                    this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
-                    this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
+                this.selectedMinion = this.players.get(this.clickedPlayerId).getAlly().get(this.clickedMinionIndex);
                 this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                 if(this.selectedCard instanceof BattleCry){
                     ((Minion) this.selectedCard).setMaster(this.currentPlayer);
@@ -304,9 +297,7 @@ public class Game implements EventListener{
     }
 
     private boolean checkValidMinion(){
-        Minion target = (this.clickedMinionAlly)? 
-            this.currentPlayer.getAlly().get(this.clickedMinionIndex) : 
-            this.currentPlayer.getEnemy().get(this.clickedMinionIndex);
+        Minion target = this.players.get(this.clickedPlayerId).getAlly().get(this.clickedMinionIndex); 
         if(this.selectedCard instanceof Targeting){
             List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer);
             return candidates.contains(target);
@@ -388,14 +379,12 @@ public class Game implements EventListener{
     private void reset(){
         this.clickedCardIndex = -1;
         this.clickedMinionIndex = -1;
-        this.clickedMinionAlly = false;
+        this.clickedPlayerId = -1;
         this.selectedCard = null;
         this.selectedMinion = null;
 
         this.clickedAttackerIndex = -1;
-        this.clickedAttackerAlly = false;
         this.clickedAttackedIndex = -1;
-        this.clickedAttackedAlly = false;
         this.selectedAttacker = null;
         this.selectedAttacked = null;
     } 
