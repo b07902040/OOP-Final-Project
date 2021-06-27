@@ -16,7 +16,9 @@ public class BoardPainter implements Painter {
         if(game.isMyTurn() && (state == Const.STATE_VALID_CARD || state == Const.STATE_VALID_ATTACKER || state == Const.STATE_VALID_ATTACKED || state == Const.STATE_VALID_TARGET))
             g.drawImage(View.loadImage(Const.SELECT_BUTTON_PATH), Const.SELECT_BUTTON[0], Const.SELECT_BUTTON[1], Const.SELECT_BUTTON[2], Const.SELECT_BUTTON[3], null);
         else g.drawImage(View.loadImage(Const.DIM_SELECT_BUTTON_PATH), Const.SELECT_BUTTON[0], Const.SELECT_BUTTON[1], Const.SELECT_BUTTON[2], Const.SELECT_BUTTON[3], null);
-        g.drawImage(View.loadImage(Const.ENDTURN_BUTTON_PATH), Const.ENDTURN_BUTTON[0], Const.ENDTURN_BUTTON[1], Const.ENDTURN_BUTTON[2], Const.ENDTURN_BUTTON[3], null);
+        if(game.isMyTurn() && state == Const.STATE_PENDING)
+            g.drawImage(View.loadImage(Const.ENDTURN_BUTTON_PATH), Const.ENDTURN_BUTTON[0], Const.ENDTURN_BUTTON[1], Const.ENDTURN_BUTTON[2], Const.ENDTURN_BUTTON[3], null);
+        else g.drawImage(View.loadImage(Const.DIM_ENDTURN_BUTTON_PATH), Const.ENDTURN_BUTTON[0], Const.ENDTURN_BUTTON[1], Const.ENDTURN_BUTTON[2], Const.ENDTURN_BUTTON[3], null);
         g.drawImage(View.loadImage(Const.MANA_BOX_IMG_PATH), Const.MANA_BOX[0], Const.MANA_BOX[1], Const.MANA_BOX[2], Const.MANA_BOX[3], null);
     }
 }

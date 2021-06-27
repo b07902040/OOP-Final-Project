@@ -75,6 +75,7 @@ public class Const {
     public static final String SELECT_BUTTON_PATH = "image/select.png";
     public static final String DIM_SELECT_BUTTON_PATH = "image/select_dim.png";
     public static final String ENDTURN_BUTTON_PATH = "image/end_turn.png";
+    public static final String DIM_ENDTURN_BUTTON_PATH = "image/end_turn_dim.png";
     public static final String MANA_BOX_IMG_PATH = "image/mana_box.png";
     
     public static final String FULL_MANA_PATH = "image/full_mana.png";
