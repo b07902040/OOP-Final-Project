@@ -73,6 +73,7 @@ public class Const {
     public static final String BAR_IMG_PATH = "image/bar.png";
     public static final String OPPONENT_CARD_REGION_PATH = "image/opponent_card_region.png";
     public static final String SELECT_BUTTON_PATH = "image/select.png";
+    public static final String DIM_SELECT_BUTTON_PATH = "image/select_dim.png";
     public static final String ENDTURN_BUTTON_PATH = "image/end_turn.png";
     public static final String MANA_BOX_IMG_PATH = "image/mana_box.png";
     
