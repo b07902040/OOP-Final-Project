@@ -17,8 +17,6 @@ public class GameInfo implements EventListener{
     private int[] mana ;
     private int[] fullMana;
     private boolean myTurn;
-    private Minion hero;
-    private Minion opponentHero;
     private List<Minion> ally = new ArrayList<Minion>();
     private List<Minion> enemy = new ArrayList<Minion>();   
     private List<Card> handCards = new ArrayList<Card>();
@@ -168,11 +166,15 @@ public class GameInfo implements EventListener{
     }
 
     public Minion getHero(){
-        return this.hero;
+        if(this.ally.size() == 0)
+            return null;
+        return this.ally.get(0);
     }
 
     public Minion getOpponentHero(){
-        return this.opponentHero;
+        if(this.enemy.size() == 0)
+            return null;
+        return this.enemy.get(0);
     }
 
     public int getShowedCardIndex(){

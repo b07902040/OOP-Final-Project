@@ -33,6 +33,8 @@ public class Const {
     public static final int SHOWEDCARD_NAME_FONT_SIZE = 36;
     public static final int MESSAGE_FONT_SIZE = 26;
     public static final int CARD_SHOW_STATUS_FONT_SIZE = 50;
+    public static final int MINION_SHOW_STATUS_FONT_SIZE = 20;
+    public static final int HERO_SHOW_STATUS_FONT_SIZE = 24;
 
     public static final int HANDCARD_GAP = 15;
     public static final int MINION_GAP = 15;
@@ -57,6 +59,10 @@ public class Const {
     public static final double CARD_MANA_X_RATIO = 0.17;
     public static final double CARD_MANA_Y_RATIO = 0.1;
 
+    public static final double MINION_ATTACK_X_RATIO = 0.16;
+    public static final double MINION_ATTACK_Y_RATIO = 0.85;
+    public static final double MINION_HEALTH_X_RATIO = 0.82;
+    public static final double MINION_HEALTH_Y_RATIO = 0.88;
 
 
     public static final int MESSAGE_X = 950;
