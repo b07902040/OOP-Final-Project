@@ -14,7 +14,7 @@ public class Const {
     public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
     public static final int[] MANA_BOX = {750, 805, 450, 50};
     public static final int[] HANDCARD_REGION = {50, 870, 950, 125};
-    public static final int[] CARD_SHOW = {50, 200, 375, 600};
+    public static final int[] CARD_SHOW = {50, 200, 375, 595};
     public static final int[] BOARD_REGION = {0, 520, 1200, 125};
     public static final int[] OP_BOARD_REGION = {0, 330, 1200, 125};
     public static final int[] HERO = {525, 690, 150, 150};
@@ -43,10 +43,16 @@ public class Const {
     public static final int OP_HANDCARD_Y = -30;
     public static final int OP_HANDCARD_GAP = -15;
 
-    public static final int CARD_W = 75;
+    public static final int CARD_W = 79;
     public static final int CARD_H = 125;
     public static final int MINION_W = 125;
     public static final int MINION_H = 125;
+    public static final int MINION_IMG_W = 105;
+    public static final int MINION_IMG_H = 105;
+    public static final int HANDCARD_IMG_W = 65;
+    public static final int HANDCARD_IMG_H = 65;
+    public static final int CARDSHOW_IMG_W = 310;
+    public static final int CARDSHOW_IMG_H = 310; 
 
     // X Ratio: (x - cardX)/cardW
     // Y Ratio: (y - cardY)/cardH
@@ -58,12 +64,15 @@ public class Const {
     public static final double CARD_HEALTH_Y_RATIO = 0.93;
     public static final double CARD_MANA_X_RATIO = 0.17;
     public static final double CARD_MANA_Y_RATIO = 0.1;
+    public static final double CARD_IMG_X_RATIO = 0.08;
+    public static final double CARD_IMG_Y_RATIO = 0.05;
 
     public static final double MINION_ATTACK_X_RATIO = 0.16;
     public static final double MINION_ATTACK_Y_RATIO = 0.85;
     public static final double MINION_HEALTH_X_RATIO = 0.82;
     public static final double MINION_HEALTH_Y_RATIO = 0.88;
-
+    public static final double MINION_IMG_X_RATIO = 0.08;
+    public static final double MINION_IMG_Y_RATIO = 0.05;
 
     public static final int MESSAGE_X = 950;
     public static final int MESSAGE_Y = 800;
