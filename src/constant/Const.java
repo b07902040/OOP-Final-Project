@@ -23,7 +23,7 @@ public class Const{
     public static final int MAX_HAND_SIZE = 10;
     public static final int STARTING_HAND_SIZE= 3;
     public static final int DECK_SIZE = 30; 
-    public static final int MAX_MANA = 10;
+    public static final int MAX_MANA = 100;
     public static final int BOARD_SPACE = 7;
     public static final int HERO_HP = 30;
     public static final int PLAYER1_WIN = 1;
@@ -31,5 +31,5 @@ public class Const{
     public static final int PLAYER_DRAW = 3;
 
     //FOR TESTING
-    public static final int INIT_MANA = 10;
+    public static final int INIT_MANA = 100;
 }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Antonidas extends AbstractMinion implements Card, Minion{
     
     private static String name = "Antonidas";
-    private static String description = "At the end of your turn, add a FireBall to your hand";
+    private static String description = "At the end of your turn, add 2 FireBalls to your hand";
     private static int baseCost = 7;
     private static int baseATK = 5;
     private static int baseHP = 7;
@@ -19,6 +19,7 @@ public class Antonidas extends AbstractMinion implements Card, Minion{
 
     @Override   
     public void doTurnEnd(){
+        this.master.addHandCards(new FireBall());
         this.master.addHandCards(new FireBall());
     }
     
