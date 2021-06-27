@@ -116,6 +116,8 @@ public class Player{
     }
 
     public void addHandCards(Card card){
+        if(this.handCards.size() >= Const.MAX_HAND_SIZE)
+            return;
         this.handCards.add(card);
         this.game.handCardAdd(this.playerId, card);
     }
