@@ -51,6 +51,7 @@ public class View implements EventListener{
         painters.add(new ManaPainter());
         painters.add(new HandCardPainter());
         painters.add(new MinionPainter());
+        painters.add(new ShowCardPainter());
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
@@ -103,7 +104,7 @@ public class View implements EventListener{
             imgLib.put(path, image);
             return image;
         } catch (IOException e){
-            e.printStackTrace();
+            System.out.printf("Error: image %s cannot be loaded.\n", path);
             return null;
         }
     }
