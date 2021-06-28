@@ -31,9 +31,8 @@ public class ShowCardPainter implements Painter {
         }
         else return;
         // draw card image
-        // g.drawImage(View.loadImage(Const.CARD_IMG_DIR + card.getName() + ".png"), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
-        g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), Const.CARD_SHOW[0] + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_SHOW[2]),
-                                    Const.CARD_SHOW[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_SHOW[3]), Const.CARDSHOW_IMG_W, Const.CARDSHOW_IMG_H, null);
+        View.drawCardImage(g, card, Const.CARD_SHOW[0] + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_SHOW[2]),
+                            Const.CARD_SHOW[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_SHOW[3]), Const.CARDSHOW_IMG_W, Const.CARDSHOW_IMG_H);
         if(card instanceof Minion){
             // draw card frame
             g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
