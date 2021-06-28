@@ -1,6 +1,9 @@
 package src.model;
 
-public interface Minion {
+import java.io.Serializable;
+
+public interface Minion extends Serializable {
+    static final long serialVersionUID = 2L;
     //todo
     //MAXHP
     Player getMaster();

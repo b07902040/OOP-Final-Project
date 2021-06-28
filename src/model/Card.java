@@ -1,6 +1,9 @@
 package src.model;
 
-public interface Card{
+import java.io.Serializable;
+
+public interface Card extends Serializable {
+    static final long serialVersionUID = 2L;
 
     String getName();
 
@@ -13,6 +16,5 @@ public interface Card{
     String getDescription();
 
     void setDescription(String description);
-
 
 }

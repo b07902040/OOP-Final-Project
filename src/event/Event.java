@@ -3,6 +3,8 @@ package src.event;
  * base of events
  * post()ed by EventManager, notify()ed by EventListener
  */
-public interface Event {
+import java.io.Serializable;
+public interface Event extends Serializable {
+    static final long serialVersionUID = 2L;
     String getName();
 }

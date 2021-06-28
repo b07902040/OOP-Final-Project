@@ -10,8 +10,9 @@ import src.model.minion.*;
 import src.model.spell.*;
 import src.event.*;
 import src.constant.*;
-
-public class Game implements EventListener{    
+import java.io.Serializable;
+public class Game implements EventListener, Serializable {
+    private static final long serialVersionUID = 1L;
     private EventManager eventManager;
     private StateMachine state = new StateMachine();
     private boolean running = false;
@@ -49,6 +50,7 @@ public class Game implements EventListener{
         this.eventManager.post(new EventInitialize());
         this.running = true;
         while(this.running){
+            System.out.println("test");
             this.eventManager.post(new EventEveryTick());
             //sleep
             try{

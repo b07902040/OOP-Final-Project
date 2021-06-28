@@ -1,4 +1,5 @@
 package src.model;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -9,7 +10,8 @@ import src.constant.Const;
 
 import java.util.ArrayList;
 
-public class Player{
+public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private int playerId;
     private String name;

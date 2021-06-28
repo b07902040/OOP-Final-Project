@@ -18,23 +18,21 @@ public class Server {
 	private int nowPlayerNum = 0;
 	public ServerEventManager eventManager = new ServerEventManager();
 
-	public static void main(String[] args) {
-
-		int port = (args.length == 0)? 2021 : Integer.parseInt(args[0]);
-		Server server = new Server();
-		server.start(port);
-
-	}
-
 	public void start(int port) {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
 			System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
-			boolean serverStart = true;
-			while (serverStart) { //Listen
+			//boolean serverStart = true;
+			int cnt = 0;
+			while ( cnt < 2 ) { //Listen
 				Socket cs = serverSocket.accept();
 				this.makeConnection(cs);
+				cnt++;
 			}
+			System.out.println("Game run start.");
+			Game game = new Game(eventManager);
+			game.run();
+			System.out.println("GGGGGGGGGG");
 			serverSocket.close();
 		} catch (Exception ex) {
 			System.out.println("Server start error on port:" + port);
@@ -83,6 +81,7 @@ public class Server {
 					// =====Do something=====
 					switch (receiveObj.getType()) {
 						case Message.JOIN:
+							System.out.println("Client just connect");
 							if ( nowPlayerNum >= 2 ) {
 								System.out.println("Too More Clients");
 							}
@@ -118,6 +117,9 @@ public class Server {
 						+ clientSockets[i].getRemoteSocketAddress());
 				ex.printStackTrace();
 			}
+		}
+		else {
+			System.out.println("No Client Connected");
 		}
 	}
 

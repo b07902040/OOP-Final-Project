@@ -37,8 +37,6 @@ public class GameInfo implements EventListener{
     private int attackedIndex;
     private int attackedPlayerIndex;
 
-
-
     
     public GameInfo(EventManager eventManager){
         this.eventManager = eventManager;
@@ -107,7 +105,8 @@ public class GameInfo implements EventListener{
         this.fullMana = new int[] {0, 0};
         this.turn = 0;
         this.deckSize = new int[] {Const.DECK_SIZE, Const.DECK_SIZE};
-        this.handSize = new int[] {0, 0};    
+        this.handSize = new int[] {0, 0};
+        System.out.println("GameInfo init success");
     }
 
     private void turnStart(){

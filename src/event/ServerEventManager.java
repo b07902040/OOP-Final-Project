@@ -1,4 +1,5 @@
 package src.event;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import src.*;
@@ -7,7 +8,7 @@ import src.event.Message;
 /**
  * Coordinate communication between the Model, View, and Controller.
  */
-public class ServerEventManager {
+public class ServerEventManager implements EventManager {
     /**
      * list of listeners that registered
      */

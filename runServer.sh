@@ -1,1 +1,1 @@
-java -cp out/ Server
+java -cp out/ ServerMain

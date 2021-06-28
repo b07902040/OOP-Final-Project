@@ -25,15 +25,6 @@ public class Client {
 	private String serverIP;
 	private int serverPort;
 	private static ObjectOutputStream oos;
-	public ClientEventManager eventManager = new ClientEventManager();
-
-	public static void main(String[] args)
-	{
-		String IP = (args.length == 0)? "127.0.0.1" : args[0];
-		int port = (args.length <= 1)? 2021 : Integer.parseInt(args[1]);
-		Client game = new Client();
-		game.start(IP, port);
-	}
 
 	public void start(String IP, int port)
 	{
@@ -52,24 +43,31 @@ public class Client {
 
 		this.playerName = playerNameField.getText();
 
+		ClientEventManager eventManager = new ClientEventManager();
+
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);
-		this.makeConnection();
+
+		GameInfo gameinfo = new GameInfo(eventManager);
+		Controller controller = new Controller(eventManager, gameinfo);
+		View view = new View(eventManager, gameinfo, controller);
+
+		this.makeConnection(eventManager);
 
 		System.out.println("GGGGGGGGGG");
 	}
 
-	public void makeConnection()
+	public void makeConnection(ClientEventManager eventManager)
 	{
 		try {
 			Socket serverSocket = new Socket(InetAddress.getByName(serverIP), serverPort);
 			oos = new ObjectOutputStream(serverSocket.getOutputStream());
 
-			Thread t = new Thread(new serverListener(serverSocket));
+			Thread t = new Thread(new serverListener(serverSocket, eventManager));
 			t.start();
 
 			System.out.println("Connected Success to server at " + serverIP);
 
-			this.sendMessage(new Message(Message.JOIN, playerID));
+			sendMessage(new Message(Message.JOIN, playerID));
 
 			Thread.sleep(500);
 
@@ -81,11 +79,13 @@ public class Client {
 	private class serverListener implements Runnable
 	{
 		private ObjectInputStream oistream;
+		private ClientEventManager eManager;
 
-		private serverListener(Socket socket)
+		private serverListener(Socket socket, ClientEventManager eventManager)
 		{
 			try{
 				oistream = new ObjectInputStream(socket.getInputStream());
+				eManager = eventManager;
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -97,13 +97,16 @@ public class Client {
 			try{
 				while ((receiveObj = (Message) oistream.readObject()) != null) {
 					// =====Do something=====
+					System.out.println(receiveObj.getType());
 					switch (receiveObj.getType()) {
 						case Message.JOIN:
 							playerID = (Integer) receiveObj.getObj();
 							System.out.println("My ID is " + playerID);
+							eManager.localPost(new EventClientInitalize(playerID));
+							System.out.println("Child: " + eManager.getListenerslen());
 							break;
 						case Message.EVENT:
-							eventManager.localPost((Event) receiveObj.getObj());
+							eManager.localPost((Event) receiveObj.getObj());
 							break;
 					}
 				}

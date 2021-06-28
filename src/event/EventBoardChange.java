@@ -1,7 +1,7 @@
 package src.event;
 import src.model.*;
 
-public class EventBoardChange implements Event{
+public class EventBoardChange implements Event {
     private String name = "EventBoardChange";
     private int playerId;
     private int index;

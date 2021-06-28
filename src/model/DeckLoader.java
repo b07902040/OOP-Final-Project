@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import src.model.minion.*;
 import src.model.spell.*;
 import src.constant.*;
-public class DeckLoader{
+import java.io.Serializable;
+public class DeckLoader implements Serializable {
+    private static final long serialVersionUID = 1L;
     private ArrayList<ArrayList<Card>> decks;
     
     public ArrayList<Card> loadDeck0(){
