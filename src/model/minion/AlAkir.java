@@ -5,9 +5,9 @@ public class AlAkir extends AbstractMinion implements Card, Minion, Charge, Divi
     
     private static String name = "AlAkir";
     private static String description = "Charge & DivineShield & Taunt & WindFury";
-    private static int baseCost = 2;
-    private static int baseATK = 1;
-    private static int baseHP = 2;
+    private static int baseCost = 8;
+    private static int baseATK = 3;
+    private static int baseHP = 6;
     private boolean divineShield = true;
     
     public AlAkir (){
