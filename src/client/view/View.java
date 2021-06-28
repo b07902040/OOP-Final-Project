@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 import src.event.*;
-// import src.model.*;
+import src.model.*;
 // import src.constant.*;
 import src.client.viewconstant.*;
 import src.client.controller.Controller;
@@ -14,6 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.Canvas;
@@ -33,6 +36,9 @@ public class View implements EventListener{
     private BufferedImage onScreenImage;
     private BufferedImage offScreenImage;
     private List<Painter> painters;
+    private Animation attackAnimation;
+    private boolean attacking;
+    private List<Animation> animations;
     private static HashMap<String, BufferedImage> imgLib = new HashMap<String, BufferedImage>(128);
     
     public View(EventManager eventManager, GameInfo model, Controller controller) {
@@ -48,6 +54,8 @@ public class View implements EventListener{
         this.onScreenImage = new BufferedImage(Const.SCREEN_W, Const.SCREEN_H, BufferedImage.TYPE_INT_ARGB);
         this.offScreenImage = new BufferedImage(Const.SCREEN_W, Const.SCREEN_H, BufferedImage.TYPE_INT_ARGB);
         this.painters = new ArrayList<Painter>();
+        this.animations = new ArrayList<Animation>();
+        this.attacking = false;
 
         painters.add(new BoardPainter());
         painters.add(new ManaPainter());
@@ -71,11 +79,23 @@ public class View implements EventListener{
             this.initialize();
         }
         else if(event instanceof EventEveryTick){
+            for (int i = this.animations.size() - 1; i >= 0; i--){
+                if(animations.get(i).isExpired()){
+                    painters.remove((Painter) animations.get(i));
+                    if(animations.get(i) == this.attackAnimation){
+                        this.attacking = false;
+                        this.eventManager.post(new EventMinionAttacked());
+                    }
+                    animations.remove(i);
+                }
+            }
+            if(this.model.getState() == Const.STATE_ATTACKING && !this.attacking){
+                this.attackAnimation = new AttackAnimation();
+                this.painters.add((Painter) this.attackAnimation);
+                this.animations.add(this.attackAnimation);
+                this.attacking = true;
+            }
             update();
-            return;
-        }
-        else if(event instanceof EventAttacking){
-            this.eventManager.post(new EventMinionAttacked());
         }
         else if(event instanceof EventEffecting){
             this.eventManager.post(new EventCardEffected());
@@ -122,6 +142,30 @@ public class View implements EventListener{
         int y = centerY;
         g.setFont(font);
         g.drawString(text, x, y);
+    }
+
+    public static void drawMinion(Graphics g, Minion minion, int x, int y){
+        Path path = Paths.get(Const.CARD_IMG_DIR + ((Card) minion).getName() + ".png");
+        // draw minion image
+        if (Files.exists(path))
+            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + ((Card) minion).getName() + ".png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
+                            y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H, null);
+        else
+            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
+                            y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H, null);
+        g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
+                        y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H, null);
+        // draw minion frame
+        g.drawImage(View.loadImage(Const.MINION_FRAME_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
+        // draw name for debugging
+        View.drawCenteredString(g,((Card) minion).getName(), x + Const.MINION_W/2, y + Const.MINION_H/2, new Font("Consolas", Font.PLAIN, 20));
+        
+        // draw attack
+        View.drawCenteredString(g, Integer.toString(minion.getATK()), x + (int)(Const.MINION_ATTACK_X_RATIO*Const.MINION_W),
+                                y + (int)(Const.MINION_ATTACK_Y_RATIO*Const.MINION_H), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
+        // draw health
+        View.drawCenteredString(g, Integer.toString(minion.getHP()), x + (int)(Const.MINION_HEALTH_X_RATIO*Const.MINION_W),
+                                y + (int)(Const.MINION_HEALTH_Y_RATIO*Const.MINION_H), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
     }
 }
 

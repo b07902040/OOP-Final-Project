@@ -22,10 +22,10 @@ public class EventAttacking implements Event{
         return this.attackerPlayerIndex;
     }
     public int getAttackedIndex(){
-        return this.attackerIndex;
+        return this.attackedIndex;
     }
     public int getAttackedPlayerIndex(){
-        return this.attackerPlayerIndex;
+        return this.attackedPlayerIndex;
     }
     
     @Override

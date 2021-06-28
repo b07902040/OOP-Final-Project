@@ -7,7 +7,7 @@ import src.model.Card;
 import src.model.minion.*;
 //import src.model.spell.*;
 import src.event.*;
-import src.constant.*;
+import src.client.viewconstant.Const;
 public class GameInfo implements EventListener{
     
     private int state; 
@@ -95,7 +95,7 @@ public class GameInfo implements EventListener{
         else if (event instanceof EventMinionChange){            
             EventMinionChange e = (EventMinionChange) event;
             this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
-        }   
+        }
     }
     
     private void initialize(int id){
@@ -106,7 +106,6 @@ public class GameInfo implements EventListener{
         this.turn = 0;
         this.deckSize = new int[] {Const.DECK_SIZE, Const.DECK_SIZE};
         this.handSize = new int[] {0, 0};
-        System.out.println("GameInfo init success");
     }
 
     private void turnStart(){
@@ -134,6 +133,10 @@ public class GameInfo implements EventListener{
 
     public int getPlayerId(){
         return this.playerId;
+    }
+
+    public int getOpponentId(){
+        return 1 - this.playerId;
     }
 
     public int getFullMana(int id){
@@ -197,19 +200,47 @@ public class GameInfo implements EventListener{
     }
 
     public int getAttackerIndex(){
-        return this.attackedIndex;
+        return this.attackerIndex;
     }
 
     public int getAttackerPlayerIndex(){
-        return this.attackedPlayerIndex;
+        return this.attackerPlayerIndex;
     }
 
     public int getAttackedIndex(){
-        return this.attackerIndex;
+        return this.attackedIndex;
     }
 
     public int getAttackedPlayerIndex(){
         return this.attackedPlayerIndex;
+    }
+
+    public int[] getMinionPosition(int playerId, int index){
+        int x, y;
+        if(playerId == this.playerId){
+            x = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (ally.size()-2)*Const.MINION_GAP - (ally.size()-1)*Const.MINION_W)/2 + (index-1)*(Const.MINION_GAP + Const.MINION_W);
+            y = Const.BOARD_REGION[1];
+        }
+        else{
+            x = Const.OP_BOARD_REGION[0] + (Const.OP_BOARD_REGION[2] - (enemy.size()-2)*Const.MINION_GAP - (enemy.size()-1)*Const.MINION_W)/2 + (enemy.size()-index-1)*(Const.MINION_GAP + Const.MINION_W);
+            y = Const.OP_BOARD_REGION[1];
+        }
+        return new int[] {x,y};
+    }
+
+    public int[] getAttackerPosition(){
+        return getMinionPosition(this.attackerPlayerIndex, this.attackerIndex);
+    }
+
+    public int[] getAttackedPosition(){
+        return getMinionPosition(this.attackedPlayerIndex, this.attackedIndex);
+    }
+
+    public Minion getAttacker(){
+        if(this.attackerPlayerIndex == this.playerId)
+            return this.ally.get(this.attackerIndex);
+        else
+            return this.enemy.get(this.attackerIndex);
     }
 
     public void manaChange(int playerId, int mana, int fullMana){
