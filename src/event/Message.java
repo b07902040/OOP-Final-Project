@@ -8,6 +8,7 @@ public class Message implements Serializable {
     private Object obj;
     public static final int JOIN = 0;
     public static final int NEWPLAYER = 1;
+    public static final int EVENT = 2;
 
     public Message(int type, int sender, Object obj) {
         this.type = type;
