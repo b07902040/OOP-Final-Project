@@ -1,3 +1,4 @@
+package src.event;
 
 import java.io.Serializable;
 

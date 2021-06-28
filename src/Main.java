@@ -15,6 +15,4 @@ public class Main {
 		//int id = Math.random(((int)(Math.random()+1)));
 		//send event id 0 1 (random)
     }
-
-	
 }

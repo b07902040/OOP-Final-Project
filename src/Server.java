@@ -1,4 +1,4 @@
-package src
+package src;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -12,11 +12,11 @@ import src.utils.*;
 
 public class Server {
 
-	private Socket[] clientSockets = new Socket[2];
+	private static Socket[] clientSockets = new Socket[2];
 	private String[] clientNames = new String[2];
-	private ObjectOutputStream[] clientOOStreams = new ObjectOutputStream[2];
+	private static ObjectOutputStream[] clientOOStreams = new ObjectOutputStream[2];
 	private int nowPlayerNum = 0;
-	public EventManager eventManager = new EventManager();
+	public ServerEventManager eventManager = new ServerEventManager();
 
 	public static void main(String[] args) {
 
@@ -24,10 +24,6 @@ public class Server {
 		Server server = new Server();
 		server.start(port);
 
-		Game game = new Game(eventManager);
-		Test test =new Test(eventManager,game);
-		test.run();
-		System.out.println("GGGGGGGGGG");
 	}
 
 	public void start(int port) {

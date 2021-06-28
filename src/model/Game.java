@@ -42,7 +42,7 @@ public class Game implements EventListener{
 
     public Game(EventManager eventManager){
         this.eventManager = eventManager;
-        this.eventManager.register(this);        
+        this.eventManager.register(this);
     }
     
     public void run(){

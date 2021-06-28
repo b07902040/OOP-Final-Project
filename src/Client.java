@@ -1,4 +1,4 @@
-package src
+package src;
 import java.io.*;
 import java.net.Socket;
 import java.net.InetAddress;
@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import org.codehaus.groovy.control.messages.Message;
 import src.model.*;
 import src.event.*;
 import java.util.List;
@@ -19,14 +18,14 @@ import src.client.controller.*;
 import src.client.view.*;
 import src.client.viewconstant.*;
 
-public class Client  {
+public class Client {
 
 	private String playerName = "";
 	private static int playerID = -2;
 	private String serverIP;
 	private int serverPort;
-	private ObjectOutputStream oos;
-	public EventManager eventManager = new EventManager();
+	private static ObjectOutputStream oos;
+	public ClientEventManager eventManager = new ClientEventManager();
 
 	public static void main(String[] args)
 	{
@@ -56,9 +55,6 @@ public class Client  {
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);
 		this.makeConnection();
 
-		GameInfo gameinfo = new GameInfo(eventManager);
-		Test test =new Test(eventManager,game);
-		test.run();
 		System.out.println("GGGGGGGGGG");
 	}
 
