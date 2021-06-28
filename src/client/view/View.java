@@ -147,14 +147,15 @@ public class View implements EventListener{
     public static void drawMinion(Graphics g, Minion minion, int x, int y){
         Path path = Paths.get(Const.CARD_IMG_DIR + ((Card) minion).getName() + ".png");
         // draw minion image
-        if (Files.exists(path))
+        if (Files.exists(path)){
             g.drawImage(View.loadImage(Const.CARD_IMG_DIR + ((Card) minion).getName() + ".png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
                             y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H, null);
-        else
-            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
+        }
+        else{
+            System.out.println(Const.CARD_IMG_DIR + ((Card) minion).getName() + ".png does not exist!!!!!!!!!!!!!!!!!!!!!!!!");
+            g.drawImage(View.loadImage(Const.CARD_IMG_DIR + ".png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
                             y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H, null);
-        g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
-                        y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H, null);
+        }
         // draw minion frame
         g.drawImage(View.loadImage(Const.MINION_FRAME_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
         // draw name for debugging

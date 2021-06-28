@@ -9,9 +9,9 @@ import java.awt.Font;
 
 public class AttackAnimation implements Animation {
     private int timer = 0;
-    private static final int forwadTicks = 10;
-    private static final int hitTicks = 2;
-    private static final int retrieveTicks = 10;
+    private static final int forwadTicks = Const.FPS/4;
+    private static final int hitTicks = Const.FPS/20;
+    private static final int retrieveTicks = Const.FPS/4;
     private static final int endTime = forwadTicks + hitTicks + retrieveTicks;
 
     @Override

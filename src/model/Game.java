@@ -53,7 +53,7 @@ public class Game implements EventListener, Serializable {
             this.eventManager.post(new EventEveryTick());
             //sleep
             try{
-                Thread.sleep(50);                
+                Thread.sleep(1000/Const.FPS);             
             }
             catch (Exception e){};
         }    
