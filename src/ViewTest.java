@@ -13,7 +13,7 @@ import src.model.*;
 
 public class ViewTest {
     public static void main(String[] args) {
-        EventManager eventManager = new EventManager();
+        LocalEventManager eventManager = new EventManager();
         GameInfo game0 = new GameInfo(eventManager);
         GameInfo game1 = new GameInfo(eventManager);
         Game model = new Game(eventManager);
