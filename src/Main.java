@@ -11,8 +11,5 @@ public class Main {
       	Test test =new Test(eventManager,game);
 		test.run();
 		System.out.println("GGGGGGGGGG");
-		//2 connection
-		//int id = Math.random(((int)(Math.random()+1)));
-		//send event id 0 1 (random)
     }
 }

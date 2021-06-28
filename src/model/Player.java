@@ -185,7 +185,7 @@ public class Player{
                 return false;      
         }
         if(card instanceof Spell && card instanceof Targeting){
-            if(((Targeting)card).getCandidates(this) == null){
+            if(((Targeting)card).getCandidates(this).size() == 0){
                 if(card instanceof BattleCry) return true;
                 else return false;
             }                
