@@ -1,18 +1,18 @@
 package src.model.minion;
 import src.model.*;
 //Complete
-public class PatientAssassin extends AbstractMinion implements Card, Minion, Poisonous, Stealth{
+public class Panther extends AbstractMinion implements Card, Minion, Stealth{
     
-    private static String name = "PatientAssassin";
-    private static String description = "Poisonous & Stealth";
-    private static int baseCost = 2;
-    private static int baseATK = 1;
-    private static int baseHP = 1;
+    private static String name = "Panther";
+    private static String description = "Stealth";
+    private static int baseCost = 3;
+    private static int baseATK = 4;
+    private static int baseHP = 2;
     private boolean stealth = true;
 
-    public PatientAssassin (){
-        super(PatientAssassin.name, PatientAssassin.description, PatientAssassin.baseCost,
-                 PatientAssassin.baseHP, PatientAssassin.baseATK);    
+    public Panther (){
+        super(Panther.name, Panther.description, Panther.baseCost,
+                 Panther.baseHP, Panther.baseATK);    
     }
 
     @Override

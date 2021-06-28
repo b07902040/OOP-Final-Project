@@ -10,12 +10,10 @@ public class DeckLoader{
     public ArrayList<Card> loadDeck0(){
         ArrayList<Card> deck = new ArrayList<Card>();
         for(int i = 0; i < 5; i++){
-            deck.add(new SunKeeper());
-            deck.add(new DarkHealer());
-            deck.add(new Sludge());
-            deck.add(new TurtleElder());
-            deck.add(new KingKrush());
-            deck.add(new EliteWarrior());
+            deck.add(new VoidLord());
+            deck.add(new Fording());
+            deck.add(new BlackKnight());
+            deck.add(new Obliterate());
         }
         return deck;
     }

@@ -6,7 +6,7 @@ import src.client.model.GameInfo;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.Thread;
-import utils.*;
+import src.utils.*;
 
 import src.model.minion.*;
 import src.model.*;

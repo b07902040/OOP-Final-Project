@@ -287,7 +287,7 @@ public class Game implements EventListener{
         for(int i = 0; i < 2; i++){
             this.players.get(i).drawCards(Const.STARTING_HAND_SIZE + i);
         }
-        this.players.get(1).addHandCards(new TheCoin());
+        this.players.get(1).addHandCards(new Coin());
     }
 
     private void turnStart(){

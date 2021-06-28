@@ -28,7 +28,7 @@ public class VileSpine extends AbstractMinion implements Card, Minion, BattleCry
         if(combo < 1) return;
         List<Minion> candidates = new ArrayList<Minion>();
         for(Minion minion : this.master.getEnemy()){
-            if(!(minion instanceof Hero)  &&  minion.canTargeted())
+            if(!(minion instanceof Hero))
                 candidates.add(minion);
         }
         if(candidates.size() == 0) return;

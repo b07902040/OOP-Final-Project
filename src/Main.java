@@ -2,7 +2,7 @@ import src.model.*;
 import src.event.*;
 import java.util.List;
 import java.util.ArrayList;
-import utils.*;
+import src.utils.*;
 
 public class Main {
     public static void main(String[] args) {
