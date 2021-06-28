@@ -50,7 +50,6 @@ public class Game implements EventListener, Serializable {
         this.eventManager.post(new EventInitialize());
         this.running = true;
         while(this.running){
-            System.out.println("test");
             this.eventManager.post(new EventEveryTick());
             //sleep
             try{
