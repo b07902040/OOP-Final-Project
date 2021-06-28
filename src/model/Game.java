@@ -119,6 +119,7 @@ public class Game implements EventListener{
                         ((Minion) this.selectedCard).setMaster(this.currentPlayer);
                         this.playedMinion(this.selectedCard);
                         this.stateChange(Const.STATE_EFFECTING);
+                    this.eventManager.post(new EventEffecting(0,0,0,0));
                         this.reset();                        
                     }
                     else
@@ -141,9 +142,7 @@ public class Game implements EventListener{
                         
                     }
                     this.stateChange(Const.STATE_EFFECTING);
-                    int cardPlayerId = this.currentPlayerid;
-                    int targetPlayerId = (this.currentPlayerid + 1) % 2;
-                    this.eventManager.post(new EventEffecting(cardPlayerId, this.clickedCardIndex, targetPlayerId,this.clickedMinionIndex));
+                    this.eventManager.post(new EventEffecting(0,0,0,0));
                     this.reset();                    
                 }  
             }

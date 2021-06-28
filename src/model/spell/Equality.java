@@ -8,7 +8,7 @@ public class Equality extends AbstractSpell implements Card, Spell{
     
     private static String name = "Equality";
     private static String description = "Change the HP of  all minions to 1";
-    private static int baseCost = 4;
+    private static int baseCost = 3;
 
     public Equality(){
         super(Equality.name, Equality.description, Equality.baseCost);    
