@@ -18,12 +18,16 @@ public class MinionPainter implements Painter {
         int x, y;
         // draw ally minions
         for(int i = 1; i < ally.size(); i++){
+            if(game.getState() == Const.STATE_ATTACKING && game.getAttackerIndex() == i && game.getAttackerPlayerIndex() == id)
+                continue;
             x = game.getMinionPosition(id, i)[0];
             y = game.getMinionPosition(id, i)[1];
             View.drawMinion(g, ally.get(i), x, y);
         }
         // draw enemy minions
         for(int i = 1; i < enemy.size(); i++){
+            if(game.getState() == Const.STATE_ATTACKING && game.getAttackerIndex() == i && game.getAttackerPlayerIndex() == opponentId)
+                continue;
             x = game.getMinionPosition(opponentId, i)[0];
             y = game.getMinionPosition(opponentId, i)[1];
             View.drawMinion(g, enemy.get(i), x, y);
