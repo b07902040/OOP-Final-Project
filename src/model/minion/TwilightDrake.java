@@ -4,7 +4,7 @@ import src.model.*;
 public class TwilightDrake extends AbstractMinion implements Card, Minion, BattleCry{
     
     private static String name = "TwilightDrake";
-    private static String description = "BattleCry: Gain +1 Health for each card in your hand.";
+    private static String description = "BattleCry: Gain +1 HP for each card in your hand.";
     private static int baseCost = 4;
     private static int baseATK = 4;
     private static int baseHP = 1;
