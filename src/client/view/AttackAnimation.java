@@ -9,10 +9,12 @@ import java.awt.Font;
 
 public class AttackAnimation implements Animation {
     private int timer = 0;
-    private static final int forwadTicks = Const.FPS/6;
-    private static final int hitTicks = Const.FPS/30;
-    private static final int retrieveTicks = Const.FPS/6;
-    private static final int endTime = forwadTicks + hitTicks + retrieveTicks;
+    private static final double attackScale = 1.1;
+    private static final int scalingTicks = Const.FPS/10;
+    private static final int floatingTicks = Const.FPS/6;
+    private static final int forwadTicks = Const.FPS/10;
+    private static final int retrieveTicks = Const.FPS/10;
+    private static final int endTime = scalingTicks + floatingTicks + forwadTicks + retrieveTicks;
 
     @Override
     public void draw(GameInfo game, BufferedImage screenImg){
@@ -21,30 +23,32 @@ public class AttackAnimation implements Animation {
         int attackerX = game.getAttackerPosition()[0];
         int attackerY = game.getAttackerPosition()[1];
         int x, y;
-        if(timer < forwadTicks){
-            System.out.println("first stage");
-            x = attackerX + (targetX - attackerX)*(timer + 1)/forwadTicks;
-            y = attackerY + (targetY - attackerY)*(timer + 1)/forwadTicks;
+        double scale;
+        if(timer < scalingTicks){
+            x = attackerX;
+            y = attackerY;
+            scale = 1 + (attackScale - 1)*(timer + 1)/scalingTicks;
         }
-        else if(timer < forwadTicks + hitTicks){
-            System.out.println("second stage");
-            x = targetX;
-            y = targetY;
+        else if(timer < scalingTicks + floatingTicks){
+            x = attackerX;
+            y = attackerY;
+            scale = attackScale;
+        }
+        else if(timer < scalingTicks + floatingTicks + forwadTicks){
+            x = attackerX + (targetX - attackerX)*(timer + 1 - (scalingTicks + floatingTicks))/forwadTicks;
+            y = attackerY + (targetY - attackerY)*(timer + 1 - (scalingTicks + floatingTicks))/forwadTicks;
+            scale = attackScale;
         }
         else if(timer < endTime){
-            System.out.println("last stage");
-            x = targetX + (attackerX - targetX)*(timer + 1 - forwadTicks - hitTicks)/retrieveTicks;
-            y = targetY + (attackerY - targetY)*(timer + 1 - forwadTicks - hitTicks)/retrieveTicks;
+            x = targetX + (attackerX - targetX)*(timer + 1 - (scalingTicks + floatingTicks + forwadTicks))/retrieveTicks;
+            y = targetY + (attackerY - targetY)*(timer + 1 - (scalingTicks + floatingTicks + forwadTicks))/retrieveTicks;
+            scale = attackScale + (1 - attackScale)*(timer + 1 - (scalingTicks + floatingTicks + forwadTicks))/retrieveTicks;
         }
         else{
             return;
         }
         Graphics g = screenImg.getGraphics();
-        View.drawMinion(g, game.getAttacker(), x, y);
-        System.out.printf("animation drawing %d %d\n", x, y);
-        System.out.printf("attacker index: %d, target index: %d\n", game.getAttackerIndex(), game.getAttackedIndex());
-        System.out.printf("attacker %d %d\n", attackerX, attackerY);
-        System.out.printf("target %d %d\n", targetX, targetY);
+        View.drawMinion(g, game.getAttacker(), x, y, scale);
         update();
     }
 

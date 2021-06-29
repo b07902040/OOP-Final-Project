@@ -98,6 +98,8 @@ public class Const {
     public static final double MINION_HEALTH_Y_RATIO = 0.88;
     public static final double MINION_IMG_X_RATIO = 0.08;
     public static final double MINION_IMG_Y_RATIO = 0.05;
+    public static final double MINION_IMG_W_RATIO = 0.84;
+    public static final double MINION_IMG_H_RATIO = 0.84;
 
     public static final int MESSAGE_X = 30;
     public static final int MESSAGE_Y = 735;

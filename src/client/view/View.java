@@ -176,32 +176,35 @@ public class View implements EventListener{
         drawCenteredString(g, line, x + w/2, y, font);
     }
 
-    public static void drawMinion(Graphics g, Minion minion, int x, int y){
+    public static void drawMinion(Graphics g, Minion minion, int x, int y, double scale){
+        x -= (int)((scale - 1)*Const.MINION_W/2);
+        y -= (int)((scale - 1)*Const.MINION_H/2);
+        int w = (int)(Const.MINION_W*scale);
+        int h = (int)(Const.MINION_H*scale);
         // draw taunt
         if(minion instanceof Taunt)
-                g.drawImage(View.loadImage(Const.TAUNT_IMG_PATH), x + (int)(Const.CARD_TAUNT_X_RATIO*Const.MINION_W), y + (int)(Const.CARD_TAUNT_Y_RATIO*Const.MINION_H),
-                            (int)(Const.CARD_TAUNT_W_RATIO*Const.MINION_W), (int)(Const.CARD_TAUNT_H_RATIO*Const.MINION_H), null);
+                g.drawImage(View.loadImage(Const.TAUNT_IMG_PATH), x + (int)(Const.CARD_TAUNT_X_RATIO*w), y + (int)(Const.CARD_TAUNT_Y_RATIO*h),
+                            (int)(Const.CARD_TAUNT_W_RATIO*w), (int)(Const.CARD_TAUNT_H_RATIO*h), null);
         // draw minion image
-        View.drawCardImage(g, (Card) minion, x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
-                            y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H);
+        View.drawCardImage(g, (Card) minion, x + (int)(Const.MINION_IMG_X_RATIO*w),
+                            y + (int)(Const.MINION_IMG_Y_RATIO*h), (int)(Const.MINION_IMG_W_RATIO*w), (int)(Const.MINION_IMG_H_RATIO*h));
         // draw minion frame
-        g.drawImage(View.loadImage(Const.MINION_FRAME_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
+        g.drawImage(View.loadImage(Const.MINION_FRAME_PATH), x, y, w, h, null);
         // draw name for debugging
-        View.drawCenteredString(g,((Card) minion).getName(), x + Const.MINION_W/2, y + Const.MINION_H/2, new Font("Consolas", Font.PLAIN, 20));
-        
+        View.drawCenteredString(g,((Card) minion).getName(), x + w/2, y + h/2, new Font("Consolas", Font.PLAIN, 20));
         // draw attack
-        View.drawCenteredString(g, Integer.toString(minion.getATK()), x + (int)(Const.MINION_ATTACK_X_RATIO*Const.MINION_W),
-                                y + (int)(Const.MINION_ATTACK_Y_RATIO*Const.MINION_H), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
+        View.drawCenteredString(g, Integer.toString(minion.getATK()), x + (int)(Const.MINION_ATTACK_X_RATIO*w),
+                                y + (int)(Const.MINION_ATTACK_Y_RATIO*h), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
         // draw health
-        View.drawCenteredString(g, Integer.toString(minion.getHP()), x + (int)(Const.MINION_HEALTH_X_RATIO*Const.MINION_W),
-                                y + (int)(Const.MINION_HEALTH_Y_RATIO*Const.MINION_H), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
+        View.drawCenteredString(g, Integer.toString(minion.getHP()), x + (int)(Const.MINION_HEALTH_X_RATIO*w),
+                                y + (int)(Const.MINION_HEALTH_Y_RATIO*h), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
         // draw death rattle icon
         if(minion instanceof DeathRattle)
-            g.drawImage(View.loadImage(Const.DEATHRATTLE_IMG_PATH), x + (int)(Const.CARD_DEATHRATTLE_X_RATIO*Const.MINION_W),
-                        y + (int)(Const.CARD_DEATHRATTLE_Y_RATIO*Const.MINION_H), (int)(Const.CARD_DEATHRATTLE_W_RATIO*Const.MINION_W), (int)(Const.CARD_DEATHRATTLE_H_RATIO*Const.MINION_H), null);
+            g.drawImage(View.loadImage(Const.DEATHRATTLE_IMG_PATH), x + (int)(Const.CARD_DEATHRATTLE_X_RATIO*w),
+                        y + (int)(Const.CARD_DEATHRATTLE_Y_RATIO*h), (int)(Const.CARD_DEATHRATTLE_W_RATIO*w), (int)(Const.CARD_DEATHRATTLE_H_RATIO*h), null);
         // draw divine shied
         if(minion instanceof DivineShield && ((DivineShield) minion).hasDivineShield())
-            g.drawImage(View.loadImage(Const.DIVINE_SHIELD_IMG_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
+            g.drawImage(View.loadImage(Const.DIVINE_SHIELD_IMG_PATH), x, y, w, h, null);
     }
 }
 

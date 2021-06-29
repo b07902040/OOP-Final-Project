@@ -24,7 +24,7 @@ public class MinionPainter implements Painter {
             minion = ally.get(i);
             x = game.getMinionPosition(id, i)[0];
             y = game.getMinionPosition(id, i)[1];
-            View.drawMinion(g, minion, x, y);
+            View.drawMinion(g, minion, x, y, 1);
 
         }
         // draw enemy minions
@@ -34,7 +34,7 @@ public class MinionPainter implements Painter {
             minion = enemy.get(i);
             x = game.getMinionPosition(opponentId, i)[0];
             y = game.getMinionPosition(opponentId, i)[1];
-            View.drawMinion(g, minion, x, y);
+            View.drawMinion(g, minion, x, y, 1);
         }
     }
 }
