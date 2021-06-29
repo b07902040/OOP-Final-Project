@@ -48,8 +48,14 @@ public class ShowCardPainter implements Painter {
         // draw mana cost
         View.drawCenteredString(g, Integer.toString(card.getCost()), Const.CARD_SHOW[0] + (int)(Const.CARD_MANA_X_RATIO*Const.CARD_SHOW[2]),
                                 Const.CARD_SHOW[1] + (int)(Const.CARD_MANA_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
-        // drw card name
+        // draw card name
         View.drawCenteredString(g, card.getName(), Const.CARD_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_SHOW[2]),
-                                    Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
+                                Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
+        // draw description
+        //g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "default.png"), Const.CARD_SHOW[0] + (int) (Const.CARD_DESCRIPTION_X_RATIO*Const.CARD_SHOW[2]),
+                                //Const.CARD_SHOW[1] + (int) (Const.CARD_DESCRIPTION_Y_RATIO*Const.CARD_SHOW[3]), (int)(Const.CARD_DESCRIPTION_W_RATIO*Const.CARD_SHOW[2]), 100, null);
+        View.drawRectString(g, card.getDescription(), Const.CARD_SHOW[0] + (int) (Const.CARD_DESCRIPTION_X_RATIO*Const.CARD_SHOW[2]),
+                                Const.CARD_SHOW[1] + (int) (Const.CARD_DESCRIPTION_Y_RATIO*Const.CARD_SHOW[3]), (int)(Const.CARD_DESCRIPTION_W_RATIO*Const.CARD_SHOW[2]),
+                                new Font("Consolas", Font.PLAIN, Const.DESCRIPTION_FONT_SIZE));
     }
 }

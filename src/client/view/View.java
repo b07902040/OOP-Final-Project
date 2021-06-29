@@ -155,6 +155,24 @@ public class View implements EventListener{
         }
     }
 
+    public static void drawRectString(Graphics g, String text, int x, int y, int w, Font font){
+        FontMetrics metrics = g.getFontMetrics(font);
+        g.setFont(font);
+        String[] splited = text.split(" ");
+        String line = "";
+        for(String word : splited){
+            if(metrics.stringWidth(line + " " + word) > w){
+                y += metrics.getHeight();
+                drawCenteredString(g, line, x + w/2, y, font);
+                line = word;
+            }
+            else
+                line += " " + word;
+        }
+        y += metrics.getHeight();
+        drawCenteredString(g, line, x + w/2, y, font);
+    }
+
     public static void drawMinion(Graphics g, Minion minion, int x, int y){
         View.drawCardImage(g, (Card) minion, x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
                             y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H);

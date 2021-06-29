@@ -36,6 +36,7 @@ public class Const {
     public static final int CARD_SHOW_STATUS_FONT_SIZE = 50;
     public static final int MINION_SHOW_STATUS_FONT_SIZE = 20;
     public static final int HERO_SHOW_STATUS_FONT_SIZE = 24;
+    public static final int DESCRIPTION_FONT_SIZE = 20;
 
     public static final int HANDCARD_GAP = 15;
     public static final int MINION_GAP = 15;
@@ -69,6 +70,9 @@ public class Const {
     public static final double CARD_MANA_Y_RATIO = 0.1;
     public static final double CARD_IMG_X_RATIO = 0.08;
     public static final double CARD_IMG_Y_RATIO = 0.05;
+    public static final double CARD_DESCRIPTION_X_RATIO = 0.2;
+    public static final double CARD_DESCRIPTION_Y_RATIO = 0.65;
+    public static final double CARD_DESCRIPTION_W_RATIO = 0.62;
 
     public static final double MINION_ATTACK_X_RATIO = 0.16;
     public static final double MINION_ATTACK_Y_RATIO = 0.85;
