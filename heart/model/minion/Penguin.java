@@ -1,17 +1,16 @@
 package heart.model.minion;
-import heart.model.*;
+
 //Complete
-public class Penguin extends AbstractMinion implements Card, Minion{
-    
+public class Penguin extends AbstractMinion {
+
     private static String name = "Penguin";
     private static String description = "";
     private static int baseCost = 0;
     private static int baseATK = 1;
     private static int baseHP = 1;
-   
-    public Penguin (){
-        super(Penguin.name, Penguin.description, Penguin.baseCost,
-                 Penguin.baseHP, Penguin.baseATK);    
+
+    public Penguin() {
+        super(Penguin.name, Penguin.description, Penguin.baseCost, Penguin.baseHP, Penguin.baseATK);
     }
-   
+
 }

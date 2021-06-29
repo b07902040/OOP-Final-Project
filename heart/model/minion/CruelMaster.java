@@ -1,42 +1,44 @@
 package heart.model.minion;
-import java.util.List;
-
-import heart.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import heart.model.BattleCry;
+import heart.model.Minion;
+import heart.model.Player;
+import heart.model.Targeting;
+
 //Complete
-public class CruelMaster extends AbstractMinion implements Card, Minion, BattleCry, Targeting{
-    
+public class CruelMaster extends AbstractMinion implements BattleCry, Targeting {
+
     private static String name = "CruelMaster";
     private static String description = "BattleCry: Deal 1 damage to a minion and give it +2 ATK";
     private static int baseCost = 2;
     private static int baseATK = 2;
     private static int baseHP = 2;
-    
 
-    public CruelMaster (){
-        super(CruelMaster.name, CruelMaster.description, CruelMaster.baseCost,
-                 CruelMaster.baseHP, CruelMaster.baseATK);    
+    public CruelMaster() {
+        super(CruelMaster.name, CruelMaster.description, CruelMaster.baseCost, CruelMaster.baseHP, CruelMaster.baseATK);
     }
 
-    @Override 
-    public List<Minion> getCandidates(Player player){ 
+    @Override
+    public List<Minion> getCandidates(Player player) {
         List<Minion> candidates = new ArrayList<Minion>();
-        for(Minion minion : player.getAlly()){
-            if(!(minion instanceof Hero) &&  minion.canTargeted())
-                candidates.add(minion);              
+        for (Minion minion : player.getAlly()) {
+            if (!(minion instanceof Hero) && minion.canTargeted())
+                candidates.add(minion);
         }
-        for(Minion minion : player.getEnemy()){
-            if(!(minion instanceof Hero)  &&  minion.canTargeted())
+        for (Minion minion : player.getEnemy()) {
+            if (!(minion instanceof Hero) && minion.canTargeted())
                 candidates.add(minion);
         }
         return candidates;
     }
 
-    @Override 
-    public void doBattleCryEffect(Minion target){ 
+    @Override
+    public void doBattleCryEffect(Minion target) {
         target.setHP(target.getHP() - 1);
-        target.setATK(target.getATK() + 1); 
+        target.setATK(target.getATK() + 1);
     }
-    
+
 }

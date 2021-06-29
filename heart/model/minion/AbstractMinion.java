@@ -1,9 +1,15 @@
 package heart.model.minion;
-import heart.constant.*;
-import heart.model.*;
 
-public abstract class AbstractMinion implements Minion, Card{
-    //minion property
+import heart.model.Card;
+import heart.model.Charge;
+import heart.model.Minion;
+import heart.model.Player;
+import heart.model.Poisonous;
+import heart.model.Taunt;
+import heart.model.WindFury;
+
+public abstract class AbstractMinion implements Minion, Card {
+    // minion property
     protected int HP;
     protected int baseHP;
     protected int buffHP;
@@ -15,14 +21,14 @@ public abstract class AbstractMinion implements Minion, Card{
     protected boolean alive = true;
     protected Player master;
     protected int aliveTime = 0;
-    
-    //card property
+
+    // card property
     protected int cost;
     protected int baseCost;
     protected String name;
-    protected String description;       
+    protected String description;
 
-    public  AbstractMinion(String name, String description, int baseCost , int baseHP, int baseATK){
+    public AbstractMinion(String name, String description, int baseCost, int baseHP, int baseATK) {
         this.name = name;
         this.description = description;
         this.baseCost = baseCost;
@@ -32,213 +38,212 @@ public abstract class AbstractMinion implements Minion, Card{
         this.buffHP = baseHP;
         this.baseATK = baseATK;
         this.ATK = baseATK;
-        this.attackLimit = (this instanceof WindFury)? 2 : 1;   
+        this.attackLimit = (this instanceof WindFury) ? 2 : 1;
     }
 
-    //card
-    @Override   
-    public String getName(){
+    // card
+    @Override
+    public String getName() {
         return this.name;
     }
 
-    @Override    
-    public int getCost(){
+    @Override
+    public int getCost() {
         return this.cost;
     }
 
-    @Override    
-    public void setCost(int cost){
+    @Override
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
     @Override
-    public int getBaseCost(){
+    public int getBaseCost() {
         return this.baseCost;
     }
 
     @Override
-    public String getDescription(){
+    public String getDescription() {
         return this.description;
     }
-    
+
     @Override
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    //minion
+    // minion
     @Override
-    public Player getMaster(){
+    public Player getMaster() {
         return this.master;
     }
 
     @Override
-    public void setMaster(Player master){
+    public void setMaster(Player master) {
         this.master = master;
     }
 
     @Override
-    public int getHP(){
+    public int getHP() {
         return this.HP;
     }
 
     @Override
-    public void setHP(int HP){
-        //Heal        
-        if(this.HP < HP){
-            System.out.printf("%s +%d HP.\n",this.name,HP-this.HP);
-            this.HP = Math.min(HP, this.buffHP);    
+    public void setHP(int HP) {
+        // Heal
+        if (this.HP < HP) {
+            System.out.printf("%s +%d HP.\n", this.name, HP - this.HP);
+            this.HP = Math.min(HP, this.buffHP);
         }
-        //damage
-        else if(this.HP > HP){         
-                System.out.printf("%s -%d HP.\n",this.name,this.HP-HP);
-                this.HP = HP;     
-        }   
-        int index = this.master.getAlly().indexOf(this);
+        // damage
+        else if (this.HP > HP) {
+            System.out.printf("%s -%d HP.\n", this.name, this.HP - HP);
+            this.HP = HP;
+        }
         this.minionChange();
     }
-    
+
     @Override
-    public void reWriteHP(int HP){
+    public void reWriteHP(int HP) {
         this.HP = HP;
         this.minionChange();
     }
 
     @Override
-    public int getBaseHP(){
+    public int getBaseHP() {
         return this.baseHP;
     }
 
     @Override
-    public int getBuffHP(){
+    public int getBuffHP() {
         return this.buffHP;
-    }  
+    }
 
     @Override
-    public void setBuffHP(int buffHP){
+    public void setBuffHP(int buffHP) {
         this.buffHP = buffHP;
     }
 
     @Override
-    public int getATK(){
+    public int getATK() {
         return this.ATK;
     }
 
     @Override
-    public void setATK(int ATK){
-        this.ATK = ATK;        
+    public void setATK(int ATK) {
+        this.ATK = ATK;
         this.minionChange();
     }
 
     @Override
-    public int getBaseATK(){
+    public int getBaseATK() {
         return this.baseATK;
     }
 
     @Override
-    public void setAttackLimit(int attackLimit){
+    public void setAttackLimit(int attackLimit) {
         this.attackLimit = attackLimit;
     }
-    
+
     @Override
-    public void resetAttackCount(){
+    public void resetAttackCount() {
         this.attackCount = 0;
     }
 
     @Override
-    public int getPlayedOrder(){
+    public int getPlayedOrder() {
         return this.playedOrder;
     }
 
     @Override
-    public void setPlayedOrder(int order){
+    public void setPlayedOrder(int order) {
         this.playedOrder = order;
     }
+
     @Override
-    public boolean isDamaged(){
+    public boolean isDamaged() {
         return this.HP < this.buffHP;
     }
 
     @Override
-    public boolean isAlive(){
-        if(this.HP <= 0) 
+    public boolean isAlive() {
+        if (this.HP <= 0)
             return false;
         return this.alive;
     }
 
     @Override
-    public boolean getAlive(){
+    public boolean getAlive() {
         return this.alive;
     }
 
     @Override
-    public void setAlive(boolean alive){
+    public void setAlive(boolean alive) {
         this.alive = alive;
     }
 
     @Override
-    public int getAliveTime(){
+    public int getAliveTime() {
         return this.aliveTime;
     }
 
     @Override
-    public void addAliveTime(){
+    public void addAliveTime() {
         this.aliveTime++;
     }
 
     @Override
-    public boolean canAttack(){        
-        if(this.ATK == 0)
+    public boolean canAttack() {
+        if (this.ATK == 0)
             return false;
-        if(this.attackCount < this.attackLimit){
-            if(this.aliveTime == 0){
-                if(this instanceof Charge)
+        if (this.attackCount < this.attackLimit) {
+            if (this.aliveTime == 0) {
+                if (this instanceof Charge)
                     return true;
                 return false;
-            }
-            else
+            } else
                 return true;
         }
         return false;
     }
 
     @Override
-    public boolean canAttacked(){
-        if(this instanceof Taunt)
+    public boolean canAttacked() {
+        if (this instanceof Taunt)
             return true;
-        for(Minion minion : this.master.getAlly()){
-            if((minion instanceof Taunt)) 
+        for (Minion minion : this.master.getAlly()) {
+            if ((minion instanceof Taunt))
                 return false;
         }
         return true;
     }
 
     @Override
-    public boolean canTargeted(){
+    public boolean canTargeted() {
         return true;
     }
 
     @Override
-    public void attack(Minion target){
-        System.out.printf("%s attack %s\n",this.name,((AbstractMinion)target).getName());
-        if(this instanceof Poisonous && !(target instanceof Hero))
+    public void attack(Minion target) {
+        System.out.printf("%s attack %s\n", this.name, ((AbstractMinion) target).getName());
+        if (this instanceof Poisonous && !(target instanceof Hero))
             target.setHP(0);
         else
             target.setHP(target.getHP() - this.getATK());
-        if(target instanceof Poisonous && !(this instanceof Hero))
+        if (target instanceof Poisonous && !(this instanceof Hero))
             this.setHP(0);
         else
-            this.setHP(this.getHP() - target.getATK());        
+            this.setHP(this.getHP() - target.getATK());
         this.attackCount++;
     }
 
     @Override
-    public void doTurnEnd(){
+    public void doTurnEnd() {
         return;
     }
 
     @Override
-    public void minionChange(){
+    public void minionChange() {
         int index = this.master.getAlly().indexOf(this);
         this.master.getGame().minionChange(this.master.getPlayerId(), index, this);
     }

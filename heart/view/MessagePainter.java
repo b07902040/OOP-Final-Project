@@ -13,9 +13,9 @@ public class MessagePainter implements Painter {
         Graphics g = screenImg.getGraphics();
         g.setFont(new Font("Consolas", Font.PLAIN, Const.TURN_MESSAGE_FONT_SIZE));
         if(game.isMyTurn())
-            g.drawString("Your Turn", Const.MESSAGE_X, Const.MESSAGE_Y);       
+            g.drawString("Turn " + game.getTurn() + ": Your Turn", Const.MESSAGE_X, Const.MESSAGE_Y);       
         else
-            g.drawString("Opponent's Turn", Const.MESSAGE_X, Const.MESSAGE_Y);
+            g.drawString("Turn " + game.getTurn() + ": Opponent's Turn", Const.MESSAGE_X, Const.MESSAGE_Y);
         int state = game.getState();
         g.setFont(new Font("Consolas", Font.PLAIN, Const.MESSAGE_FONT_SIZE));
         if(state == Const.STATE_GAME_END){

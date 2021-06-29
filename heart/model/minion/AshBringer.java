@@ -1,18 +1,17 @@
 
 package heart.model.minion;
-import heart.model.*;
+
 //Complete
-public class AshBringer extends AbstractMinion implements Card, Minion{
-    
+public class AshBringer extends AbstractMinion {
+
     private static String name = "AshBringer";
     private static String description = "Fording's weapon";
     private static int baseCost = 5;
     private static int baseATK = 5;
     private static int baseHP = 5;
-   
-    public AshBringer (){
-        super(AshBringer.name, AshBringer.description, AshBringer.baseCost,
-                 AshBringer.baseHP, AshBringer.baseATK);    
+
+    public AshBringer() {
+        super(AshBringer.name, AshBringer.description, AshBringer.baseCost, AshBringer.baseHP, AshBringer.baseATK);
     }
-   
+
 }
