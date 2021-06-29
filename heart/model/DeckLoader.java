@@ -10,7 +10,10 @@ import heart.model.spell.*;
 public class DeckLoader implements Serializable {
     private static final long serialVersionUID = 1L;
     private ArrayList<ArrayList<Card>> library;
-    private static int[] cardNumber = {1,1,2,2,2,6,6,1,1,2,3,3};
+    private static final int[] cardNumber = {1,1,2,2,2,6,6,1,1,2,3,3};
+    private static final int shuffleThresHold = 4;
+    private static final int shuffleCard = 4;
+    private static final int shuffleTime = 3;
     public DeckLoader(){
         library = new ArrayList<ArrayList<Card>>();
         this.library.add(minionType0());
@@ -35,13 +38,21 @@ public class DeckLoader implements Serializable {
             decks.get(0).addAll(cards.subList(0, cardNumber[i]));
             decks.get(1).addAll(cards.subList(cardNumber[i], 2 * cardNumber[i]));
         }
-        Collections.shuffle(decks.get(0),new Random());
-        Collections.shuffle(decks.get(1),new Random());
-       
+        Collections.shuffle(decks.get(0), new Random());
+        Collections.shuffle(decks.get(1), new Random());
+        this.balanceCost(decks.get(0));
+        this.balanceCost(decks.get(1));
         return decks;
     }
-    private ArrayList<Card> balanceCost(ArrayList<Card> input){
-        
+    private void balanceCost(ArrayList<Card> input){
+        for(int j = 0;j < shuffleTime; j++){
+            for(int i = 0; i < shuffleCard; i++){
+                if(input.get(i).getCost() < shuffleThresHold) continue;
+                input.add(input.get(i));
+                input.remove(i);
+            }
+        }
+        Collections.shuffle(input.subList(shuffleCard, input.size()), new Random());
     }
     private ArrayList<Card> pickCards(ArrayList<Card> input, int num){
         ArrayList<Card> cards = new ArrayList<Card>();
