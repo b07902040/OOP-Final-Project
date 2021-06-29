@@ -217,7 +217,18 @@ public class GameInfo implements EventListener{
 
     public int[] getMinionPosition(int playerId, int index){
         int x, y;
-        if(playerId == this.playerId){
+
+        if(index == 0){
+            if(playerId == this.playerId){
+                x = Const.HERO[0] + (Const.HERO[2] - Const.MINION_W)/2;
+                y = Const.HERO[1] + (Const.HERO[3] - Const.MINION_H)/2;
+            }
+            else{
+                x = Const.OP_HERO[0] + (Const.OP_HERO[2] - Const.MINION_W)/2;
+                y = Const.OP_HERO[1] + (Const.OP_HERO[3] - Const.MINION_H)/2;
+            }
+        }
+        else if(playerId == this.playerId){
             x = Const.BOARD_REGION[0] + (Const.BOARD_REGION[2] - (ally.size()-2)*Const.MINION_GAP - (ally.size()-1)*Const.MINION_W)/2 + (index-1)*(Const.MINION_GAP + Const.MINION_W);
             y = Const.BOARD_REGION[1];
         }
