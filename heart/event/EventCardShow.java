@@ -1,11 +1,11 @@
 package heart.event;
 
-public class EventCardShow implements Event{
+public class EventCardShow implements Event {
     private String name = "EventCardShow";
     private int showIndex;
     private boolean valid;
-    
-    public EventCardShow(int showIndex, boolean valid){
+
+    public EventCardShow(int showIndex, boolean valid) {
         this.showIndex = showIndex;
         this.valid = valid;
     }
@@ -19,8 +19,8 @@ public class EventCardShow implements Event{
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
-    
+
 }

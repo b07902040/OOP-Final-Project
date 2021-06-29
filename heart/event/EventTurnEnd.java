@@ -1,10 +1,10 @@
 package heart.event;
 
-public class EventTurnEnd implements Event{
+public class EventTurnEnd implements Event {
     private String name = "EventTurnEnd";
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

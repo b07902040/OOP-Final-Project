@@ -1,25 +1,25 @@
 package heart.event;
 
-public class EventMinionDestroy implements Event{
+public class EventMinionDestroy implements Event {
     private String name = "EventMinionDestroy";
     private int playerId;
     private int index;
 
-    public EventMinionDestroy(int playerId, int index){
+    public EventMinionDestroy(int playerId, int index) {
         this.playerId = playerId;
         this.index = index;
     }
-    
-    public int getPlayerId(){
+
+    public int getPlayerId() {
         return this.playerId;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return this.index;
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

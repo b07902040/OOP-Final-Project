@@ -1,7 +1,7 @@
 package heart.model;
 
-public interface DeathRattle{
-    
+public interface DeathRattle {
+
     void doDeathRattleEffect();
-     
+
 }

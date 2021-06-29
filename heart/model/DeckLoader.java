@@ -1,27 +1,27 @@
 package heart.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import heart.model.minion.*;
 import heart.model.spell.*;
-
-import java.util.ArrayList;
-import java.io.Serializable;
 public class DeckLoader implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    public ArrayList<Card> loadDeck0(){
+
+    public ArrayList<Card> loadDeck0() {
         ArrayList<Card> deck = new ArrayList<Card>();
         deck.add(new KingKrush());
         deck.add(new KingKrush());
-        deck.add(new AlexStrasza());            
+        deck.add(new AlexStrasza());
         deck.add(new Onyxia());
-        deck.add(new LordBarov());    
-        deck.add(new LordBarov());    
-        deck.add(new DrBoom());            
+        deck.add(new LordBarov());
+        deck.add(new LordBarov());
+        deck.add(new DrBoom());
         deck.add(new PenguinParty());
         deck.add(new Antonidas());
         deck.add(new BlackKnight());
         deck.add(new DeathWing());
-        deck.add(new DoomGuard());            
+        deck.add(new DoomGuard());
         deck.add(new Fordring());
         deck.add(new FriedChicken());
         deck.add(new Hogger());
@@ -42,4 +42,3 @@ public class DeckLoader implements Serializable {
         return deck;
     }
 }
-

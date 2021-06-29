@@ -1,5 +1,5 @@
 package heart.model;
 
-public interface Taunt{
+public interface Taunt {
 
 }

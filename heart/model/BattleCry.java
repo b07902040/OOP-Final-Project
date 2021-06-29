@@ -1,7 +1,7 @@
 package heart.model;
 
-public interface BattleCry{
-    
+public interface BattleCry {
+
     void doBattleCryEffect(Minion target);
-     
+
 }

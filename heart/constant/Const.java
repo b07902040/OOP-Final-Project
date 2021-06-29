@@ -1,30 +1,31 @@
 package heart.constant;
-public class Const{
+
+public class Const {
     public static final int FPS = 60;
-    //StateMachine
+    // StateMachine
     public static final int STATE_INITIALIZED = 0;
     public static final int STATE_PENDING = 1;
     public static final int STATE_GAME_END = 111;
-    //Play card
+    // Play card
     public static final int STATE_VALID_CARD = 2;
     public static final int STATE_INVALID_CARD = 3;
-    public static final int STATE_CARD_TARGETING = 4; 
-    public static final int STATE_VALID_TARGET = 5;  
+    public static final int STATE_CARD_TARGETING = 4;
+    public static final int STATE_VALID_TARGET = 5;
     public static final int STATE_INVALID_TARGET = 6;
-    public static final int STATE_EFFECTING = 7; 
-    //Attack
-    public static final int STATE_VALID_ATTACKER = 8;  
-    public static final int STATE_INVALID_ATTACKER = 9; 
-    public static final int STATE_ATTACKER_TARGETING = 10;     
-    public static final int STATE_VALID_ATTACKED = 11;  
-    public static final int STATE_INVALID_ATTACKED = 12; 
-    public static final int STATE_ATTACKING = 13; 
+    public static final int STATE_EFFECTING = 7;
+    // Attack
+    public static final int STATE_VALID_ATTACKER = 8;
+    public static final int STATE_INVALID_ATTACKER = 9;
+    public static final int STATE_ATTACKER_TARGETING = 10;
+    public static final int STATE_VALID_ATTACKED = 11;
+    public static final int STATE_INVALID_ATTACKED = 12;
+    public static final int STATE_ATTACKING = 13;
 
     public static final int STATE_END = 99;
-    //Game
+    // Game
     public static final int MAX_HAND_SIZE = 10;
-    public static final int STARTING_HAND_SIZE= 3;
-    public static final int DECK_SIZE = 30; 
+    public static final int STARTING_HAND_SIZE = 3;
+    public static final int DECK_SIZE = 30;
     public static final int MAX_MANA = 100;
     public static final int BOARD_SPACE = 7;
     public static final int HERO_HP = 30;
@@ -32,33 +33,32 @@ public class Const{
     public static final int PLAYER2_WIN = 2;
     public static final int PLAYER_DRAW = 3;
 
-    //FOR TESTING
+    // FOR TESTING
     public static final int INIT_MANA = 100;
 
-    //Controller
+    // Controller
     public static final int MOUSE_CLICK_THRESHOLD = 100;
-    //View
+    // View
     public static final int SCREEN_W = 1200;
     public static final int SCREEN_H = 1000;
 
-    public static final int[] MIDDLE_BAR = {0, 480, 1200, 8};
-    public static final int[] BOTTOM_BAR = {0, 850, 1200, 8};
-    public static final int[] OPPONENT_CARD_REGION = {300, -30, 600, 100};
-    public static final int[] SELECT_BUTTON = {1030, 900, 150, 60};
-    public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
-    public static final int[] MANA_BOX = {750, 805, 450, 50};
-    public static final int[] OP_MANA_BOX = {950, 10, 135, 50};
-    public static final int[] MESSAGE_BOX = {5, 700, 450, 150};
-    public static final int[] HANDCARD_REGION = {50, 860, 950, 125};
-    public static final int[] CARD_SHOW = {50, 90, 375, 595};
-    public static final int[] BOARD_REGION = {0, 520, 1200, 125};
-    public static final int[] OP_BOARD_REGION = {0, 330, 1200, 125};
-    public static final int[] HERO = {525, 690, 150, 150};
-    public static final int[] OP_HERO = {525, 120, 150, 150};
-    public static final int[] DECK = {1150, 190, 79, 125};
-    public static final int[] OP_DECK = {1150, 590, 79, 125};
+    public static final int[] MIDDLE_BAR = { 0, 480, 1200, 8 };
+    public static final int[] BOTTOM_BAR = { 0, 850, 1200, 8 };
+    public static final int[] OPPONENT_CARD_REGION = { 300, -30, 600, 100 };
+    public static final int[] SELECT_BUTTON = { 1030, 900, 150, 60 };
+    public static final int[] ENDTURN_BUTTON = { 1100, 460, 100, 40 };
+    public static final int[] MANA_BOX = { 750, 805, 450, 50 };
+    public static final int[] OP_MANA_BOX = { 950, 10, 135, 50 };
+    public static final int[] MESSAGE_BOX = { 5, 700, 450, 150 };
+    public static final int[] HANDCARD_REGION = { 50, 860, 950, 125 };
+    public static final int[] CARD_SHOW = { 50, 90, 375, 595 };
+    public static final int[] BOARD_REGION = { 0, 520, 1200, 125 };
+    public static final int[] OP_BOARD_REGION = { 0, 330, 1200, 125 };
+    public static final int[] HERO = { 525, 690, 150, 150 };
+    public static final int[] OP_HERO = { 525, 120, 150, 150 };
+    public static final int[] DECK = { 1150, 190, 79, 125 };
+    public static final int[] OP_DECK = { 1150, 590, 79, 125 };
 
-    
     public static final int MANA_X = 770;
     public static final int MANA_Y = 815;
     public static final int MANA_SIZE = 30;
@@ -96,7 +96,7 @@ public class Const{
     public static final int CARDSHOW_IMG_W = 300;
     public static final int CARDSHOW_IMG_H = 300;
     public static final int HERO_IMG_W = 126;
-    public static final int HERO_IMG_H = 126;  
+    public static final int HERO_IMG_H = 126;
 
     // X Ratio: (x - cardX)/cardW
     // Y Ratio: (y - cardY)/cardH
@@ -126,7 +126,6 @@ public class Const{
     public static final double CARD_DEATHRATTLE_W_RATIO = 0.28;
     public static final double CARD_DEATHRATTLE_H_RATIO = 0.25;
 
-
     public static final double MINION_ATTACK_X_RATIO = 0.16;
     public static final double MINION_ATTACK_Y_RATIO = 0.85;
     public static final double MINION_HEALTH_X_RATIO = 0.82;
@@ -140,7 +139,7 @@ public class Const{
     public static final int MESSAGE_Y = 735;
     public static final int MESSAGE_H = 30;
 
-    //Path
+    // Path
     public static final String BACKGROUND_IMG_PATH = "image/background.png";
     public static final String BAR_IMG_PATH = "image/bar.png";
     public static final String OPPONENT_CARD_REGION_PATH = "image/opponent_card_region.png";
@@ -151,7 +150,7 @@ public class Const{
     public static final String MANA_BOX_IMG_PATH = "image/mana_box.png";
     public static final String OPPONENT_MANA_BOX_IMG_PATH = "image/opponent_mana_box.png";
     public static final String MESSAGE_BOX_IMG_PATH = "image/message_box.png";
-    
+
     public static final String FULL_MANA_PATH = "image/full_mana.png";
     public static final String EMPTY_MANA_PATH = "image/empty_mana.png";
 
@@ -165,6 +164,5 @@ public class Const{
     public static final String TAUNT_IMG_PATH = "image/taunt.png";
     public static final String DIVINE_SHIELD_IMG_PATH = "image/divine_shield.png";
     public static final String DEATHRATTLE_IMG_PATH = "image/death_rattle.png";
-
 
 }

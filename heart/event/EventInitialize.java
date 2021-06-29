@@ -1,10 +1,10 @@
 package heart.event;
 
-public class EventInitialize implements Event{
+public class EventInitialize implements Event {
     private String name = "EventInitialize";
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

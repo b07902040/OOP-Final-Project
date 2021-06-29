@@ -1,5 +1,5 @@
 package heart.model;
 
-public interface WindFury{
+public interface WindFury {
 
 }

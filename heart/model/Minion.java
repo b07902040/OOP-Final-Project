@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 public interface Minion extends Serializable {
     static final long serialVersionUID = 2L;
-    //todo
-    //MAXHP
+
+    // todo
+    // MAXHP
     Player getMaster();
 
     void setMaster(Player master);
@@ -13,7 +14,7 @@ public interface Minion extends Serializable {
     int getHP();
 
     void setHP(int HP);
-    
+
     void reWriteHP(int HP);
 
     int getBaseHP();
@@ -21,7 +22,7 @@ public interface Minion extends Serializable {
     int getBuffHP();
 
     void setBuffHP(int buffHP);
-     
+
     int getATK();
 
     void setATK(int ATK);
@@ -31,17 +32,17 @@ public interface Minion extends Serializable {
     void resetAttackCount();
 
     int getBaseATK();
-    
+
     int getPlayedOrder();
 
     void setPlayedOrder(int order);
-    
+
     boolean isDamaged();
-    
+
     boolean isAlive();
 
     boolean getAlive();
-    
+
     void setAlive(boolean alive);
 
     boolean canAttack();
@@ -55,7 +56,7 @@ public interface Minion extends Serializable {
     void addAliveTime();
 
     void attack(Minion target);
-    
+
     void doTurnEnd();
 
     void minionChange();

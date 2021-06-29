@@ -1,5 +1,6 @@
 package heart.event;
-import heart.model.*;
+
+import heart.model.Minion;
 
 public class EventBoardChange implements Event {
     private String name = "EventBoardChange";
@@ -7,33 +8,34 @@ public class EventBoardChange implements Event {
     private int index;
     private Minion minion;
 
-    //remove
-    public EventBoardChange(int playerId, int index){
+    // remove
+    public EventBoardChange(int playerId, int index) {
         this.playerId = playerId;
         this.index = index;
         this.minion = null;
     }
-    //summon
-    public EventBoardChange(int playerId, int index, Minion minion){
+
+    // summon
+    public EventBoardChange(int playerId, int index, Minion minion) {
         this.playerId = playerId;
         this.index = index;
         this.minion = minion;
     }
-    
-    public int getPlayerId(){
+
+    public int getPlayerId() {
         return this.playerId;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return this.index;
     }
 
-    public Minion getMinion(){
+    public Minion getMinion() {
         return this.minion;
     }
-    
+
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

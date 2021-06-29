@@ -1,11 +1,11 @@
 package heart.event;
 
-public class EventClickedEmpty implements Event{
+public class EventClickedEmpty implements Event {
     private String name = "EventClickedEmpty";
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
-    
+
 }

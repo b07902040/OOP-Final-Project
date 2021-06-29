@@ -1,10 +1,10 @@
 package heart.event;
 
-public class EventEveryTick implements Event{
+public class EventEveryTick implements Event {
     private String name = "EventEveryTick";
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

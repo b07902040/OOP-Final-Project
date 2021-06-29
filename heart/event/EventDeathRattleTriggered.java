@@ -1,10 +1,10 @@
 package heart.event;
 
-public class EventDeathRattleTriggered implements Event{
+public class EventDeathRattleTriggered implements Event {
     private String name = "EventDeathRattleTriggered";
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

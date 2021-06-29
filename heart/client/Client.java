@@ -1,16 +1,19 @@
 package heart.client;
-import java.io.*;
-import java.net.Socket;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
+import java.net.Socket;
 
-import javax.swing.JTextField;
-
-import heart.event.*;
-
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import heart.event.ClientEventManager;
+import heart.event.Event;
+import heart.event.EventClientInitalize;
+import heart.event.Message;
 
 public class Client {
 
@@ -20,8 +23,7 @@ public class Client {
 	private int serverPort;
 	private static ObjectOutputStream oos;
 
-	public void start(String IP, int port)
-	{
+	public void start(String IP, int port) {
 		serverIP = IP;
 		serverPort = port;
 
@@ -29,10 +31,7 @@ public class Client {
 		JPanel playerNamePanel = new JPanel();
 		playerNamePanel.add(new JLabel("Type your name here:"));
 		playerNamePanel.add(playerNameField);
-		JOptionPane.showConfirmDialog(null,
-				playerNamePanel,
-				"Welcome to HeartStone",
-				JOptionPane.YES_NO_OPTION,
+		JOptionPane.showConfirmDialog(null, playerNamePanel, "Welcome to HeartStone", JOptionPane.YES_NO_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 
 		this.playerName = playerNameField.getText();
@@ -46,8 +45,7 @@ public class Client {
 		System.out.println("GGGGGGGGGG");
 	}
 
-	public void makeConnection(ClientEventManager eventManager)
-	{
+	public void makeConnection(ClientEventManager eventManager) {
 		try {
 			Socket serverSocket = new Socket(InetAddress.getByName(serverIP), serverPort);
 			oos = new ObjectOutputStream(serverSocket.getOutputStream());
@@ -61,30 +59,28 @@ public class Client {
 
 			Thread.sleep(500);
 
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			System.out.println("Server no respond.");
 		}
 	}
 
-	private class serverListener implements Runnable
-	{
+	private class serverListener implements Runnable {
 		private ObjectInputStream oistream;
 		private ClientEventManager eManager;
 
-		private serverListener(Socket socket, ClientEventManager eventManager)
-		{
-			try{
+		private serverListener(Socket socket, ClientEventManager eventManager) {
+			try {
 				oistream = new ObjectInputStream(socket.getInputStream());
 				eManager = eventManager;
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
+
 		@Override
-		public void run()
-		{
+		public void run() {
 			Message receiveObj;
-			try{
+			try {
 				while ((receiveObj = (Message) oistream.readObject()) != null) {
 					// =====Do something=====
 					System.out.println(receiveObj.getType());
@@ -100,17 +96,16 @@ public class Client {
 							break;
 					}
 				}
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				System.out.println("Connection lost");
 				ex.printStackTrace();
 			}
 		}
 	}
-	public static synchronized void sendMessage(Message message)
-	{
-		try
-		{
-			System.out.println("Message Sent Success, Type: " + message.getType() );
+
+	public static synchronized void sendMessage(Message message) {
+		try {
+			System.out.println("Message Sent Success, Type: " + message.getType());
 			oos.writeObject(message);
 			oos.flush();
 		} catch (Exception ex) {
@@ -119,6 +114,8 @@ public class Client {
 		}
 	}
 
-	public static int getPlayerID() { return playerID; }
+	public static int getPlayerID() {
+		return playerID;
+	}
 
 }

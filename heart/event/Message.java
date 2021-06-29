@@ -26,12 +26,20 @@ public class Message implements Serializable {
         return this.type;
     }
 
-    public int getSender() { return this.sender; }
+    public int getSender() {
+        return this.sender;
+    }
 
-    public void setSender(int sender) { this.sender= sender; }
+    public void setSender(int sender) {
+        this.sender = sender;
+    }
 
-    public Object getObj() { return this.obj; }
+    public Object getObj() {
+        return this.obj;
+    }
 
-    public void setObj(Object newObj) { this.obj = newObj; }
+    public void setObj(Object newObj) {
+        this.obj = newObj;
+    }
 
 }

@@ -1,6 +1,6 @@
 package heart.event;
 
-public class EventAttacking implements Event{
+public class EventAttacking implements Event {
     private String name = "EventAttacking";
 
     private int attackerIndex;
@@ -8,28 +8,31 @@ public class EventAttacking implements Event{
     private int attackedIndex;
     private int attackedPlayerIndex;
 
-    public EventAttacking(int attackerPlayerIndex, int attackerIndex, int attackedPlayerIndex, int attackedIndex){
+    public EventAttacking(int attackerPlayerIndex, int attackerIndex, int attackedPlayerIndex, int attackedIndex) {
         this.attackerIndex = attackerIndex;
         this.attackerPlayerIndex = attackerPlayerIndex;
         this.attackedIndex = attackedIndex;
         this.attackedPlayerIndex = attackedPlayerIndex;
     }
-    
-    public int getAttackerIndex(){
+
+    public int getAttackerIndex() {
         return this.attackerIndex;
     }
-    public int getAttackerPlayerIndex(){
+
+    public int getAttackerPlayerIndex() {
         return this.attackerPlayerIndex;
     }
-    public int getAttackedIndex(){
+
+    public int getAttackedIndex() {
         return this.attackedIndex;
     }
-    public int getAttackedPlayerIndex(){
+
+    public int getAttackedPlayerIndex() {
         return this.attackedPlayerIndex;
     }
-    
+
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

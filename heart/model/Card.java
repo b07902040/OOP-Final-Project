@@ -12,7 +12,7 @@ public interface Card extends Serializable {
     void setCost(int cost);
 
     int getBaseCost();
-    
+
     String getDescription();
 
     void setDescription(String description);

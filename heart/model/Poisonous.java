@@ -1,5 +1,5 @@
 package heart.model;
 
-public interface Poisonous{
+public interface Poisonous {
 
 }

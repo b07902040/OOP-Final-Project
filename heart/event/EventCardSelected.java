@@ -1,10 +1,10 @@
 package heart.event;
 
-public class EventCardSelected implements Event{
+public class EventCardSelected implements Event {
     private String name = "EventCardSelected";
 
     @Override
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

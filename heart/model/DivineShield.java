@@ -1,5 +1,5 @@
 package heart.model;
 
-public interface DivineShield{
+public interface DivineShield {
     boolean hasDivineShield();
 }
