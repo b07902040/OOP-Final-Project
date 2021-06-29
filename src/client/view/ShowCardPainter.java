@@ -33,7 +33,7 @@ public class ShowCardPainter implements Painter {
         else return;
         // draw card image
         View.drawCardImage(g, card, Const.CARD_SHOW[0] + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_SHOW[2]),
-                            Const.CARD_SHOW[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_SHOW[3]), Const.CARDSHOW_IMG_W, Const.CARDSHOW_IMG_H);
+                            Const.CARD_SHOW[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_SHOW[3]), (int)(Const.CARD_IMG_W_RATIO*Const.CARD_SHOW[2]), (int)(Const.CARD_IMG_H_RATIO*Const.CARD_SHOW[3]));
         if(card instanceof Minion){
             // draw card frame
             g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);

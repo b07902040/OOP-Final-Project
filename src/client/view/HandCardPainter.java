@@ -18,7 +18,7 @@ public class HandCardPainter implements Painter {
         for(int i = 0; i < handCards.size(); i++){
             card = handCards.get(i);
             View.drawCardImage(g, card, shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_W),
-                                Const.HANDCARD_REGION[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_H), Const.HANDCARD_IMG_W, Const.HANDCARD_IMG_H);
+                                Const.HANDCARD_REGION[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_H), (int)(Const.CARD_IMG_W_RATIO*Const.CARD_W), (int)(Const.CARD_IMG_H_RATIO*Const.CARD_H));
             if(card instanceof Minion)
                 g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
             else if(card instanceof Spell)

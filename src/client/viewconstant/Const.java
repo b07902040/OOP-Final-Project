@@ -15,7 +15,7 @@ public class Const {
     public static final int[] MANA_BOX = {750, 805, 450, 50};
     public static final int[] OP_MANA_BOX = {950, 10, 135, 50};
     public static final int[] MESSAGE_BOX = {5, 700, 450, 150};
-    public static final int[] HANDCARD_REGION = {50, 870, 950, 125};
+    public static final int[] HANDCARD_REGION = {50, 860, 950, 125};
     public static final int[] CARD_SHOW = {50, 90, 375, 595};
     public static final int[] BOARD_REGION = {0, 520, 1200, 125};
     public static final int[] OP_BOARD_REGION = {0, 330, 1200, 125};
@@ -51,16 +51,14 @@ public class Const {
     public static final int OP_HANDCARD_GAP = -15;
     public static final int CARD_SHADOW_W = 20;
 
-    public static final int CARD_W = 79;
-    public static final int CARD_H = 125;
+    public static final int CARD_W = 85;
+    public static final int CARD_H = 135;
     public static final int MINION_W = 125;
     public static final int MINION_H = 125;
     public static final int MINION_IMG_W = 105;
     public static final int MINION_IMG_H = 105;
-    public static final int HANDCARD_IMG_W = 65;
-    public static final int HANDCARD_IMG_H = 65;
-    public static final int CARDSHOW_IMG_W = 310;
-    public static final int CARDSHOW_IMG_H = 310;
+    public static final int CARDSHOW_IMG_W = 300;
+    public static final int CARDSHOW_IMG_H = 300;
     public static final int HERO_IMG_W = 126;
     public static final int HERO_IMG_H = 126;  
 
@@ -76,8 +74,10 @@ public class Const {
     public static final double CARD_HEALTH_Y_RATIO = 0.93;
     public static final double CARD_MANA_X_RATIO = 0.17;
     public static final double CARD_MANA_Y_RATIO = 0.1;
-    public static final double CARD_IMG_X_RATIO = 0.08;
-    public static final double CARD_IMG_Y_RATIO = 0.05;
+    public static final double CARD_IMG_X_RATIO = 0.1;
+    public static final double CARD_IMG_Y_RATIO = 0.06;
+    public static final double CARD_IMG_W_RATIO = 0.82;
+    public static final double CARD_IMG_H_RATIO = 0.52;
     public static final double CARD_DESCRIPTION_X_RATIO = 0.2;
     public static final double CARD_DESCRIPTION_Y_RATIO = 0.65;
     public static final double CARD_DESCRIPTION_W_RATIO = 0.62;
@@ -85,6 +85,11 @@ public class Const {
     public static final double CARD_TAUNT_Y_RATIO = -0.05;
     public static final double CARD_TAUNT_W_RATIO = 1.06;
     public static final double CARD_TAUNT_H_RATIO = 1.1;
+    public static final double CARD_DEATHRATTLE_X_RATIO = 0.36;
+    public static final double CARD_DEATHRATTLE_Y_RATIO = 0.72;
+    public static final double CARD_DEATHRATTLE_W_RATIO = 0.28;
+    public static final double CARD_DEATHRATTLE_H_RATIO = 0.25;
+
 
     public static final double MINION_ATTACK_X_RATIO = 0.16;
     public static final double MINION_ATTACK_Y_RATIO = 0.85;
@@ -120,6 +125,7 @@ public class Const {
 
     public static final String TAUNT_IMG_PATH = "image/taunt.png";
     public static final String DIVINE_SHIELD_IMG_PATH = "image/divine_shield.png";
+    public static final String DEATHRATTLE_IMG_PATH = "image/death_rattle.png";
 
     //------------------------------------------------------------------------------------------
     public static final int FPS = 60;

@@ -195,9 +195,13 @@ public class View implements EventListener{
         // draw health
         View.drawCenteredString(g, Integer.toString(minion.getHP()), x + (int)(Const.MINION_HEALTH_X_RATIO*Const.MINION_W),
                                 y + (int)(Const.MINION_HEALTH_Y_RATIO*Const.MINION_H), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
+        // draw death rattle icon
+        if(minion instanceof DeathRattle)
+            g.drawImage(View.loadImage(Const.DEATHRATTLE_IMG_PATH), x + (int)(Const.CARD_DEATHRATTLE_X_RATIO*Const.MINION_W),
+                        y + (int)(Const.CARD_DEATHRATTLE_Y_RATIO*Const.MINION_H), (int)(Const.CARD_DEATHRATTLE_W_RATIO*Const.MINION_W), (int)(Const.CARD_DEATHRATTLE_H_RATIO*Const.MINION_H), null);
         // draw divine shied
         if(minion instanceof DivineShield && ((DivineShield) minion).hasDivineShield())
-                g.drawImage(View.loadImage(Const.DIVINE_SHIELD_IMG_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
+            g.drawImage(View.loadImage(Const.DIVINE_SHIELD_IMG_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
     }
 }
 
