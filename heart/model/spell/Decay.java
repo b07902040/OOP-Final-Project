@@ -1,29 +1,29 @@
 package heart.model.spell;
-import java.util.List;
-
-import heart.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import heart.model.Minion;
+import heart.model.Player;
+
 //Complete
-public class Decay extends AbstractSpell implements Card, Spell{
-    
-    private static String type = "DeathKnight";
+public class Decay extends AbstractSpell {
+
     private static String name = "Decay";
     private static String description = "Deal 3 damge to all enemies";
     private static int baseCost = 3;
 
-    public Decay(){
-        super(Decay.name, Decay.description, Decay.baseCost);    
-    }    
-    
+    public Decay() {
+        super(Decay.name, Decay.description, Decay.baseCost);
+    }
+
     @Override
-    public void takeEffect(Player user, Minion target){
+    public void takeEffect(Player user, Minion target) {
         List<Minion> targets = new ArrayList<Minion>();
-        for(Minion minion : user.getEnemy())
+        for (Minion minion : user.getEnemy())
             targets.add(minion);
-        for(Minion minion : targets)
+        for (Minion minion : targets)
             minion.setHP(minion.getHP() - 3);
     }
 
-    
 }
