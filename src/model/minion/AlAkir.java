@@ -36,4 +36,9 @@ public class AlAkir extends AbstractMinion implements Card, Minion, Charge, Divi
         this.minionChange();
     }
 
+    @Override
+    public boolean hasDivineShield(){
+        return this.divineShield;
+    }
+
 }

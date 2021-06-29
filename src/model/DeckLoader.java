@@ -11,8 +11,12 @@ public class DeckLoader implements Serializable {
     
     public ArrayList<Card> loadDeck0(){
         ArrayList<Card> deck = new ArrayList<Card>();
+<<<<<<< Updated upstream
         deck.add(new AlexStrasza());            
         deck.add(new Onyxia());
+=======
+        deck.add(new LordBarov());    
+>>>>>>> Stashed changes
         deck.add(new DrBoom());            
         deck.add(new PenguinParty());
         deck.add(new AlAkir());

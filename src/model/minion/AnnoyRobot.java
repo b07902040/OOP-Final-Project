@@ -36,4 +36,8 @@ public class AnnoyRobot extends AbstractMinion implements Card, Minion, DivineSh
         this.minionChange();
     }
 
+    @Override
+    public boolean hasDivineShield(){
+        return this.divineShield;
+    }
 }

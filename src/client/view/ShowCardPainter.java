@@ -6,6 +6,7 @@ import java.util.List;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Font;
+import java.awt.Color;
 
 public class ShowCardPainter implements Painter {
     @Override
@@ -46,9 +47,11 @@ public class ShowCardPainter implements Painter {
         else if(card instanceof Spell)
             g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
         // draw mana cost
+        g.setColor(new Color(25, 70, 130));
         View.drawCenteredString(g, Integer.toString(card.getCost()), Const.CARD_SHOW[0] + (int)(Const.CARD_MANA_X_RATIO*Const.CARD_SHOW[2]),
                                 Const.CARD_SHOW[1] + (int)(Const.CARD_MANA_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
         // draw card name
+        g.setColor(Color.WHITE);
         View.drawCenteredString(g, card.getName(), Const.CARD_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_SHOW[2]),
                                 Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
         // draw description

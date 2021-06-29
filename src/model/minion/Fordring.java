@@ -42,4 +42,8 @@ public class Fordring extends AbstractMinion implements Card, Minion, DeathRattl
         this.master.summonAlly(new AshBringer(), this.master.getAlly().size());
     }
     
+    @Override
+    public boolean hasDivineShield(){
+        return this.divineShield;
+    }
 }

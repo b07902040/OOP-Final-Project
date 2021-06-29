@@ -38,6 +38,7 @@ public class View implements EventListener{
     private List<Painter> painters;
     private Animation attackAnimation;
     private boolean attacking;
+    private boolean effecting;
     private List<Animation> animations;
     private static HashMap<String, BufferedImage> imgLib = new HashMap<String, BufferedImage>(128);
     
@@ -56,6 +57,7 @@ public class View implements EventListener{
         this.painters = new ArrayList<Painter>();
         this.animations = new ArrayList<Animation>();
         this.attacking = false;
+        this.effecting = false;
 
         painters.add(new BoardPainter());
         painters.add(new ManaPainter());
@@ -64,6 +66,7 @@ public class View implements EventListener{
         painters.add(new HeroPainter());
         painters.add(new ShowCardPainter());
         painters.add(new MessagePainter());
+        painters.add(new DeckPainter());
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
@@ -95,10 +98,10 @@ public class View implements EventListener{
                 this.animations.add(this.attackAnimation);
                 this.attacking = true;
             }
+            if(this.model.getState() == Const.STATE_EFFECTING && !this.effecting){
+                this.eventManager.post(new EventCardEffected());
+            }
             update();
-        }
-        else if(event instanceof EventEffecting){
-            this.eventManager.post(new EventCardEffected());
         }
     }
 
@@ -174,6 +177,11 @@ public class View implements EventListener{
     }
 
     public static void drawMinion(Graphics g, Minion minion, int x, int y){
+        // draw taunt
+        if(minion instanceof Taunt)
+                g.drawImage(View.loadImage(Const.TAUNT_IMG_PATH), x + (int)(Const.CARD_TAUNT_X_RATIO*Const.MINION_W), y + (int)(Const.CARD_TAUNT_Y_RATIO*Const.MINION_H),
+                            (int)(Const.CARD_TAUNT_W_RATIO*Const.MINION_W), (int)(Const.CARD_TAUNT_H_RATIO*Const.MINION_H), null);
+        // draw minion image
         View.drawCardImage(g, (Card) minion, x + (int)(Const.MINION_IMG_X_RATIO*Const.MINION_W),
                             y + (int)(Const.MINION_IMG_Y_RATIO*Const.MINION_H), Const.MINION_IMG_W, Const.MINION_IMG_H);
         // draw minion frame
@@ -187,6 +195,9 @@ public class View implements EventListener{
         // draw health
         View.drawCenteredString(g, Integer.toString(minion.getHP()), x + (int)(Const.MINION_HEALTH_X_RATIO*Const.MINION_W),
                                 y + (int)(Const.MINION_HEALTH_Y_RATIO*Const.MINION_H), new Font("Consolas", Font.BOLD, Const.MINION_SHOW_STATUS_FONT_SIZE));
+        // draw divine shied
+        if(minion instanceof DivineShield && ((DivineShield) minion).hasDivineShield())
+                g.drawImage(View.loadImage(Const.DIVINE_SHIELD_IMG_PATH), x, y, Const.MINION_W, Const.MINION_H, null);
     }
 }
 

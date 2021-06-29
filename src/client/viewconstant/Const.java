@@ -14,12 +14,16 @@ public class Const {
     public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
     public static final int[] MANA_BOX = {750, 805, 450, 50};
     public static final int[] OP_MANA_BOX = {950, 10, 135, 50};
+    public static final int[] MESSAGE_BOX = {5, 700, 450, 150};
     public static final int[] HANDCARD_REGION = {50, 870, 950, 125};
-    public static final int[] CARD_SHOW = {50, 200, 375, 595};
+    public static final int[] CARD_SHOW = {50, 90, 375, 595};
     public static final int[] BOARD_REGION = {0, 520, 1200, 125};
     public static final int[] OP_BOARD_REGION = {0, 330, 1200, 125};
     public static final int[] HERO = {525, 690, 150, 150};
     public static final int[] OP_HERO = {525, 120, 150, 150};
+    public static final int[] DECK = {1150, 190, 79, 125};
+    public static final int[] OP_DECK = {1150, 590, 79, 125};
+
     
     public static final int MANA_X = 770;
     public static final int MANA_Y = 815;
@@ -37,6 +41,7 @@ public class Const {
     public static final int MINION_SHOW_STATUS_FONT_SIZE = 20;
     public static final int HERO_SHOW_STATUS_FONT_SIZE = 24;
     public static final int DESCRIPTION_FONT_SIZE = 20;
+    public static final int DECKNUM_FONT_SIZE = 24;
 
     public static final int HANDCARD_GAP = 15;
     public static final int MINION_GAP = 15;
@@ -61,6 +66,8 @@ public class Const {
 
     // X Ratio: (x - cardX)/cardW
     // Y Ratio: (y - cardY)/cardH
+    // W Ratio: w/CardW
+    // H Ratio: h/CardH
     public static final double CARD_NAME_Y_RATIO = 0.58;
     public static final double CARD_NAME_X_RATIO = 0.5;
     public static final double CARD_ATTACK_X_RATIO = 0.15;
@@ -74,6 +81,10 @@ public class Const {
     public static final double CARD_DESCRIPTION_X_RATIO = 0.2;
     public static final double CARD_DESCRIPTION_Y_RATIO = 0.65;
     public static final double CARD_DESCRIPTION_W_RATIO = 0.62;
+    public static final double CARD_TAUNT_X_RATIO = -0.03;
+    public static final double CARD_TAUNT_Y_RATIO = -0.05;
+    public static final double CARD_TAUNT_W_RATIO = 1.06;
+    public static final double CARD_TAUNT_H_RATIO = 1.1;
 
     public static final double MINION_ATTACK_X_RATIO = 0.16;
     public static final double MINION_ATTACK_Y_RATIO = 0.85;
@@ -82,8 +93,8 @@ public class Const {
     public static final double MINION_IMG_X_RATIO = 0.08;
     public static final double MINION_IMG_Y_RATIO = 0.05;
 
-    public static final int MESSAGE_X = 950;
-    public static final int MESSAGE_Y = 800;
+    public static final int MESSAGE_X = 30;
+    public static final int MESSAGE_Y = 735;
 
     //Path
     public static final String BACKGROUND_IMG_PATH = "image/background.png";
@@ -95,17 +106,20 @@ public class Const {
     public static final String DIM_ENDTURN_BUTTON_PATH = "image/end_turn_dim.png";
     public static final String MANA_BOX_IMG_PATH = "image/mana_box.png";
     public static final String OPPONENT_MANA_BOX_IMG_PATH = "image/opponent_mana_box.png";
+    public static final String MESSAGE_BOX_IMG_PATH = "image/message_box.png";
     
     public static final String FULL_MANA_PATH = "image/full_mana.png";
     public static final String EMPTY_MANA_PATH = "image/empty_mana.png";
 
     public static final String MINION_CARD_FRAME_PATH = "image/minion_card_frame.png";
     public static final String SPELL_CARD_FRAME_PATH = "image/spell_card_frame.png";
+    public static final String MINION_FRAME_PATH = "image/minion_frame.png";
     public static final String CARD_BACK_PATH = "image/card_back.png";
     public static final String CARD_SHADOW_PATH = "image/card_shadow.png";
     public static final String CARD_IMG_DIR = "image/cards/";
 
-    public static final String MINION_FRAME_PATH = "image/minion_frame.png";
+    public static final String TAUNT_IMG_PATH = "image/taunt.png";
+    public static final String DIVINE_SHIELD_IMG_PATH = "image/divine_shield.png";
 
     //------------------------------------------------------------------------------------------
     public static final int FPS = 60;

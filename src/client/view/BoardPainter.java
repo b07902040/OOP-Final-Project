@@ -21,5 +21,6 @@ public class BoardPainter implements Painter {
         else g.drawImage(View.loadImage(Const.DIM_ENDTURN_BUTTON_PATH), Const.ENDTURN_BUTTON[0], Const.ENDTURN_BUTTON[1], Const.ENDTURN_BUTTON[2], Const.ENDTURN_BUTTON[3], null);
         g.drawImage(View.loadImage(Const.MANA_BOX_IMG_PATH), Const.MANA_BOX[0], Const.MANA_BOX[1], Const.MANA_BOX[2], Const.MANA_BOX[3], null);
         g.drawImage(View.loadImage(Const.OPPONENT_MANA_BOX_IMG_PATH), Const.OP_MANA_BOX[0], Const.OP_MANA_BOX[1], Const.OP_MANA_BOX[2], Const.OP_MANA_BOX[3], null);
+        g.drawImage(View.loadImage(Const.MESSAGE_BOX_IMG_PATH), Const.MESSAGE_BOX[0], Const.MESSAGE_BOX[1], Const.MESSAGE_BOX[2], Const.MESSAGE_BOX[3], null);
     }
 }
