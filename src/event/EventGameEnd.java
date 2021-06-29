@@ -8,7 +8,7 @@ public class EventGameEnd implements Event{
         this.winner = winner;
     }
 
-    private int getWinner(){
+    public int getWinner(){
         return this.winner;
     }
     @Override

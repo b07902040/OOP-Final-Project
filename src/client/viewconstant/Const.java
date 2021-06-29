@@ -10,7 +10,7 @@ public class Const {
     public static final int[] MIDDLE_BAR = {0, 480, 1200, 8};
     public static final int[] BOTTOM_BAR = {0, 850, 1200, 8};
     public static final int[] OPPONENT_CARD_REGION = {300, -30, 600, 100};
-    public static final int[] SELECT_BUTTON = {1030, 870, 100, 40};
+    public static final int[] SELECT_BUTTON = {1030, 900, 150, 60};
     public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
     public static final int[] MANA_BOX = {750, 805, 450, 50};
     public static final int[] OP_MANA_BOX = {950, 10, 135, 50};
@@ -135,6 +135,7 @@ public class Const {
     //------------------------------------------------------------------------------------------
     public static final int FPS = 60;
     //StateMachine
+    public static final int STATE_INITIALIZED = 0;
     public static final int STATE_PENDING = 1;
     public static final int STATE_GAME_END = 111;
     //Play card

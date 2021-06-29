@@ -82,8 +82,8 @@ public class Game implements EventListener, Serializable {
             this.checkDeadStatus();
             this.currentPlayer.printPlayerStatus();
             if(winner > 0){
-                this.eventManager.post(new EventGameEnd(winner -1));
                 this.stateChange(Const.STATE_GAME_END);  
+                this.eventManager.post(new EventGameEnd(winner - 1));  
             }
             else 
                 this.stateChange(Const.STATE_PENDING);
@@ -223,8 +223,8 @@ public class Game implements EventListener, Serializable {
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if(winner > 0){
-                    this.eventManager.post(new EventGameEnd(winner - 1));
                     this.stateChange(Const.STATE_GAME_END);  
+                    this.eventManager.post(new EventGameEnd(winner - 1));   
                 }
                 else 
                     this.stateChange(Const.STATE_PENDING);
@@ -235,8 +235,8 @@ public class Game implements EventListener, Serializable {
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if(winner > 0){
-                    this.eventManager.post(new EventGameEnd(winner - 1));
                     this.stateChange(Const.STATE_GAME_END);  
+                    this.eventManager.post(new EventGameEnd(winner - 1));   
                 }
                 else
                     this.stateChange(Const.STATE_PENDING);             
@@ -247,8 +247,8 @@ public class Game implements EventListener, Serializable {
             this.checkDeadStatus();
             this.currentPlayer.printPlayerStatus();
             if(winner > 0){
-                this.eventManager.post(new EventGameEnd(winner - 1));
                 this.stateChange(Const.STATE_GAME_END);  
+                this.eventManager.post(new EventGameEnd(winner - 1));  
             }            
         }              
         else if(event instanceof EventTurnEnd){
@@ -334,7 +334,7 @@ public class Game implements EventListener, Serializable {
         List<Minion> deadMinions = new ArrayList<Minion>();
         for(Player player : players){
             List<Minion> ally = player.getAlly();
-            for(int i = ally.size() - 1; i >= 0; i--){
+            for(int i = ally.size() - 1; i >= 1; i--){
                 Minion minion = ally.get(i);
                 if(!minion.isAlive()){
                     deadMinions.add(minion);
@@ -379,8 +379,8 @@ public class Game implements EventListener, Serializable {
                 minion.doTurnEnd();
             this.checkDeadStatus();
             if(winner > 0){
-                this.eventManager.post(new EventGameEnd(winner -1));
-                this.stateChange(Const.STATE_GAME_END); 
+                this.stateChange(Const.STATE_GAME_END);  
+                this.eventManager.post(new EventGameEnd(winner - 1)); 
                 break; 
             }
         }
@@ -440,7 +440,7 @@ public class Game implements EventListener, Serializable {
         return ((int) (Math.random() * range + 1));
     }
     private String getState(){
-        String state = "NO_STATE";
+        String state = "STATE_INITIALIZED";
         if(this.isState(Const.STATE_PENDING)) 
             state ="STATE_PENDING";
         else if(this.isState(Const.STATE_GAME_END))

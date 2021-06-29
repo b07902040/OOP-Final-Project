@@ -2,6 +2,7 @@ package src.client.model;
 import java.util.List;
 import java.util.ArrayList;
 
+
 import src.model.Minion;
 import src.model.Card;
 import src.model.minion.*;
@@ -13,13 +14,13 @@ public class GameInfo implements EventListener{
     private int state; 
     private EventManager eventManager;
     private int playerId;
-    private int winnerId;
+    private int winner;
     private int[] mana ;
     private int[] fullMana;
     private boolean myTurn;
-    private List<Minion> ally = new ArrayList<Minion>();
-    private List<Minion> enemy = new ArrayList<Minion>();   
-    private List<Card> handCards = new ArrayList<Card>();
+    private List<Minion> ally;
+    private List<Minion> enemy;   
+    private List<Card> handCards;
     private int[] handSize;
     private int[] deckSize;
     
@@ -96,9 +97,13 @@ public class GameInfo implements EventListener{
             EventMinionChange e = (EventMinionChange) event;
             this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
         }
+        else if (event instanceof EventGameEnd){            
+            this.winner = ((EventGameEnd) event).getWinner();
+        }
     }
     
     private void initialize(int id){
+        this.winner = -1;
         this.myTurn = (id == 0)? false : true;
         this.playerId = id;
         this.mana = new int[] {0, 0};
@@ -106,6 +111,10 @@ public class GameInfo implements EventListener{
         this.turn = 0;
         this.deckSize = new int[] {Const.DECK_SIZE, Const.DECK_SIZE};
         this.handSize = new int[] {0, 0};
+        this.ally = new ArrayList<Minion>();
+        this.enemy = new ArrayList<Minion>();   
+        this.handCards = new ArrayList<Card>();
+        this.state = Const.STATE_INITIALIZED;
     }
 
     private void turnStart(){
@@ -131,6 +140,10 @@ public class GameInfo implements EventListener{
         return this.state;
     }
 
+    public int getWinner(){
+        return this.winner;
+    }
+    
     public int getPlayerId(){
         return this.playerId;
     }

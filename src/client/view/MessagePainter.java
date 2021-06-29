@@ -11,13 +11,22 @@ public class MessagePainter implements Painter {
         Graphics g = screenImg.getGraphics();
         g.setFont(new Font("Consolas", Font.PLAIN, Const.TURN_MESSAGE_FONT_SIZE));
         if(game.isMyTurn())
-            g.drawString("Your Turn", Const.MESSAGE_X, Const.MESSAGE_Y);
-        else{
+            g.drawString("Your Turn", Const.MESSAGE_X, Const.MESSAGE_Y);       
+        else
             g.drawString("Opponent's Turn", Const.MESSAGE_X, Const.MESSAGE_Y);
-            return;
-        }
-        g.setFont(new Font("Consolas", Font.PLAIN, Const.MESSAGE_FONT_SIZE));
         int state = game.getState();
+        g.setFont(new Font("Consolas", Font.PLAIN, Const.MESSAGE_FONT_SIZE));
+        if(state == Const.STATE_GAME_END){
+            g.drawString("Game ends.", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
+            if(game.getWinner() == game.getPlayerId())
+                g.drawString("YOU WIN!!!!", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
+            else if (game.getWinner() == game.getOpponentId())
+                g.drawString("YOU LOSE...", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
+            else 
+                g.drawString("DRAW!!!!", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
+        }
+        if(!game.isMyTurn()) 
+            return;       
         if(state == Const.STATE_PENDING){
             g.drawString("You can choose a card to play,", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
             g.drawString("OR select a minion to attack.", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
@@ -57,9 +66,6 @@ public class MessagePainter implements Painter {
         else if(state == Const.STATE_INVALID_ATTACKED){
             g.drawString("This target cannot be attacked.", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
             g.drawString("Choose another one.", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
-        }
-        else if(state == Const.STATE_GAME_END){
-            g.drawString("This game ends.", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
         }
     }
 }

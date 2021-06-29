@@ -2,6 +2,7 @@ package src.constant;
 public class Const{
     public static final int FPS = 60;
     //StateMachine
+    public static final int STATE_INITIALIZED = 0;
     public static final int STATE_PENDING = 1;
     public static final int STATE_GAME_END = 111;
     //Play card
