@@ -25,6 +25,7 @@ public class VarianWrynn extends AbstractMinion implements Card, Minion, BattleC
                     if(this.master.getAlly().size() < Const.BOARD_SPACE + 1){
                         this.master.summonAlly((Minion) deck.get(0), this.master.getAlly().size());
                         deck.remove(0);
+                        this.master.getGame().cardDrew(this.master.getPlayerId(), false, true);
                         continue;
                     }
                 }
