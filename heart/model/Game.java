@@ -242,7 +242,6 @@ public class Game implements EventListener, Serializable {
                 this.eventManager.post(new EventTurnStart());
             }
         } else if (event instanceof EventGameEnd) {
-            this.running = false;
             System.out.printf("Game End!! Player %d win.\n", winner);
         }
 
@@ -259,7 +258,7 @@ public class Game implements EventListener, Serializable {
         this.players.add(new Player(new Guldan(), this, false));
         for (int i = 0; i < 2; i++) {
             this.players.get(i).setOpponent(this.players.get((i + 1) % 2));
-            ArrayList<Card> deck = this.deckLoader.loadDeck0();
+            ArrayList<Card> deck = this.deckLoader.loadDecks();
             // Collections.shuffle(deck,new Random());
             this.players.get(i).setDeck(deck);
             this.eventManager.post(new EventBoardChange(i, 0, this.players.get(i).getHero()));

@@ -103,9 +103,10 @@ public class GameInfo implements EventListener {
 
     private void turnStart() {
         this.myTurn = !this.myTurn;
-        if (this.myTurn)
-            if (this.playerId == 0)
-                this.turn++;
+        if (this.playerId == 0 && this.myTurn)        
+            this.turn++;
+        else if (this.playerId == 1 && !this.myTurn)
+            this.turn++;
     }
 
     private void cardDraw(int id, boolean fatigue, boolean full) {

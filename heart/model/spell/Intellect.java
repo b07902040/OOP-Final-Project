@@ -16,7 +16,7 @@ public class Intellect extends AbstractSpell {
 
     @Override
     public void takeEffect(Player user, Minion target) {
-        user.drawCards(2);
+        user.drawCards(20);
     }
 
 }
