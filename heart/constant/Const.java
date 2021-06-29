@@ -134,10 +134,10 @@ public class Const {
     public static final double MINION_IMG_Y_RATIO = 0.05;
     public static final double MINION_IMG_W_RATIO = 0.84;
     public static final double MINION_IMG_H_RATIO = 0.84;
-    public static final double CAN_ATTACK_EFFECT_X_RATIO = -0.09;
-    public static final double CAN_ATTACK_EFFECT_Y_RATIO = -0.103;
-    public static final double CAN_ATTACK_EFFECT_W_RATIO = 1.18;
-    public static final double CAN_ATTACK_EFFECT_H_RATIO = 1.206;
+    public static final double VALID_MINION_EFFECT_X_RATIO = -0.09;
+    public static final double VALID_MINION_EFFECT_Y_RATIO = -0.103;
+    public static final double VALID_MINION_EFFECT_W_RATIO = 1.18;
+    public static final double VALID_MINION_EFFECT_H_RATIO = 1.206;
     public static final double VALID_MINION_CARD_X_RATIO = -0.05;
     public static final double VALID_MINION_CARD_Y_RATIO = -0.04;
     public static final double VALID_MINION_CARD_W_RATIO = 1.1;
@@ -177,7 +177,7 @@ public class Const {
     public static final String TAUNT_IMG_PATH = "image/taunt.png";
     public static final String DIVINE_SHIELD_IMG_PATH = "image/divine_shield.png";
     public static final String DEATHRATTLE_IMG_PATH = "image/death_rattle.png";
-    public static final String CAN_ATTACK_EFFECT_PATH = "image/can_attack_effect.png";
+    public static final String VALID_MINION_EFFECT_PATH = "image/valid_minion_effect.png";
     public static final String VALID_MINION_CARD_EFFECT_PATH = "image/valid_minion_card_effect.png";
     public static final String VALID_SPELL_CARD_EFFECT_PATH = "image/valid_spell_card_effect.png";
 }

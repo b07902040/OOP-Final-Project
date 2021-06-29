@@ -26,12 +26,9 @@ public class MinionPainter implements Painter {
             minion = ally.get(i);
             x = game.getMinionPosition(id, i)[0];
             y = game.getMinionPosition(id, i)[1];
-            if (game.isMyTurn() && minion.canAttack() && game.getState() == Const.STATE_PENDING)
-                g.drawImage(View.loadImage(Const.CAN_ATTACK_EFFECT_PATH),
-                        x + (int) (Const.CAN_ATTACK_EFFECT_X_RATIO * Const.MINION_W),
-                        y + (int) (Const.CAN_ATTACK_EFFECT_Y_RATIO * Const.MINION_H),
-                        (int) (Const.CAN_ATTACK_EFFECT_W_RATIO * Const.MINION_W),
-                        (int) (Const.CAN_ATTACK_EFFECT_H_RATIO * Const.MINION_H), null);
+            if ((game.isMyTurn() && minion.canAttack() && game.getState() == Const.STATE_PENDING) ||
+                (game.isMyTurn() && minion.canTargeted() && game.getState() == Const.STATE_CARD_TARGETING))
+                View.drawValidMinionEffect(g, x, y, Const.MINION_W, Const.MINION_H);
             View.drawMinion(g, minion, x, y, 1);
 
         }
@@ -43,12 +40,9 @@ public class MinionPainter implements Painter {
             minion = enemy.get(i);
             x = game.getMinionPosition(opponentId, i)[0];
             y = game.getMinionPosition(opponentId, i)[1];
-            if (game.isMyTurn() && minion.canAttacked() && game.getState() == Const.STATE_ATTACKER_TARGETING)
-                g.drawImage(View.loadImage(Const.CAN_ATTACK_EFFECT_PATH),
-                        x + (int) (Const.CAN_ATTACK_EFFECT_X_RATIO * Const.MINION_W),
-                        y + (int) (Const.CAN_ATTACK_EFFECT_Y_RATIO * Const.MINION_H),
-                        (int) (Const.CAN_ATTACK_EFFECT_W_RATIO * Const.MINION_W),
-                        (int) (Const.CAN_ATTACK_EFFECT_H_RATIO * Const.MINION_H), null);
+            if ((game.isMyTurn() && minion.canAttacked() && game.getState() == Const.STATE_ATTACKER_TARGETING) ||
+                (game.isMyTurn() && minion.canTargeted() && game.getState() == Const.STATE_CARD_TARGETING))
+                View.drawValidMinionEffect(g, x, y, Const.MINION_W, Const.MINION_H);
             View.drawMinion(g, minion, x, y, 1);
         }
     }

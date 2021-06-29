@@ -203,6 +203,14 @@ public class View implements EventListener{
         if(minion instanceof DivineShield && ((DivineShield) minion).hasDivineShield())
             g.drawImage(View.loadImage(Const.DIVINE_SHIELD_IMG_PATH), x, y, w, h, null);
     }
+
+    public static void drawValidMinionEffect(Graphics g, int x, int y, int w, int h){
+        g.drawImage(View.loadImage(Const.VALID_MINION_EFFECT_PATH),
+                                x + (int) (Const.VALID_MINION_EFFECT_X_RATIO * w),
+                                y + (int) (Const.VALID_MINION_EFFECT_Y_RATIO * h),
+                                (int) (Const.VALID_MINION_EFFECT_W_RATIO * w),
+                                (int) (Const.VALID_MINION_EFFECT_H_RATIO * h), null);
+    }
 }
 
 class Board extends JPanel {
