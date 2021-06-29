@@ -11,7 +11,7 @@ public class HellFire extends AbstractSpell {
 
     private static String name = "HellFire";
     private static String description = "Deal 3 damage to all characters";
-    private static int baseCost = 0;
+    private static int baseCost = 4;
 
     public HellFire() {
         super(HellFire.name, HellFire.description, HellFire.baseCost);

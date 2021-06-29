@@ -16,8 +16,7 @@ public class HeroPainter implements Painter {
         
         // draw my Hero
         Minion hero = game.getHero();
-        if ((game.isMyTurn() && hero.canAttacked() && game.getState() == Const.STATE_ATTACKER_TARGETING) ||
-            (game.isMyTurn() && hero.canTargeted() && game.getState() == Const.STATE_CARD_TARGETING && ((Targeting) game.getLastShowedCard()).getCandidates(hero.getMaster()).contains(hero)))
+        if ((game.isMyTurn() && hero.canTargeted() && game.getState() == Const.STATE_CARD_TARGETING && ((Targeting) game.getLastShowedCard()).getCandidates(hero.getMaster()).contains(hero)))
                 View.drawValidMinionEffect(g, Const.HERO[0], Const.HERO[1], Const.HERO[2], Const.HERO[3]);
         // draw hero image
         View.drawCardImage(g, (Card) hero, Const.HERO[0] + (int)(Const.MINION_IMG_X_RATIO*Const.HERO[2]),

@@ -256,11 +256,10 @@ public class Game implements EventListener, Serializable {
         this.players = new ArrayList<Player>();
         this.players.add(new Player(new Jaina(), this, true));
         this.players.add(new Player(new Guldan(), this, false));
+        ArrayList<ArrayList<Card>> decks = this.deckLoader.loadDecks();
         for (int i = 0; i < 2; i++) {
             this.players.get(i).setOpponent(this.players.get((i + 1) % 2));
-            ArrayList<Card> deck = this.deckLoader.loadDecks();
-            // Collections.shuffle(deck,new Random());
-            this.players.get(i).setDeck(deck);
+            this.players.get(i).setDeck(decks.get(i));
             this.eventManager.post(new EventBoardChange(i, 0, this.players.get(i).getHero()));
         }
         this.currentPlayerid = 0;

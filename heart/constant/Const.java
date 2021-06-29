@@ -34,7 +34,7 @@ public class Const {
     public static final int PLAYER_DRAW = 3;
 
     // FOR TESTING
-    public static final int INIT_MANA = 100;
+    public static final int INIT_MANA = 0;
 
     // Controller
     public static final int MOUSE_CLICK_THRESHOLD = 100;
@@ -120,7 +120,7 @@ public class Const {
     public static final double CARD_TAUNT_X_RATIO = -0.03;
     public static final double CARD_TAUNT_Y_RATIO = -0.05;
     public static final double CARD_TAUNT_W_RATIO = 1.06;
-    public static final double CARD_TAUNT_H_RATIO = 1.1;
+    public static final double CARD_TAUNT_H_RATIO = 1.2;
     public static final double CARD_DEATHRATTLE_X_RATIO = 0.36;
     public static final double CARD_DEATHRATTLE_Y_RATIO = 0.72;
     public static final double CARD_DEATHRATTLE_W_RATIO = 0.28;

@@ -64,7 +64,7 @@ public class Player implements Serializable {
 
     public void setMana(int mana) {
         System.out.printf("%s %d mana.\n", this.name, mana - this.mana);
-        this.mana = mana;
+        this.mana = Math.min(mana, Const.MAX_MANA);
         this.game.manaChange(this.playerId, this.mana, this.fullMana);
     }
 
