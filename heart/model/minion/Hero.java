@@ -1,15 +1,14 @@
 package heart.model.minion;
 import heart.constant.*;
-import heart.model.*;
 
-public class Hero extends AbstractMinion implements Card, Minion{
+public abstract class Hero extends AbstractMinion{
+
     //static private String name = "HERO";
-    static private String description = "I'm HERO!";
-    static private int baseCost = 0;
-    static private int baseATK = 0;
-    static private int baseHP = Const.HERO_HP;
+    private static int baseCost = 0;
+    private static int baseATK = 0;
+    private static int baseHP = Const.HERO_HP;
     
-    public Hero(String name){
-        super(name, Hero.description, Hero.baseCost, Hero.baseHP, Hero.baseATK); 
+    public Hero(String name, String description){
+        super(name, description, Hero.baseCost, Hero.baseHP, Hero.baseATK); 
     } 
 }

@@ -25,7 +25,7 @@ public class Game implements EventListener, Serializable {
     private int currentPlayerid;
     private int turn = 0;
     private boolean firstPlayerTurn = true;
-    private float timer = 0; 
+    //private float timer = 0; 
     private int minionSummoned = 0;
        
     //play card
@@ -272,8 +272,8 @@ public class Game implements EventListener, Serializable {
     private void initialize(){      
         this.deckLoader = new DeckLoader();
         this.players = new ArrayList<Player>();
-        this.players.add(new Player("Jaina", this, true));
-        this.players.add(new Player("Guldan", this, false));
+        this.players.add(new Player(new Jaina(), this, true));
+        this.players.add(new Player(new Guldan(), this, false));
         for(int i = 0; i < 2; i++){
             this.players.get(i).setOpponent(this.players.get((i + 1) % 2));  
             ArrayList<Card> deck = this.deckLoader.loadDeck0();
@@ -304,7 +304,10 @@ public class Game implements EventListener, Serializable {
             minion.resetAttackCount();
         }
         this.currentPlayer.printPlayerStatus();
-        this.timer = 0;
+        //this.timer = 0;
+    }
+    public int getTurn(){
+        return this.turn;
     }
 
     public int getMinionSummoned(){

@@ -1,7 +1,5 @@
 package heart.model;
-import java.util.List;
 
-import heart.constant.*;
 import heart.model.minion.*;
 import heart.model.spell.*;
 
@@ -9,7 +7,6 @@ import java.util.ArrayList;
 import java.io.Serializable;
 public class DeckLoader implements Serializable {
     private static final long serialVersionUID = 1L;
-    private ArrayList<ArrayList<Card>> decks;
     
     public ArrayList<Card> loadDeck0(){
         ArrayList<Card> deck = new ArrayList<Card>();

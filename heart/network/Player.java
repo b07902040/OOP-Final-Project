@@ -12,6 +12,10 @@ public class Player implements Serializable {
         this.name = name;
     }
 
+    public String getName(){
+        return this.name;
+    }
+    
     public void addCard(Card add) {
         list.add(add);
     }

@@ -1,5 +1,4 @@
 package heart.event;
-import heart.model.*;
 
 public class EventMinionDestroy implements Event{
     private String name = "EventMinionDestroy";

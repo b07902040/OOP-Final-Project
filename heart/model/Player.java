@@ -1,13 +1,12 @@
 package heart.model;
 import java.io.Serializable;
 import java.util.List;
-
-import javax.swing.AbstractAction;
+import java.util.ArrayList;
 
 import heart.constant.Const;
 import heart.model.minion.*;
 
-import java.util.ArrayList;
+
 
 public class Player implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -27,14 +26,14 @@ public class Player implements Serializable {
     private Minion hero;
     private boolean firstPlayer;
 
-    public Player(String name, Game game, boolean firstPlayer){         
+    public Player(Hero hero, Game game, boolean firstPlayer){         
         this.firstPlayer = firstPlayer;
         this.playerId = firstPlayer? 0 : 1;
-        this.name = name;
+        //this.name = name;
         this.game = game;
         this.handCards = new ArrayList<Card>();
         this.ally = new ArrayList<Minion>();
-        this.hero = new Hero(name);
+        this.hero = hero;
         this.hero.setMaster(this);
         this.ally.add(this.hero);
     }
@@ -51,9 +50,9 @@ public class Player implements Serializable {
         return this.playerId;
     }
 
-    public String getName(){
+    /*public String getName(){
         return this.name;
-    } 
+    } */
 
     public Minion  getHero(){
         return this.hero;

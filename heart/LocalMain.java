@@ -4,7 +4,6 @@ import heart.controller.Controller;
 import heart.model.*;
 import heart.event.*;
 import heart.model.minion.*;
-import heart.utils.*;
 import heart.view.View;
 
 import java.util.ArrayList;

@@ -21,7 +21,7 @@ public class GameInfo implements EventListener{
     private int[] deckSize;
     
     private int turn;
-    private float timer;
+    //private float timer;
     
     private int showedCardIndex;
     private boolean showedCardValid;
@@ -130,6 +130,10 @@ public class GameInfo implements EventListener{
 
     public boolean isMyTurn(){
         return this.myTurn;
+    }
+
+    public int getTurn(){
+        return this.turn;
     }
 
     public int getState(){

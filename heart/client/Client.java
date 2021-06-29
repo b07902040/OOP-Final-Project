@@ -5,10 +5,7 @@ import java.net.InetAddress;
 
 import javax.swing.JTextField;
 
-import heart.controller.*;
-import heart.model.*;
 import heart.event.*;
-import heart.view.*;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -43,10 +40,6 @@ public class Client {
 		ClientEventManager eventManager = new ClientEventManager();
 
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);
-
-		GameInfo gameinfo = new GameInfo(eventManager);
-		Controller controller = new Controller(eventManager, gameinfo);
-		View view = new View(eventManager, gameinfo, controller);
 
 		this.makeConnection(eventManager);
 
