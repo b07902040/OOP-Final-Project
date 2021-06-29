@@ -218,6 +218,10 @@ public class GameInfo implements EventListener {
         return this.attackedPlayerIndex;
     }
 
+    public Card getLastShowedCard() {
+        return this.handCards.get(this.showedCardIndex);
+    }
+
     public int[] getMinionPosition(int playerId, int index) {
         int x, y;
 
