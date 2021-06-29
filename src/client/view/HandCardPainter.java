@@ -30,6 +30,9 @@ public class HandCardPainter implements Painter {
         shiftedX = Const.OPPONENT_CARD_REGION[0] + (Const.OPPONENT_CARD_REGION[2] - (opponentHandSize-1)*Const.OP_HANDCARD_GAP - opponentHandSize*Const.CARD_W)/2;
         for(int i = 0; i < game.getHandSize(opponentId); i++){
             g.drawImage(View.loadImage(Const.CARD_BACK_PATH), shiftedX + i*(Const.OP_HANDCARD_GAP + Const.CARD_W), Const.OP_HANDCARD_Y, Const.CARD_W, Const.CARD_H, null);
+            // draw shadow
+            if(i > 0)
+                g.drawImage(View.loadImage(Const.CARD_SHADOW_PATH), shiftedX + i*(Const.OP_HANDCARD_GAP + Const.CARD_W) - Const.CARD_SHADOW_W, Const.OP_HANDCARD_Y, Const.CARD_SHADOW_W, Const.CARD_H, null);
         }
     }
 }

@@ -9,7 +9,7 @@ public class Const {
 
     public static final int[] MIDDLE_BAR = {0, 480, 1200, 8};
     public static final int[] BOTTOM_BAR = {0, 850, 1200, 8};
-    public static final int[] OPPONENT_CARD_REGION = {350, 0, 500, 100};
+    public static final int[] OPPONENT_CARD_REGION = {300, -30, 600, 100};
     public static final int[] SELECT_BUTTON = {1030, 870, 100, 40};
     public static final int[] ENDTURN_BUTTON = {1100, 460, 100, 40};
     public static final int[] MANA_BOX = {750, 805, 450, 50};
@@ -44,6 +44,7 @@ public class Const {
     public static final int OP_HANDCARD_X = 370;
     public static final int OP_HANDCARD_Y = -30;
     public static final int OP_HANDCARD_GAP = -15;
+    public static final int CARD_SHADOW_W = 20;
 
     public static final int CARD_W = 79;
     public static final int CARD_H = 125;
@@ -101,6 +102,7 @@ public class Const {
     public static final String MINION_CARD_FRAME_PATH = "image/minion_card_frame.png";
     public static final String SPELL_CARD_FRAME_PATH = "image/spell_card_frame.png";
     public static final String CARD_BACK_PATH = "image/card_back.png";
+    public static final String CARD_SHADOW_PATH = "image/card_shadow.png";
     public static final String CARD_IMG_DIR = "image/cards/";
 
     public static final String MINION_FRAME_PATH = "image/minion_frame.png";
