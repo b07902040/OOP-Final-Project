@@ -23,6 +23,13 @@ public class HeroPainter implements Painter {
         //g.drawImage(View.loadImage(Const.CARD_IMG_DIR + "Goblin.png"), Const.OP_HERO[0] + (int)(Const.MINION_IMG_X_RATIO*Const.OP_HERO[2]),
                         //Const.OP_HERO[1] + (int)(Const.MINION_IMG_Y_RATIO*Const.OP_HERO[3]), Const.HERO_IMG_W, Const.HERO_IMG_H, null);
         
+        if (game.isMyTurn() && game.getOpponentHero().canAttacked() && game.getState() == Const.STATE_ATTACKER_TARGETING)
+                        g.drawImage(View.loadImage(Const.CAN_ATTACK_EFFECT_PATH),
+                                Const.OP_HERO[0] + (int) (Const.CAN_ATTACK_EFFECT_X_RATIO * Const.OP_HERO[2]),
+                                Const.OP_HERO[1] + (int) (Const.CAN_ATTACK_EFFECT_Y_RATIO * Const.OP_HERO[3]),
+                                (int) (Const.CAN_ATTACK_EFFECT_W_RATIO * Const.OP_HERO[2]),
+                                (int) (Const.CAN_ATTACK_EFFECT_H_RATIO * Const.OP_HERO[3]), null);
+
         View.drawCardImage(g, (Card) game.getOpponentHero(), Const.OP_HERO[0] + (int)(Const.MINION_IMG_X_RATIO*Const.OP_HERO[2]),
                         Const.OP_HERO[1] + (int)(Const.MINION_IMG_Y_RATIO*Const.OP_HERO[3]), Const.HERO_IMG_W, Const.HERO_IMG_H);
 

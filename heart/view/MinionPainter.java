@@ -1,15 +1,16 @@
 package heart.view;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import heart.constant.Const;
-import heart.model.*;
-
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
+import heart.model.GameInfo;
+import heart.model.Minion;
 
 public class MinionPainter implements Painter {
     @Override
-    public void draw(GameInfo game, BufferedImage screenImg){
+    public void draw(GameInfo game, BufferedImage screenImg) {
         int id = game.getPlayerId();
         int opponentId = game.getOpponentId();
         Graphics g = screenImg.getGraphics();
@@ -18,22 +19,36 @@ public class MinionPainter implements Painter {
         int x, y;
         Minion minion;
         // draw ally minions
-        for(int i = 1; i < ally.size(); i++){
-            if(game.getState() == Const.STATE_ATTACKING && game.getAttackerIndex() == i && game.getAttackerPlayerIndex() == id)
+        for (int i = 1; i < ally.size(); i++) {
+            if (game.getState() == Const.STATE_ATTACKING && game.getAttackerIndex() == i
+                    && game.getAttackerPlayerIndex() == id)
                 continue;
             minion = ally.get(i);
             x = game.getMinionPosition(id, i)[0];
             y = game.getMinionPosition(id, i)[1];
+            if (game.isMyTurn() && minion.canAttack() && game.getState() == Const.STATE_PENDING)
+                g.drawImage(View.loadImage(Const.CAN_ATTACK_EFFECT_PATH),
+                        x + (int) (Const.CAN_ATTACK_EFFECT_X_RATIO * Const.MINION_W),
+                        y + (int) (Const.CAN_ATTACK_EFFECT_Y_RATIO * Const.MINION_H),
+                        (int) (Const.CAN_ATTACK_EFFECT_W_RATIO * Const.MINION_W),
+                        (int) (Const.CAN_ATTACK_EFFECT_H_RATIO * Const.MINION_H), null);
             View.drawMinion(g, minion, x, y, 1);
 
         }
         // draw enemy minions
-        for(int i = 1; i < enemy.size(); i++){
-            if(game.getState() == Const.STATE_ATTACKING && game.getAttackerIndex() == i && game.getAttackerPlayerIndex() == opponentId)
+        for (int i = 1; i < enemy.size(); i++) {
+            if (game.getState() == Const.STATE_ATTACKING && game.getAttackerIndex() == i
+                    && game.getAttackerPlayerIndex() == opponentId)
                 continue;
             minion = enemy.get(i);
             x = game.getMinionPosition(opponentId, i)[0];
             y = game.getMinionPosition(opponentId, i)[1];
+            if (game.isMyTurn() && minion.canAttacked() && game.getState() == Const.STATE_ATTACKER_TARGETING)
+                g.drawImage(View.loadImage(Const.CAN_ATTACK_EFFECT_PATH),
+                        x + (int) (Const.CAN_ATTACK_EFFECT_X_RATIO * Const.MINION_W),
+                        y + (int) (Const.CAN_ATTACK_EFFECT_Y_RATIO * Const.MINION_H),
+                        (int) (Const.CAN_ATTACK_EFFECT_W_RATIO * Const.MINION_W),
+                        (int) (Const.CAN_ATTACK_EFFECT_H_RATIO * Const.MINION_H), null);
             View.drawMinion(g, minion, x, y, 1);
         }
     }
