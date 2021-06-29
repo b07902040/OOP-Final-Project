@@ -29,8 +29,9 @@ public class Const {
     public static final int MANA_Y = 815;
     public static final int MANA_SIZE = 30;
     public static final int MANA_GAP = 4;
-    public static final int MANA_FONT_Y = 835;
-    public static final int OP_MANA_FONT_Y = 45;
+    public static final int MANA_MESSAGE_X = 1145;
+    public static final int MANA_MESSAGE_Y = 835;
+    public static final int OP_MANA_MESSAGE_Y = 45;
 
     // font size
     public static final int MANA_FONT_SIZE = 26;

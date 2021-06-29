@@ -55,8 +55,8 @@ public class MessagePainter implements Painter {
             g.drawString("Click \"SELECT\" to confirm.", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
         }
         else if(state == Const.STATE_INVALID_ATTACKED){
-            g.drawString("This target can be attacked.", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
-            g.drawString("Click \"SELECT\" to attack it.", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
+            g.drawString("This target cannot be attacked.", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
+            g.drawString("Choose another one.", Const.MESSAGE_X, Const.MESSAGE_Y + 2*Const.MESSAGE_H);
         }
         else if(state == Const.STATE_GAME_END){
             g.drawString("This game ends.", Const.MESSAGE_X, Const.MESSAGE_Y + Const.MESSAGE_H);
