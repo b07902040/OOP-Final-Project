@@ -36,7 +36,8 @@ public class Const {
     public static final int MANA_FONT_SIZE = 26;
     public static final int HANDCARD_NAME_FONT_SIZE = 10;
     public static final int SHOWEDCARD_NAME_FONT_SIZE = 36;
-    public static final int MESSAGE_FONT_SIZE = 26;
+    public static final int TURN_MESSAGE_FONT_SIZE = 26;
+    public static final int MESSAGE_FONT_SIZE = 20;
     public static final int CARD_SHOW_STATUS_FONT_SIZE = 50;
     public static final int MINION_SHOW_STATUS_FONT_SIZE = 20;
     public static final int HERO_SHOW_STATUS_FONT_SIZE = 24;
@@ -100,6 +101,7 @@ public class Const {
 
     public static final int MESSAGE_X = 30;
     public static final int MESSAGE_Y = 735;
+    public static final int MESSAGE_H = 30;
 
     //Path
     public static final String BACKGROUND_IMG_PATH = "image/background.png";
