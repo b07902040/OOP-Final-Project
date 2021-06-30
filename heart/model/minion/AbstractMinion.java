@@ -165,6 +165,7 @@ public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     @Override
     public void resetAttackCount() {
         this.attackCount = 0;
+        this.minionChange();
     }
 
     @Override
@@ -208,6 +209,7 @@ public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     @Override
     public void addAliveTime() {
         this.aliveTime++;
+        this.minionChange();
     }
 
     @Override

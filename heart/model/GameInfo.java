@@ -359,6 +359,22 @@ public class GameInfo implements EventListener {
         }
         return true;
     }
+    
+    /*public boolean canAttack(int playerId, int index){
+        List<Minion> ally;
+        Minion minion = ally.get(index);
+        if (minion.getATK == 0)
+        return false;
+        if (minion.getAttackCount() < minion.getAttackLimit()) {
+            if (minion.getAliveTime() == 0) {
+                if (this instanceof Charge)
+                    return true;
+                return false;
+            } else
+                return true;
+        }
+        return false;
+    }*/
 
     public boolean canAttacked(int playerId, int index) {
         List<Minion> ally;
