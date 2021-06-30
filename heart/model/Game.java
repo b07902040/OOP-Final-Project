@@ -228,8 +228,7 @@ public class Game implements EventListener, Serializable {
                 } else
                     this.stateChange(Const.STATE_PENDING);
                 this.effectedCount = 0;
-            }
-            
+            }   
         } else if (event instanceof EventMinionAttacked) {
             this.attackedCount++;
             if (this.isState(Const.STATE_ATTACKING) && this.attackedCount >= 2) {

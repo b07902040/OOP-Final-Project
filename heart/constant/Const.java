@@ -53,6 +53,7 @@ public class Const {
     public static final int[] MESSAGE_BOX = { 5, 700, 450, 150 };
     public static final int[] HANDCARD_REGION = { 50, 860, 950, 125 };
     public static final int[] CARD_SHOW = { 50, 90, 375, 595 };
+    public static final int[] SPELL_SHOW = { 400, 90, 375, 595 };
     public static final int[] BOARD_REGION = { 0, 520, 1200, 125 };
     public static final int[] OP_BOARD_REGION = { 0, 330, 1200, 125 };
     public static final int[] HERO = { 525, 690, 150, 150 };

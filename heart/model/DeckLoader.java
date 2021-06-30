@@ -31,7 +31,7 @@ public class DeckLoader implements Serializable {
     }
     public  ArrayList<ArrayList<Card>> loadDecks() {
         ArrayList<ArrayList<Card>> decks = new  ArrayList<ArrayList<Card>>();
-        /*decks.add(new ArrayList<Card>());
+        decks.add(new ArrayList<Card>());
         decks.add(new ArrayList<Card>());
         ArrayList<Card> cards;
         for(int i = 0; i < this.library.size(); i++){
@@ -42,9 +42,9 @@ public class DeckLoader implements Serializable {
         Collections.shuffle(decks.get(0), new Random());
         Collections.shuffle(decks.get(1), new Random());
         this.balanceCost(decks.get(0));
-        this.balanceCost(decks.get(1));*/
-        decks.add(this.customDeck());
-        decks.add(this.customDeck());
+        this.balanceCost(decks.get(1));
+        /*decks.add(this.customDeck());
+        decks.add(this.customDeck());*/
         return decks;
     }
     private void balanceCost(ArrayList<Card> input){

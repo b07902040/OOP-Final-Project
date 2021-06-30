@@ -24,20 +24,20 @@ public class OpponentSpellAnimation implements Animation {
         }
         if(this.timer < endTime){
             // draw card image
-            View.drawCardImage(g, card, Const.CARD_SHOW[0] + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_SHOW[2]),
-                                Const.CARD_SHOW[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_SHOW[3]), (int)(Const.CARD_IMG_W_RATIO*Const.CARD_SHOW[2]), (int)(Const.CARD_IMG_H_RATIO*Const.CARD_SHOW[3]));
-            g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), Const.CARD_SHOW[0], Const.CARD_SHOW[1], Const.CARD_SHOW[2], Const.CARD_SHOW[3], null);
+            View.drawCardImage(g, card, Const.SPELL_SHOW[0] + (int)(Const.CARD_IMG_X_RATIO*Const.SPELL_SHOW[2]),
+                                Const.SPELL_SHOW[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.SPELL_SHOW[3]), (int)(Const.CARD_IMG_W_RATIO*Const.SPELL_SHOW[2]), (int)(Const.CARD_IMG_H_RATIO*Const.SPELL_SHOW[3]));
+            g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), Const.SPELL_SHOW[0], Const.SPELL_SHOW[1], Const.SPELL_SHOW[2], Const.SPELL_SHOW[3], null);
             // draw mana cost
             g.setColor(new Color(25, 70, 130));
-            View.drawCenteredString(g, Integer.toString(card.getCost()), Const.CARD_SHOW[0] + (int)(Const.CARD_MANA_X_RATIO*Const.CARD_SHOW[2]),
-                                    Const.CARD_SHOW[1] + (int)(Const.CARD_MANA_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
+            View.drawCenteredString(g, Integer.toString(card.getCost()), Const.SPELL_SHOW[0] + (int)(Const.CARD_MANA_X_RATIO*Const.SPELL_SHOW[2]),
+                                    Const.SPELL_SHOW[1] + (int)(Const.CARD_MANA_Y_RATIO*Const.SPELL_SHOW[3]), new Font("Consolas", Font.BOLD, Const.CARD_SHOW_STATUS_FONT_SIZE));
             // draw card name
             g.setColor(Color.WHITE);
-            View.drawCenteredString(g, card.getName(), Const.CARD_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_SHOW[2]),
-                                    Const.CARD_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_SHOW[3]), new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
+            View.drawCenteredString(g, card.getName(), Const.SPELL_SHOW[0] + (int) (Const.CARD_NAME_X_RATIO*Const.SPELL_SHOW[2]),
+                                    Const.SPELL_SHOW[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.SPELL_SHOW[3]), new Font("Consolas", Font.PLAIN, Const.SHOWEDCARD_NAME_FONT_SIZE));
             // draw description
-            View.drawRectString(g, card.getDescription(), Const.CARD_SHOW[0] + (int) (Const.CARD_DESCRIPTION_X_RATIO*Const.CARD_SHOW[2]),
-                                    Const.CARD_SHOW[1] + (int) (Const.CARD_DESCRIPTION_Y_RATIO*Const.CARD_SHOW[3]), (int)(Const.CARD_DESCRIPTION_W_RATIO*Const.CARD_SHOW[2]),
+            View.drawRectString(g, card.getDescription(), Const.SPELL_SHOW[0] + (int) (Const.CARD_DESCRIPTION_X_RATIO*Const.SPELL_SHOW[2]),
+                                    Const.SPELL_SHOW[1] + (int) (Const.CARD_DESCRIPTION_Y_RATIO*Const.SPELL_SHOW[3]), (int)(Const.CARD_DESCRIPTION_W_RATIO*Const.SPELL_SHOW[2]),
                                     new Font("Consolas", Font.PLAIN, Const.DESCRIPTION_FONT_SIZE));
         }
         update();
