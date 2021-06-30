@@ -4,25 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heart.constant.Const;
-import heart.event.Event;
-import heart.event.EventAttacking;
-import heart.event.EventBoardChange;
-import heart.event.EventCardDraw;
-import heart.event.EventCardShow;
-import heart.event.EventClientInitalize;
-import heart.event.EventEffecting;
-import heart.event.EventEveryTick;
-import heart.event.EventGameEnd;
-import heart.event.EventHandCardChange;
-import heart.event.EventListener;
-import heart.event.EventManaChange;
-import heart.event.EventManager;
-import heart.event.EventMinionChange;
-import heart.event.EventMinionChangeHP;
-import heart.event.EventMinionDestroy;
-import heart.event.EventMinionShow;
-import heart.event.EventStateChange;
-import heart.event.EventTurnStart;
+import heart.event.*;
 
 public class GameInfo implements EventListener {
 
@@ -38,7 +20,6 @@ public class GameInfo implements EventListener {
     private List<Card> handCards;
     private int[] handSize;
     private int[] deckSize;
-
     private int turn;
     // private float timer;
 
@@ -53,7 +34,7 @@ public class GameInfo implements EventListener {
     private int attackedIndex;
     private int attackedPlayerIndex;
     private Card effectingCard;
-
+    private Card drawedCard;
     public GameInfo(EventManager eventManager) {
         this.eventManager = eventManager;
         this.eventManager.register(this);
@@ -63,7 +44,7 @@ public class GameInfo implements EventListener {
     public void notify(Event event) {
         if (event instanceof EventEveryTick)
             return;
-        System.out.println(event.getName());
+        //System.out.println(event.getName());
         if (event instanceof EventClientInitalize) {
             this.initialize(((EventClientInitalize) event).getClientId());
         } else if (event instanceof EventStateChange) {
@@ -72,7 +53,7 @@ public class GameInfo implements EventListener {
             this.turnStart();
         } else if (event instanceof EventCardDraw) {
             EventCardDraw e = (EventCardDraw) event;
-            this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull());
+            this.cardDraw(e.getPlayerId(), e.getFatigue(), e.getFull(), e.getCard());
         } else if (event instanceof EventManaChange) {
             EventManaChange e = (EventManaChange) event;
             this.manaChange(e.getPlayerId(), e.getMana(), e.getFullMana());
@@ -136,13 +117,20 @@ public class GameInfo implements EventListener {
             this.turn++;
     }
 
-    private void cardDraw(int id, boolean fatigue, boolean full) {
-        if (fatigue)
+    private void cardDraw(int id, boolean fatigue, boolean full, Card card) {
+        if (fatigue){
+            this.drawedCard = null;
             return;
+        }
         if (full)
             this.deckSize[id]--;
         else
             this.deckSize[id]--;
+        this.drawedCard = card;
+    }
+
+    public Card getDrawedCard(){
+        return this.drawedCard;
     }
 
     public boolean isMyTurn() {

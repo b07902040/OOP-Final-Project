@@ -19,7 +19,14 @@ import javax.swing.JPanel;
 
 import heart.constant.Const;
 import heart.controller.Controller;
-import heart.event.*;
+import heart.event.Event;
+import heart.event.EventCardDrawed;
+import heart.event.EventCardEffected;
+import heart.event.EventEveryTick;
+import heart.event.EventInitialize;
+import heart.event.EventListener;
+import heart.event.EventManager;
+import heart.event.EventMinionAttacked;
 import heart.model.Card;
 import heart.model.DeathRattle;
 import heart.model.DivineShield;
@@ -39,8 +46,10 @@ public class View implements EventListener{
     private List<Painter> painters;
     private Animation attackAnimation;
     private Animation effectAnimation;
+    private Animation cardDrawAnimation;
     private boolean attacking;
     private boolean effecting;
+    private boolean drawingCard;
     private List<Animation> animations;
     private static HashMap<String, BufferedImage> imgLib = new HashMap<String, BufferedImage>(128);
     
@@ -60,6 +69,7 @@ public class View implements EventListener{
         this.animations = new ArrayList<Animation>();
         this.attacking = false;
         this.effecting = false;
+        this.drawingCard = false;
 
         painters.add(new BoardPainter());
         painters.add(new ManaPainter());
@@ -98,6 +108,11 @@ public class View implements EventListener{
                         this.model.pauseState();
                         this.eventManager.post(new EventCardEffected());
                     }
+                    else if(animations.get(i) == this.cardDrawAnimation){
+                        this.drawingCard = false;
+                        this.model.pauseState();
+                        this.eventManager.post(new EventCardDrawed());
+                    }
                     animations.remove(i);
                 }
             }
@@ -112,6 +127,12 @@ public class View implements EventListener{
                 this.painters.add((Painter) this.effectAnimation);
                 this.animations.add(this.effectAnimation);
                 this.effecting = true;
+            }
+            if(this.model.getState() == Const.STATE_DRAWING && !this.drawingCard){
+                this.cardDrawAnimation = new DrawCardAnimation();
+                this.painters.add((Painter) this.cardDrawAnimation);
+                this.animations.add(this.cardDrawAnimation);
+                this.drawingCard = true;
             }
             update();
         }

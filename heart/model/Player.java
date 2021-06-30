@@ -29,7 +29,7 @@ public class Player implements Serializable {
     public Player(Hero hero, Game game, boolean firstPlayer) {
         this.firstPlayer = firstPlayer;
         this.playerId = firstPlayer ? 0 : 1;
-        // this.name = name;
+        this.name = hero.getName();
         this.game = game;
         this.handCards = new ArrayList<Card>();
         this.ally = new ArrayList<Minion>();
@@ -50,9 +50,9 @@ public class Player implements Serializable {
         return this.playerId;
     }
 
-    /*
-     * public String getName(){ return this.name; }
-     */
+    
+    public String getName(){ return this.name; }
+     
 
     public Minion getHero() {
         return this.hero;
@@ -158,18 +158,18 @@ public class Player implements Serializable {
                 Card newCard = this.deck.get(0);
                 this.deck.remove(0);
                 if (this.handCards.size() < Const.MAX_HAND_SIZE) {
-                    System.out.printf("%s draws %s.\n", this.name, newCard.getName());
-                    this.game.cardDrew(this.playerId, false, false);
+                    System.out.printf("%s draws %s.\n", this.name, newCard.getName());                 
                     this.addHandCards(newCard);
-                } else {
+                    this.game.cardDrew(this.playerId, false, false, newCard);
+                } else {                    
+                    this.game.cardDrew(this.playerId, false, true, newCard);
                     System.out.printf("!!!!!!%s draws %s BOOM!!!!!!!\n", this.name, newCard.getName());
-                    this.game.cardDrew(this.playerId, false, true);
                 }
             } else {
                 System.out.printf("!!!!!!%s draws fatigue!!!!!!\n", this.name);
                 this.hero.setHP(this.hero.getHP() - this.fatigueDamge);
                 this.fatigueDamge += 1;
-                this.game.cardDrew(this.playerId, true, false);
+                this.game.cardDrew(this.playerId, true, false, null);
             }
         }
     }

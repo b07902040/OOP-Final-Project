@@ -21,6 +21,8 @@ public class Const {
     public static final int STATE_VALID_ATTACKED = 11;
     public static final int STATE_INVALID_ATTACKED = 12;
     public static final int STATE_ATTACKING = 13;
+    //Draw
+    public static final int STATE_DRAWING = 123;
 
     public static final int STATE_END = 99;
     // Game
@@ -54,6 +56,7 @@ public class Const {
     public static final int[] HANDCARD_REGION = { 50, 860, 950, 125 };
     public static final int[] CARD_SHOW = { 50, 90, 375, 595 };
     public static final int[] SPELL_SHOW = { 400, 90, 375, 595 };
+    public static final int[] DRAW_SHOW = { 700, 90, 375, 595 };
     public static final int[] BOARD_REGION = { 0, 520, 1200, 125 };
     public static final int[] OP_BOARD_REGION = { 0, 330, 1200, 125 };
     public static final int[] HERO = { 525, 690, 150, 150 };

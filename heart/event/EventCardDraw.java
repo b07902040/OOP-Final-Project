@@ -1,5 +1,7 @@
 package heart.event;
 
+import heart.model.Card;
+
 public class EventCardDraw implements Event {
 
     // to deck
@@ -7,11 +9,17 @@ public class EventCardDraw implements Event {
     private int playerId;
     private boolean fatigue;
     private boolean full;
+    private Card card;
 
-    public EventCardDraw(int playerId, boolean fatigue, boolean full) {
+    public EventCardDraw(int playerId, boolean fatigue, boolean full, Card card) {
         this.playerId = playerId;
         this.fatigue = fatigue;
         this.full = full;
+        this.card = card;
+    }
+
+    public Card getCard() {
+        return this.card;
     }
 
     public boolean getFatigue() {

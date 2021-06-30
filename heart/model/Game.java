@@ -39,6 +39,7 @@ public class Game implements EventListener, Serializable {
     private Minion selectedAttacker = null;
     private Minion selectedAttacked = null;
 
+    private int drawedCount = 0;
     private int attackedCount = 0;
     private int effectedCount = 0;
 
@@ -79,14 +80,21 @@ public class Game implements EventListener, Serializable {
             this.stateChange(Const.STATE_PENDING);
             this.currentPlayer.drawCards(1);
         } else if (event instanceof EventCardDraw) {
-            this.checkDeadStatus();
-            this.currentPlayer.printPlayerStatus();
-            if (winner > 0) {
-                this.stateChange(Const.STATE_GAME_END);
-                this.eventManager.post(new EventGameEnd(winner - 1));
-            } else
-                this.stateChange(Const.STATE_PENDING);
-        } else if (event instanceof EventClickedEmpty) {
+            ;
+        } 
+        else if (event instanceof EventCardDrawed) {
+            this.drawedCount++;
+            if (this.isState(Const.STATE_DRAWING) && this.drawedCount >= 2) {
+                this.checkDeadStatus();
+                this.currentPlayer.printPlayerStatus();
+                if (winner > 0) {
+                    this.stateChange(Const.STATE_GAME_END);
+                    this.eventManager.post(new EventGameEnd(winner - 1));
+                } else
+                    this.stateChange(Const.STATE_PENDING);
+                this.drawedCount = 0;
+        }   
+        }else if (event instanceof EventClickedEmpty) {
             if (this.isState(Const.STATE_VALID_CARD) || this.isState(Const.STATE_INVALID_CARD))
                 this.stateChange(Const.STATE_PENDING);
             else if (this.isState(Const.STATE_VALID_TARGET) || this.isState(Const.STATE_INVALID_TARGET))
@@ -217,7 +225,8 @@ public class Game implements EventListener, Serializable {
                         this.clickedAttackedIndex));
                 this.reset();
             }
-        } else if (event instanceof EventCardEffected) {
+        } 
+        else if (event instanceof EventCardEffected) {
             this.effectedCount++;
             if (this.isState(Const.STATE_EFFECTING) && this.effectedCount >= 2) {
                 this.checkDeadStatus();
@@ -405,8 +414,9 @@ public class Game implements EventListener, Serializable {
         this.eventManager.post(new EventStateChange(state));
     }
 
-    public void cardDrew(int playerId, boolean fatigue, boolean full) {
-        this.eventManager.post(new EventCardDraw(playerId, fatigue, full));
+    public void cardDrew(int playerId, boolean fatigue, boolean full, Card card) {
+        this.stateChange(Const.STATE_DRAWING);
+        this.eventManager.post(new EventCardDraw(playerId, fatigue, full, card));
     }
 
     public void handCardAdd(int playerId, Card card) {
@@ -470,6 +480,8 @@ public class Game implements EventListener, Serializable {
             state = "STATE_INVALID_ATTACKED";
         else if (this.isState(Const.STATE_ATTACKING))
             state = "STATE_ATTACKING";
+        else if (this.isState(Const.STATE_DRAWING))
+            state = "STATE_DRAWING";
         return state;
     }
 }
