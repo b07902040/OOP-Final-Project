@@ -39,6 +39,7 @@ public class AlAkir extends AbstractMinion implements Charge, DivineShield, Taun
         this.minionChange();
     }
 
+    
     @Override
     public boolean hasDivineShield() {
         return this.divineShield;

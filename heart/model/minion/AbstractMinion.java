@@ -8,7 +8,7 @@ import heart.model.Poisonous;
 import heart.model.Taunt;
 import heart.model.WindFury;
 
-public abstract class AbstractMinion implements Minion, Card {
+public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     // minion property
     protected int HP;
     protected int baseHP;
@@ -40,7 +40,32 @@ public abstract class AbstractMinion implements Minion, Card {
         this.ATK = baseATK;
         this.attackLimit = (this instanceof WindFury) ? 2 : 1;
     }
-
+    @Override
+    public AbstractMinion clone() {
+        try{
+            AbstractMinion  cloneObj = (AbstractMinion) super.clone();
+            /*cloneObj.name = this.name;
+            cloneObj.description = this.description;
+            cloneObj.baseHP = this.baseHP;
+            cloneObj.buffHP = this.buffHP;
+            cloneObj.HP = this.HP;
+            cloneObj.baseATK =  this.baseATK;
+            cloneObj.ATK = this.baseATK;
+            cloneObj.attackLimit = this.attackLimit;
+            cloneObj.cost = this.cost;
+            cloneObj.baseCost = this.baseCost;
+            cloneObj.aliveTime = this.aliveTime;
+            cloneObj.alive = this.alive;
+            cloneObj.attackCount = this.attackCount;
+            cloneObj.playedOrder = this.playedOrder;
+            cloneObj.master = null;*/
+            return cloneObj;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
     // card
     @Override
     public String getName() {
@@ -73,6 +98,11 @@ public abstract class AbstractMinion implements Minion, Card {
     }
 
     // minion
+    @Override
+    public int getAttackLimit(){
+        return this.attackLimit;
+    }
+
     @Override
     public Player getMaster() {
         return this.master;
@@ -226,6 +256,7 @@ public abstract class AbstractMinion implements Minion, Card {
     @Override
     public void attack(Minion target) {
         System.out.printf("%s attack %s\n", this.name, ((AbstractMinion) target).getName());
+        this.attackCount++;
         if (this instanceof Poisonous && !(target instanceof Hero))
             target.setHP(0);
         else
@@ -234,7 +265,7 @@ public abstract class AbstractMinion implements Minion, Card {
             this.setHP(0);
         else
             this.setHP(this.getHP() - target.getATK());
-        this.attackCount++;
+        
     }
 
     @Override

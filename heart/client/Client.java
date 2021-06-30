@@ -5,17 +5,17 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import heart.controller.Controller;
 import heart.event.ClientEventManager;
 import heart.event.Event;
 import heart.event.EventClientInitalize;
+import heart.event.EventMinionChange;
 import heart.event.Message;
+import heart.model.Card;
 import heart.model.GameInfo;
+import heart.model.Minion;
 import heart.view.View;
 
 public class Client {
@@ -89,6 +89,7 @@ public class Client {
 			Message receiveObj;
 			try {
 				while ((receiveObj = (Message) oistream.readObject()) != null) {
+					
 					// =====Do something=====
 					switch (receiveObj.getType()) {
 						case Message.JOIN:
@@ -98,6 +99,10 @@ public class Client {
 							//System.out.println("Child: " + eManager.getListenerslen());
 							break;
 						case Message.EVENT:
+							if(receiveObj.getObj() instanceof EventMinionChange){
+								Minion minion = ((EventMinionChange) receiveObj.getObj()).getMinion();
+								System.out.printf("RECV:%s %d\n",((Card)minion).getName(),minion.getHP());
+							}
 							eManager.localPost((Event) receiveObj.getObj());
 							break;
 					}

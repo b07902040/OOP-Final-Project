@@ -42,6 +42,8 @@ public class GameInfo implements EventListener {
 
     @Override
     public void notify(Event event) {
+        if(event instanceof EventEveryTick) return;
+        System.out.println(event.getName());
         if (event instanceof EventClientInitalize) {
             this.initialize(((EventClientInitalize) event).getClientId());
         } else if (event instanceof EventStateChange) {
@@ -63,6 +65,8 @@ public class GameInfo implements EventListener {
         } else if (event instanceof EventMinionChange) {
             EventMinionChange e = (EventMinionChange) event;
             this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
+            Card m = (Card) e.getMinion();
+            System.out.printf("%s %d\n",m.getName(),((Minion) m).getHP());
         } else if (event instanceof EventAttacking) {
             EventAttacking e = (EventAttacking) event;
             this.attackerIndex = e.getAttackerIndex();
@@ -307,23 +311,22 @@ public class GameInfo implements EventListener {
     }
 
     public boolean checkValidCard(int index){
-        return true;
-        /*Card card = this.handCards.get(index);
-        if (card.getCost() > this.mana)
+        Card card = this.handCards.get(index);
+        if (card.getCost() > this.mana[this.playerId])
             return false;
         if (card instanceof Minion) {
             if (this.ally.size() >= Const.BOARD_SPACE + 1)// ADD FOR HERO
                 return false;
         }
         if (card instanceof Spell && card instanceof Targeting) {
-            if (((Targeting) card).getCandidates(this).size() == 0) {
+            if (((Targeting) card).getCandidates(this.ally, this.enemy).size() == 0) {
                 if (card instanceof BattleCry)
                     return true;
                 else
                     return false;
             }
         }
-        return true;*/
+        return true;
     }
 
     public boolean canAttacked(int playerId, int index){
@@ -344,5 +347,40 @@ public class GameInfo implements EventListener {
                 return false;
         }
         return true;
+    }
+    private void printState() {
+        String state = "STATE_INITIALIZED";
+        if (this.isState(Const.STATE_PENDING))
+            state = "STATE_PENDING";
+        else if (this.isState(Const.STATE_GAME_END))
+            state = "STATE_GAME_END";
+        else if (this.isState(Const.STATE_VALID_CARD))
+            state = "STATE_VALID_CARD";
+        else if (this.isState(Const.STATE_INVALID_CARD))
+            state = "STATE_INVALID_CARD";
+        else if (this.isState(Const.STATE_CARD_TARGETING))
+            state = "STATE_CARD_TARGETING";
+        else if (this.isState(Const.STATE_VALID_TARGET))
+            state = "STATE_VALID_TARGET";
+        else if (this.isState(Const.STATE_INVALID_TARGET))
+            state = "STATE_INVALID_TARGET";
+        else if (this.isState(Const.STATE_EFFECTING))
+            state = "STATE_EFFECTING";
+        else if (this.isState(Const.STATE_VALID_ATTACKER))
+            state = "STATE_VALID_ATTACKER";
+        else if (this.isState(Const.STATE_INVALID_ATTACKER))
+            state = "STATE_INVALID_ATTACKER";
+        else if (this.isState(Const.STATE_ATTACKER_TARGETING))
+            state = "STATE_ATTACKER_TARGETING";
+        else if (this.isState(Const.STATE_VALID_ATTACKED))
+            state = "STATE_VALID_ATTACKED";
+        else if (this.isState(Const.STATE_INVALID_ATTACKED))
+            state = "STATE_INVALID_ATTACKED";
+        else if (this.isState(Const.STATE_ATTACKING))
+            state = "STATE_ATTACKING";
+        System.out.println(state);
+    }
+    private boolean isState(int state){
+        return (this.state == state);
     }
 }

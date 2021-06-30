@@ -426,6 +426,7 @@ public class Game implements EventListener, Serializable {
     }
 
     public void minionChange(int playerId, int id, Minion minion) {
+        System.out.printf("%s %d\n",((Card)minion).getName(),minion.getHP());
         this.eventManager.post(new EventMinionChange(playerId, id, minion));
     }
 

@@ -24,7 +24,7 @@ public class AlexStrasza extends AbstractMinion implements BattleCry, Targeting 
     public List<Minion> getCandidates(List<Minion> ally, List<Minion> enemy) {
         List<Minion> candidates = new ArrayList<Minion>();
         candidates.add(ally.get(0));
-        candidates.add(ally.get(1));
+        candidates.add(enemy.get(0));
         return candidates;
     }
 

@@ -1,15 +1,17 @@
 package heart.server;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import heart.event.Event;
+import heart.event.EventMinionChange;
 import heart.event.Message;
 import heart.event.ServerEventManager;
 import heart.model.Game;
-
-
+import heart.model.Minion;
+import heart.model.minion.AbstractMinion;
 
 public class Server {
 
@@ -23,9 +25,9 @@ public class Server {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
 			System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
-			//boolean serverStart = true;
+			// boolean serverStart = true;
 			int cnt = 0;
-			while ( cnt < 2 ) { //Listen
+			while (cnt < 2) { // Listen
 				Socket cs = serverSocket.accept();
 				this.makeConnection(cs);
 				cnt++;
@@ -65,7 +67,7 @@ public class Server {
 		private Socket cs;
 		private ObjectInputStream oistream;
 
-		public Listener (Socket newcs) {
+		public Listener(Socket newcs) {
 			this.cs = newcs;
 			try {
 				oistream = new ObjectInputStream(cs.getInputStream());
@@ -73,6 +75,7 @@ public class Server {
 				ex.printStackTrace();
 			}
 		}
+
 		@Override
 		public void run() {
 			Message receiveObj;
@@ -83,7 +86,7 @@ public class Server {
 					switch (receiveObj.getType()) {
 						case Message.JOIN:
 							System.out.println("Client just connect");
-							if ( nowPlayerNum >= 2 ) {
+							if (nowPlayerNum >= 2) {
 								System.out.println("Too More Clients");
 							}
 							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, nowPlayerNum));
@@ -101,25 +104,31 @@ public class Server {
 		}
 	}
 
-	public static synchronized void boardcastMessage(Message message)
-	{
+	public static synchronized void boardcastMessage(Message message) {
 		sendMessage(0, message);
 		sendMessage(1, message);
 	}
 
-	public static synchronized void sendMessage(int i, Message message)
-	{
+	public static synchronized void sendMessage(int i, Message message) {
+		if(message.getObj() instanceof EventMinionChange){
+			Minion minion = ((EventMinionChange) message.getObj()).getMinion();
+			Minion newMinion = ((AbstractMinion) minion).clone();
+			System.out.printf("Send from server: %d\n",newMinion.getHP());
+			EventMinionChange e = (EventMinionChange) message.getObj();
+			message = new Message(Message.EVENT, -2, new EventMinionChange(e.getPlayerId(),e.getIndex(),newMinion));
+		}
+	
+		// System.out.printf("%s %d\n",((Card)minion).getName(),minion.getHP());
 		if (clientSockets[i] != null && clientOOStreams[i] != null) {
 			try {
 				clientOOStreams[i].writeObject(message);
 				clientOOStreams[i].flush();
 			} catch (Exception ex) {
-				System.out.println("Error in send message to the client at "
-						+ clientSockets[i].getRemoteSocketAddress());
+				System.out
+						.println("Error in send message to the client at " + clientSockets[i].getRemoteSocketAddress());
 				ex.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			System.out.println("No Client Connected");
 		}
 	}

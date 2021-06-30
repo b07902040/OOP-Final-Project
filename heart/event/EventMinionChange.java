@@ -8,6 +8,7 @@ public class EventMinionChange implements Event {
     private int index;
     private Minion minion;
 
+
     public EventMinionChange(int playerId, int index, Minion minion) {
         this.playerId = playerId;
         this.index = index;

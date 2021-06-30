@@ -60,4 +60,6 @@ public interface Minion extends Serializable {
     void doTurnEnd();
 
     void minionChange();
+    
+    int getAttackLimit();
 }
