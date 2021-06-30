@@ -85,6 +85,7 @@ public class Game implements EventListener, Serializable {
         else if (event instanceof EventCardDrawed) {
             this.drawedCount++;
             if (this.isState(Const.STATE_DRAWING) && this.drawedCount >= 2) {
+                System.out.println();
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if (winner > 0) {
@@ -282,7 +283,8 @@ public class Game implements EventListener, Serializable {
     }
 
     private void initialize() {
-        this.deckLoader = new RandomDeckLoader();
+        //this.deckLoader = new RandomDeckLoader();
+        this.deckLoader = new CustomDeckLoader();
         this.players = new ArrayList<Player>();
         this.players.add(new Player(new Jaina(), this, true));
         this.players.add(new Player(new Guldan(), this, false));

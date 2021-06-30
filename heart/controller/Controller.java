@@ -27,7 +27,6 @@ public class Controller extends MouseAdapter implements EventListener {
         if (event instanceof EventInitialize) {
             this.initialize();
         } else if (event instanceof EventEveryTick) {
-            // TODO:
             // handle mouse events
             return;
         }
@@ -79,27 +78,6 @@ public class Controller extends MouseAdapter implements EventListener {
         if (isInEnturnButton(x, y)) {
             this.eventManager.post(new EventTurnEnd());
         }
-
-        /*
-         * if(isInEnturnButton(x, y)){ System.out.println("End turn button clicked");
-         * Card card = new PyroBlast(); this.eventManager.post(new
-         * EventHandCardChange(0, card)); } if(isInSelectButton(x, y)){
-         * 
-         * System.out.println("Select button clicked"); //Card card = new Goblin();
-         * //this.eventManager.post(new EventHandCardChange(0, card));
-         * 
-         * Minion minion = new Goblin(); this.eventManager.post(new EventBoardChange(1,
-         * 0, minion)); } if(position2MinionIndex(x, y) >= 0){
-         * System.out.printf("Clicked on Minion with player id: %d, index: %d\n",
-         * position2MinionPlayerId(x, y), position2MinionIndex(x, y)); }
-         * if(position2CardIndex(x, y) >= 0){
-         * System.out.printf("Clicked on Card with index: %d\n", position2CardIndex(x,
-         * y)); this.eventManager.post(new EventStateChange(Const.STATE_VALID_CARD));
-         * this.eventManager.post(new EventCardShow(position2CardIndex(x, y), true)); }
-         * else if(isEmptyRegion(x, y)){ if(this.model.getState() ==
-         * Const.STATE_VALID_CARD) this.eventManager.post(new
-         * EventStateChange(Const.STATE_PENDING)); }
-         */
     }
 
     @Override
@@ -123,38 +101,6 @@ public class Controller extends MouseAdapter implements EventListener {
         if (Math.abs(x - lastPressedX) < Const.MOUSE_CLICK_THRESHOLD
                 && Math.abs(y - lastPressedY) < Const.MOUSE_CLICK_THRESHOLD)
             mouseClicked(e);
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        /**
-         * Invoked when the mouse enters a component.
-         */
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        /**
-         * Invoked when the mouse exits a component.
-         */
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        /**
-         * Invoked when a mouse button is pressed on a component and then dragged.
-         * MOUSE_DRAGGED events will continue to be delivered to the component where the
-         * drag originated until the mouse button is released (regardless of whether the
-         * mouse position is within the bounds of the component).
-         */
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        /**
-         * Invoked when the mouse cursor has been moved onto a component but no buttons
-         * have been pushed.
-         */
     }
 
     private boolean isInSelectButton(int x, int y) {
