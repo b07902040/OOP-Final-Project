@@ -4,7 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heart.constant.Const;
-import heart.event.*;
+import heart.event.Event;
+import heart.event.EventAttacking;
+import heart.event.EventBoardChange;
+import heart.event.EventCardDraw;
+import heart.event.EventCardShow;
+import heart.event.EventClientInitalize;
+import heart.event.EventEffecting;
+import heart.event.EventEveryTick;
+import heart.event.EventGameEnd;
+import heart.event.EventHandCardChange;
+import heart.event.EventListener;
+import heart.event.EventManaChange;
+import heart.event.EventManager;
+import heart.event.EventMinionChange;
+import heart.event.EventMinionChangeHP;
+import heart.event.EventMinionDestroy;
+import heart.event.EventMinionShow;
+import heart.event.EventStateChange;
+import heart.event.EventTurnStart;
 
 public class GameInfo implements EventListener {
 
@@ -34,6 +52,7 @@ public class GameInfo implements EventListener {
     private int attackerPlayerIndex;
     private int attackedIndex;
     private int attackedPlayerIndex;
+    private Card effectingCard;
 
     public GameInfo(EventManager eventManager) {
         this.eventManager = eventManager;
@@ -73,7 +92,11 @@ public class GameInfo implements EventListener {
             this.attackerPlayerIndex = e.getAttackerPlayerIndex();
             this.attackedIndex = e.getAttackedIndex();
             this.attackedPlayerIndex = e.getAttackedPlayerIndex();
-        } else if (event instanceof EventCardShow) {
+        } else if (event instanceof EventEffecting) {
+            EventEffecting e = (EventEffecting) event;
+            this.effectingCard = e.getCard();
+        } 
+        else if (event instanceof EventCardShow) {
             EventCardShow e = (EventCardShow) event;
             this.showedCardIndex = e.getShowIndex();
             this.showedCardValid = e.getValid();
@@ -207,6 +230,10 @@ public class GameInfo implements EventListener {
 
     public boolean getShowedMinionValid() {
         return this.showedMinionValid;
+    }
+
+    public Card getEffectingCard() {
+        return this.effectingCard;
     }
 
     public int getAttackerIndex() {

@@ -1,5 +1,7 @@
 package heart.event;
 
+import heart.model.Card;
+
 public class EventEffecting implements Event {
     private String name = "EventEffecting";
 
@@ -7,12 +9,14 @@ public class EventEffecting implements Event {
     private int cardPlayerIndex;
     private int targetIndex;
     private int targetPlayerIndex;
+    private Card card;
 
-    public EventEffecting(int cardIndex, int cardPlayerIndex, int targetIndex, int targetPlayerIndex) {
-        this.cardIndex = cardIndex;
-        this.cardPlayerIndex = cardPlayerIndex;
-        this.targetIndex = targetIndex;
-        this.targetPlayerIndex = targetPlayerIndex;
+    public EventEffecting(Card card) {
+        this.card = card;
+    }
+
+    public Card getCard() {
+        return this.card;
     }
 
     public int getCardIndex() {

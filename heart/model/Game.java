@@ -118,7 +118,7 @@ public class Game implements EventListener, Serializable {
                         this.stateChange(Const.STATE_NULL);
                         this.playedMinion(this.selectedCard);          
                         this.stateChange(Const.STATE_EFFECTING);              
-                        this.eventManager.post(new EventEffecting(0, 0, 0, 0));
+                        this.eventManager.post(new EventEffecting(this.selectedCard));
                         this.reset();
                     } else
                         this.stateChange(Const.STATE_CARD_TARGETING);
@@ -140,7 +140,7 @@ public class Game implements EventListener, Serializable {
                         ((Spell) this.selectedCard).takeEffect(this.currentPlayer, null);
                     }
                     this.stateChange(Const.STATE_EFFECTING);
-                    this.eventManager.post(new EventEffecting(0, 0, 0, 0));
+                    this.eventManager.post(new EventEffecting(this.selectedCard));
                     this.reset();
                 }
             }
@@ -202,7 +202,7 @@ public class Game implements EventListener, Serializable {
                     ((Spell) this.selectedCard).takeEffect(this.currentPlayer, this.selectedMinion);
                 }
                 this.stateChange(Const.STATE_EFFECTING);
-                this.eventManager.post(new EventEffecting(0, 0, 0, 0));
+                this.eventManager.post(new EventEffecting(this.selectedCard));
                 this.reset();
             } else if (this.isState(Const.STATE_VALID_ATTACKER)) {
                 this.selectedAttacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);
