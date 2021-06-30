@@ -129,6 +129,9 @@ public class GameInfo implements EventListener {
     public int getTurn() {
         return this.turn;
     }
+    public void pauseState(){
+        this.state = Const.STATE_NULL;
+    }
 
     public int getState() {
         return this.state;

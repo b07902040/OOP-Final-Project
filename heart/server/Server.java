@@ -110,13 +110,13 @@ public class Server {
 	}
 
 	public static synchronized void sendMessage(int i, Message message) {
-		if(message.getObj() instanceof EventMinionChange){
+		/*if(message.getObj() instanceof EventMinionChange){
 			Minion minion = ((EventMinionChange) message.getObj()).getMinion();
 			Minion newMinion = ((AbstractMinion) minion).clone();
 			System.out.printf("Send from server: %d\n",newMinion.getHP());
 			EventMinionChange e = (EventMinionChange) message.getObj();
 			message = new Message(Message.EVENT, -2, new EventMinionChange(e.getPlayerId(),e.getIndex(),newMinion));
-		}
+		}*/
 	
 		// System.out.printf("%s %d\n",((Card)minion).getName(),minion.getHP());
 		if (clientSockets[i] != null && clientOOStreams[i] != null) {

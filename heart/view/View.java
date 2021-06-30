@@ -1,27 +1,31 @@
 package heart.view;
-import java.util.List;
-import java.util.HashMap;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import heart.controller.Controller;
-import heart.constant.Const;
-import heart.event.*;
-import heart.model.*;
-
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.imageio.ImageIO;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import heart.constant.Const;
+import heart.controller.Controller;
+import heart.event.*;
+import heart.model.Card;
+import heart.model.DeathRattle;
+import heart.model.DivineShield;
+import heart.model.GameInfo;
+import heart.model.Minion;
+import heart.model.Taunt;
 
 
 public class View implements EventListener{
@@ -84,6 +88,7 @@ public class View implements EventListener{
                     painters.remove((Painter) animations.get(i));
                     if(animations.get(i) == this.attackAnimation){
                         this.attacking = false;
+                        this.model.pauseState();
                         this.eventManager.post(new EventMinionAttacked());
                     }
                     animations.remove(i);

@@ -115,8 +115,9 @@ public class Game implements EventListener, Serializable {
                         System.out.printf("BattleCry no target!\n");
                         this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                         ((Minion) this.selectedCard).setMaster(this.currentPlayer);
-                        this.playedMinion(this.selectedCard);
-                        this.stateChange(Const.STATE_EFFECTING);
+                        this.stateChange(Const.STATE_NULL);
+                        this.playedMinion(this.selectedCard);          
+                        this.stateChange(Const.STATE_EFFECTING);              
                         this.eventManager.post(new EventEffecting(0, 0, 0, 0));
                         this.reset();
                     } else
@@ -126,14 +127,17 @@ public class Game implements EventListener, Serializable {
                     if (this.selectedCard instanceof Minion) {
                         if (this.selectedCard instanceof BattleCry) {
                             ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                            this.stateChange(Const.STATE_NULL);
                             this.playedMinion(this.selectedCard);
                             ((BattleCry) this.selectedCard).doBattleCryEffect(null);
-                        } else
+                        } else{
+                            this.stateChange(Const.STATE_NULL);
                             this.playedMinion(this.selectedCard);
+                        }
                     } else if (this.selectedCard instanceof Spell) {
+                        this.stateChange(Const.STATE_NULL);
                         this.playedSpell(this.selectedCard);
                         ((Spell) this.selectedCard).takeEffect(this.currentPlayer, null);
-
                     }
                     this.stateChange(Const.STATE_EFFECTING);
                     this.eventManager.post(new EventEffecting(0, 0, 0, 0));
@@ -189,9 +193,11 @@ public class Game implements EventListener, Serializable {
                 this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                 if (this.selectedCard instanceof BattleCry) {
                     ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                    this.stateChange(Const.STATE_NULL);
                     this.playedMinion(this.selectedCard);
                     ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);
                 } else if (this.selectedCard instanceof Spell) {
+                    this.stateChange(Const.STATE_NULL);
                     this.playedSpell(this.selectedCard);
                     ((Spell) this.selectedCard).takeEffect(this.currentPlayer, this.selectedMinion);
                 }
@@ -426,8 +432,9 @@ public class Game implements EventListener, Serializable {
     }
 
     public void minionChange(int playerId, int id, Minion minion) {
-        System.out.printf("%s %d\n",((Card)minion).getName(),minion.getHP());
-        this.eventManager.post(new EventMinionChange(playerId, id, minion));
+        Minion newMinion = ((AbstractMinion) minion).clone();
+        System.out.printf("%s %d\n",((Card)newMinion).getName(),minion.getHP());
+        this.eventManager.post(new EventMinionChange(playerId, id, newMinion));
     }
 
     public static int getRandom(int range) {

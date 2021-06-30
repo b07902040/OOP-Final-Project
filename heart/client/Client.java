@@ -48,7 +48,6 @@ public class Client {
 		View view = new View(eventManager, gameinfo, controller);
 		System.out.println("MAIN: " + eventManager.getListenerslen());
 		this.makeConnection(eventManager);
-
 		System.out.println("!!!!!!!!!!!!!");
 	}
 
