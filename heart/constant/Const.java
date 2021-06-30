@@ -185,4 +185,7 @@ public class Const {
     public static final String VALID_MINION_EFFECT_PATH = "image/valid_minion_effect.png";
     public static final String VALID_MINION_CARD_EFFECT_PATH = "image/valid_minion_card_effect.png";
     public static final String VALID_SPELL_CARD_EFFECT_PATH = "image/valid_spell_card_effect.png";
+
+    public static final String BGM_PATH = "./music/bgm.wav";
+    
 }

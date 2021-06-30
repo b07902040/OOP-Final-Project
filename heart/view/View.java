@@ -79,12 +79,15 @@ public class View implements EventListener{
         painters.add(new ShowCardPainter());
         painters.add(new MessagePainter());
         painters.add(new DeckPainter());
+        
 
         this.board.addMouseListener(this.controller);
         this.screen.add(this.board);
         this.screen.pack();
         update();
-        this.screen.setVisible(true);
+        Thread t = new Thread(new AudioPlayer());
+		t.start();
+        this.screen.setVisible(true);        
         return;
     };
 

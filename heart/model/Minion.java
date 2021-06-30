@@ -1,9 +1,7 @@
 package heart.model;
 
-import java.io.Serializable;
 
-public interface Minion extends Serializable {
-    static final long serialVersionUID = 2L;
+public interface Minion extends Card {
 
     // todo
     // MAXHP

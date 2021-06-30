@@ -16,7 +16,7 @@ import heart.model.Game;
 import heart.model.Minion;
 
 public class Server {
-
+	
 	private static Socket[] clientSockets = new Socket[2];
 	private String[] clientNames = new String[2];
 	private static ObjectOutputStream[] clientOOStreams = new ObjectOutputStream[2];
@@ -66,6 +66,7 @@ public class Server {
 	}
 
 	private class Listener extends Thread {
+		private int uniqueId = -1;
 		private Socket cs;
 		private ObjectInputStream oistream;
 
@@ -91,10 +92,9 @@ public class Server {
 							if (nowPlayerNum >= 2) {
 								System.out.println("Too More Clients");
 							}
-							int id = (int) (Math.random() * 2);
-							System.out.printf("RANDOM: %d\n",id);
-							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, id));
-							id = (id + 1) % 2;
+							this.uniqueId = (this.uniqueId < 0)? (int) (Math.random() * 2) : 1 - this.uniqueId;
+							System.out.printf("RANDOM: %d\n",this.uniqueId);
+							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, this.uniqueId));
 							nowPlayerNum++;
 							break;
 						case Message.EVENT:

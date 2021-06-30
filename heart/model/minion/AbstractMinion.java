@@ -1,6 +1,5 @@
 package heart.model.minion;
 
-import heart.model.Card;
 import heart.model.Charge;
 import heart.model.Minion;
 import heart.model.Player;
@@ -8,7 +7,7 @@ import heart.model.Poisonous;
 import heart.model.Taunt;
 import heart.model.WindFury;
 
-public abstract class AbstractMinion implements Minion, Card ,Cloneable{
+public abstract class AbstractMinion implements Minion, Cloneable{
     // minion property
     protected int HP;
     protected int baseHP;
