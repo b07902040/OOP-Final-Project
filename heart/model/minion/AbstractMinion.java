@@ -44,21 +44,6 @@ public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     public AbstractMinion clone() {
         try{
             AbstractMinion  cloneObj = (AbstractMinion) super.clone();
-            /*cloneObj.name = this.name;
-            cloneObj.description = this.description;
-            cloneObj.baseHP = this.baseHP;
-            cloneObj.buffHP = this.buffHP;
-            cloneObj.HP = this.HP;
-            cloneObj.baseATK =  this.baseATK;
-            cloneObj.ATK = this.baseATK;
-            cloneObj.attackLimit = this.attackLimit;
-            cloneObj.cost = this.cost;
-            cloneObj.baseCost = this.baseCost;
-            cloneObj.aliveTime = this.aliveTime;
-            cloneObj.alive = this.alive;
-            cloneObj.attackCount = this.attackCount;
-            cloneObj.playedOrder = this.playedOrder;
-            cloneObj.master = null;*/
             return cloneObj;
         } catch(Exception e) {
             e.printStackTrace();

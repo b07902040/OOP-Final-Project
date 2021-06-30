@@ -432,7 +432,7 @@ public class Game implements EventListener, Serializable {
 
     public void minionChange(int playerId, int id, Minion minion) {
         Minion newMinion = ((AbstractMinion) minion).clone();
-        System.out.printf("%s %d\n",((Card)newMinion).getName(),minion.getHP());
+        System.out.printf("game send :%s %d\n",((Card) newMinion).getName(),minion.getHP());
         this.eventManager.post(new EventMinionChange(playerId, id, newMinion));
     }
 

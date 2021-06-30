@@ -6,9 +6,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import heart.event.Event;
+import heart.event.EventMinionChange;
 import heart.event.Message;
 import heart.event.ServerEventManager;
 import heart.model.Game;
+import heart.model.Minion;
 
 public class Server {
 
@@ -109,10 +111,11 @@ public class Server {
 	public static synchronized void sendMessage(int i, Message message) {
 		/*if(message.getObj() instanceof EventMinionChange){
 			Minion minion = ((EventMinionChange) message.getObj()).getMinion();
-			Minion newMinion = ((AbstractMinion) minion).clone();
-			System.out.printf("Send from server: %d\n",newMinion.getHP());
-			EventMinionChange e = (EventMinionChange) message.getObj();
-			message = new Message(Message.EVENT, -2, new EventMinionChange(e.getPlayerId(),e.getIndex(),newMinion));
+			//Minion newMinion = ((AbstractMinion) minion).clone();
+			//System.out.printf("Send from server: %d\n",newMinion.getHP());
+			System.out.printf("Send from server: %d\n",minion.getHP());
+			//EventMinionChange e = (EventMinionChange) message.getObj();
+			//message = new Message(Message.EVENT, -2, new EventMinionChange(e.getPlayerId(),e.getIndex(),newMinion));
 		}*/
 	
 		// System.out.printf("%s %d\n",((Card)minion).getName(),minion.getHP());
