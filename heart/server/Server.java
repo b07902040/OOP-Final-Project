@@ -2,8 +2,11 @@ package heart.server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collection;
+import java.util.Collections;
 
 import heart.event.Event;
 import heart.event.EventMinionChange;
@@ -88,7 +91,10 @@ public class Server {
 							if (nowPlayerNum >= 2) {
 								System.out.println("Too More Clients");
 							}
-							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, nowPlayerNum));
+							int id = (int) (Math.random() * 2);
+							System.out.printf("RANDOM: %d\n",id);
+							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, id));
+							id = (id + 1) % 2;
 							nowPlayerNum++;
 							break;
 						case Message.EVENT:
