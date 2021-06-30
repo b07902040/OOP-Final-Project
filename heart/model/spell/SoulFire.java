@@ -13,7 +13,7 @@ import heart.model.Targeting;
 public class SoulFire extends AbstractSpell implements Targeting {
 
     private static String name = "SoulFire";
-    private static String description = "Deal 10 damage";
+    private static String description = "Deal 4 damage. Discard a random card";
     private static int baseCost = 1;
 
     public SoulFire() {

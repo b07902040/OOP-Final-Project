@@ -12,7 +12,7 @@ import heart.model.minion.Hero;
 public class PowerShield extends AbstractSpell implements Targeting {
 
     private static String name = "PowerShield";
-    private static String description = "Give a minion +2 Health. Draw a card";
+    private static String description = "Give a minion +2 HP. Draw a card";
     private static int baseCost = 1;
 
     public PowerShield() {

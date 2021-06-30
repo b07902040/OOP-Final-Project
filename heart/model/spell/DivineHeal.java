@@ -12,7 +12,7 @@ public class DivineHeal extends AbstractSpell implements Targeting {
 
     private static String name = "DivineHeal";
     private static String description = "Restore 8 HP and draw 3 cards";
-    private static int baseCost = 10;
+    private static int baseCost = 8;
 
     public DivineHeal() {
         super(DivineHeal.name, DivineHeal.description, DivineHeal.baseCost);

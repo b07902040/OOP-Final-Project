@@ -74,7 +74,7 @@ public class DeckLoader implements Serializable {
         cards.add(new Tazdingo());
         cards.add(new Doom());
         cards.add(new UldmanKeeper());
-        
+        cards.add(new BigDragon());        
         return cards;
     }
     private static ArrayList<Card> minionType0(){
