@@ -110,7 +110,7 @@ public class Game implements EventListener, Serializable {
             if (this.isState(Const.STATE_VALID_CARD)) {
                 this.selectedCard = this.currentPlayer.getHandCards().get(this.clickedCardIndex);
                 if (this.selectedCard instanceof Targeting) {
-                    List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer);
+                    List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer.getAlly(), this.currentPlayer.getEnemy());
                     if (this.selectedCard instanceof BattleCry && candidates.size() == 0) {
                         System.out.printf("BattleCry no target!\n");
                         this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
@@ -307,7 +307,7 @@ public class Game implements EventListener, Serializable {
     private boolean checkValidMinion() {
         Minion target = this.players.get(this.clickedPlayerId).getAlly().get(this.clickedMinionIndex);
         if (this.selectedCard instanceof Targeting) {
-            List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer);
+            List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer.getAlly(), this.currentPlayer.getEnemy());
             return candidates.contains(target);
         } else
             return false;

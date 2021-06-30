@@ -27,6 +27,7 @@ public class DeckLoader implements Serializable {
         this.library.add(spellType1());
         this.library.add(spellType2());
         this.library.add(spellType3());
+        this.library.add(spellType4());
     }
     public  ArrayList<ArrayList<Card>> loadDecks() {
         ArrayList<ArrayList<Card>> decks = new  ArrayList<ArrayList<Card>>();

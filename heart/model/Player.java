@@ -183,7 +183,7 @@ public class Player implements Serializable {
                 return false;
         }
         if (card instanceof Spell && card instanceof Targeting) {
-            if (((Targeting) card).getCandidates(this).size() == 0) {
+            if (((Targeting) card).getCandidates(this.ally, this.enemy).size() == 0) {
                 if (card instanceof BattleCry)
                     return true;
                 else
