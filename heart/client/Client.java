@@ -10,10 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import heart.controller.Controller;
 import heart.event.ClientEventManager;
 import heart.event.Event;
 import heart.event.EventClientInitalize;
 import heart.event.Message;
+import heart.model.GameInfo;
+import heart.view.View;
 
 public class Client {
 
@@ -40,9 +43,13 @@ public class Client {
 
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);
 
+		GameInfo gameinfo = new GameInfo(eventManager);
+		Controller controller = new Controller(eventManager, gameinfo);
+		View view = new View(eventManager, gameinfo, controller);
+		System.out.println("MAIN: " + eventManager.getListenerslen());
 		this.makeConnection(eventManager);
 
-		System.out.println("GGGGGGGGGG");
+		System.out.println("!!!!!!!!!!!!!");
 	}
 
 	public void makeConnection(ClientEventManager eventManager) {

@@ -18,7 +18,7 @@ public class HandCardPainter implements Painter {
         int shiftedX = Const.HANDCARD_REGION[0] + (Const.HANDCARD_REGION[2] - (handCards.size()-1)*Const.HANDCARD_GAP - handCards.size()*Const.CARD_W)/2;
         for(int i = 0; i < handCards.size(); i++){
             card = handCards.get(i);
-            
+                        
             if(card instanceof Minion){
                 if(game.isMyTurn() && game.getState() == Const.STATE_PENDING && game.getHero().getMaster().checkValidCard(i))
                     g.drawImage(View.loadImage(Const.VALID_MINION_CARD_EFFECT_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.VALID_MINION_CARD_X_RATIO*Const.CARD_W),

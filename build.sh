@@ -1,4 +1,3 @@
 
-
 rm -r out/
-javac -cp . -sourcepath src -d ./out  src/*.java src/*/*.java src/*/*/*.java
+javac -cp . -sourcepath heart -d ./out  heart/*.java heart/*/*.java heart/*/*/*.java
