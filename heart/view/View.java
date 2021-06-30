@@ -38,6 +38,7 @@ public class View implements EventListener{
     private BufferedImage offScreenImage;
     private List<Painter> painters;
     private Animation attackAnimation;
+    private Animation effectAnimation;
     private boolean attacking;
     private boolean effecting;
     private List<Animation> animations;
@@ -91,6 +92,12 @@ public class View implements EventListener{
                         this.model.pauseState();
                         this.eventManager.post(new EventMinionAttacked());
                     }
+                    else if(animations.get(i) == this.effectAnimation){
+                        System.out.println("effect ends");
+                        this.effecting = false;
+                        this.model.pauseState();
+                        this.eventManager.post(new EventCardEffected());
+                    }
                     animations.remove(i);
                 }
             }
@@ -101,7 +108,10 @@ public class View implements EventListener{
                 this.attacking = true;
             }
             if(this.model.getState() == Const.STATE_EFFECTING && !this.effecting){
-                this.eventManager.post(new EventCardEffected());
+                this.effectAnimation = new OpponentSpellAnimation();
+                this.painters.add((Painter) this.effectAnimation);
+                this.animations.add(this.effectAnimation);
+                this.effecting = true;
             }
             update();
         }
