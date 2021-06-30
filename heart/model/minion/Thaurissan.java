@@ -6,7 +6,7 @@ import heart.model.spell.Coin;
 public class Thaurissan extends AbstractMinion {
 
     private static String name = "Thaurissan";
-    private static String description = "DeathRattle: Add 1 Coin to your hand.";
+    private static String description = "At the end of your turn, give you 3 Coin";
     private static int baseCost = 6;
     private static int baseATK = 5;
     private static int baseHP = 5;

@@ -8,7 +8,4 @@ public class Guldan extends Hero {
     public Guldan() {
         super(Guldan.name, Guldan.description);
     }
-    public void hhp(int hhp){
-        this.HP = hhp;
-    }
 }

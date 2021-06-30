@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import javax.swing.JTextField;
+//import javax.swing.JTextField;
 
 import heart.controller.Controller;
 import heart.event.ClientEventManager;
@@ -20,7 +20,7 @@ import heart.view.View;
 
 public class Client {
 
-	private String playerName = "";
+	//private String playerName = "";
 	private static int playerID = -2;
 	private String serverIP;
 	private int serverPort;
@@ -30,15 +30,15 @@ public class Client {
 		serverIP = IP;
 		serverPort = port;
 
-		JTextField playerNameField = new JTextField(playerName, 10);
-		/*JPanel playerNamePanel = new JPanel();
+		/*JTextField playerNameField = new JTextField(playerName, 10);
+		JPanel playerNamePanel = new JPanel();
 		playerNamePanel.add(new JLabel("Type your name here:"));
 		playerNamePanel.add(playerNameField);
 		JOptionPane.showConfirmDialog(null, playerNamePanel, "Welcome to HeartStone", JOptionPane.YES_NO_OPTION,
 				JOptionPane.PLAIN_MESSAGE);*/
 
 		//this.playerName = playerNameField.getText();
-		this.playerName = "philly";
+		//this.playerName = "philly";
 		ClientEventManager eventManager = new ClientEventManager();
 
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);

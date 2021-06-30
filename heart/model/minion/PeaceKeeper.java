@@ -11,7 +11,7 @@ import heart.model.Targeting;
 public class PeaceKeeper extends AbstractMinion implements BattleCry, Targeting {
 
     private static String name = "PeaceKeeper";
-    private static String description = "BattleCry:Change an enemy minion's ATK to 1";
+    private static String description = "BattleCry: Change an enemy minion's ATK to 1";
     private static int baseCost = 3;
     private static int baseATK = 3;
     private static int baseHP = 3;

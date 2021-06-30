@@ -9,7 +9,7 @@ import heart.model.Player;
 public class FriedChicken extends AbstractMinion implements BattleCry, Charge {
 
     private static String name = "FriedChicken";
-    private static String description = "Charge & BattleCry: Summon two 1/1 Whelp for your opponent";
+    private static String description = "Charge & BattleCry: Summon two 1/1 Whelps for your opponent";
     private static int baseCost = 5;
     private static int baseATK = 6;
     private static int baseHP = 2;

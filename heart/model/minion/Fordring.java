@@ -8,7 +8,7 @@ import heart.model.Taunt;
 public class Fordring extends AbstractMinion implements DeathRattle, DivineShield, Taunt {
 
     private static String name = "Fordring";
-    private static String description = "DivineShield & Taunt & DeathRattle: Summon a 5/3 AshBringer";
+    private static String description = "DivineShield & Taunt & DeathRattle: Summon a 5/5 AshBringer";
     private static int baseCost = 8;
     private static int baseATK = 6;
     private static int baseHP = 6;

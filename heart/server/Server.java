@@ -6,12 +6,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import heart.event.Event;
-import heart.event.EventMinionChange;
 import heart.event.Message;
 import heart.event.ServerEventManager;
 import heart.model.Game;
-import heart.model.Minion;
-import heart.model.minion.AbstractMinion;
 
 public class Server {
 

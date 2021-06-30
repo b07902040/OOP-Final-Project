@@ -61,7 +61,8 @@ public class GameInfo implements EventListener {
 
     @Override
     public void notify(Event event) {
-        if(event instanceof EventEveryTick) return;
+        if (event instanceof EventEveryTick)
+            return;
         System.out.println(event.getName());
         if (event instanceof EventClientInitalize) {
             this.initialize(((EventClientInitalize) event).getClientId());
@@ -85,7 +86,7 @@ public class GameInfo implements EventListener {
             EventMinionChange e = (EventMinionChange) event;
             this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
             Card m = (Card) e.getMinion();
-            System.out.printf("%s %d\n",m.getName(),((Minion) m).getHP());
+            System.out.printf("%s %d\n", m.getName(), ((Minion) m).getHP());
         } else if (event instanceof EventAttacking) {
             EventAttacking e = (EventAttacking) event;
             this.attackerIndex = e.getAttackerIndex();
@@ -95,8 +96,7 @@ public class GameInfo implements EventListener {
         } else if (event instanceof EventEffecting) {
             EventEffecting e = (EventEffecting) event;
             this.effectingCard = e.getCard();
-        } 
-        else if (event instanceof EventCardShow) {
+        } else if (event instanceof EventCardShow) {
             EventCardShow e = (EventCardShow) event;
             this.showedCardIndex = e.getShowIndex();
             this.showedCardValid = e.getValid();
@@ -127,10 +127,10 @@ public class GameInfo implements EventListener {
         this.handCards = new ArrayList<Card>();
         this.state = Const.STATE_INITIALIZED;
     }
-    
+
     private void turnStart() {
         this.myTurn = !this.myTurn;
-        if (this.playerId == 0 && this.myTurn)        
+        if (this.playerId == 0 && this.myTurn)
             this.turn++;
         else if (this.playerId == 1 && !this.myTurn)
             this.turn++;
@@ -152,7 +152,8 @@ public class GameInfo implements EventListener {
     public int getTurn() {
         return this.turn;
     }
-    public void pauseState(){
+
+    public void pauseState() {
         this.state = Const.STATE_NULL;
     }
 
@@ -340,7 +341,7 @@ public class GameInfo implements EventListener {
             minions.add(index, minion);
     }
 
-    public boolean checkValidCard(int index){
+    public boolean checkValidCard(int index) {
         Card card = this.handCards.get(index);
         if (card.getCost() > this.mana[this.playerId])
             return false;
@@ -359,9 +360,9 @@ public class GameInfo implements EventListener {
         return true;
     }
 
-    public boolean canAttacked(int playerId, int index){
-        List <Minion> ally;
-        if(this.playerId == playerId)
+    public boolean canAttacked(int playerId, int index) {
+        List<Minion> ally;
+        if (this.playerId == playerId)
             ally = this.ally;
         else
             ally = this.enemy;
@@ -371,14 +372,15 @@ public class GameInfo implements EventListener {
             return false;
         if (minion instanceof Taunt)
             return true;
-        
+
         for (Minion allyMinion : ally) {
             if (allyMinion instanceof Taunt)
                 return false;
         }
         return true;
     }
-    private void printState() {
+
+    /*private void printState() {
         String state = "STATE_INITIALIZED";
         if (this.isState(Const.STATE_PENDING))
             state = "STATE_PENDING";
@@ -410,7 +412,8 @@ public class GameInfo implements EventListener {
             state = "STATE_ATTACKING";
         System.out.println(state);
     }
-    private boolean isState(int state){
+
+    private boolean isState(int state) {
         return (this.state == state);
-    }
+    }*/
 }

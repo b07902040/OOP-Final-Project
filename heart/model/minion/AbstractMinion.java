@@ -80,6 +80,7 @@ public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     @Override
     public void setCost(int cost) {
         this.cost = cost;
+        this.minionChange();
     }
 
     @Override
@@ -152,6 +153,7 @@ public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     @Override
     public void setBuffHP(int buffHP) {
         this.buffHP = buffHP;
+        this.minionChange();
     }
 
     @Override
@@ -210,6 +212,7 @@ public abstract class AbstractMinion implements Minion, Card ,Cloneable{
     @Override
     public void setAlive(boolean alive) {
         this.alive = alive;
+        this.minionChange();
     }
 
     @Override
