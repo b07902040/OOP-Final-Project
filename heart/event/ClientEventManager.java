@@ -38,7 +38,6 @@ public class ClientEventManager implements EventManager {
     }
 
     public void localPost(Event event) {
-        System.out.println("");
         for (EventListener listener : this.listeners) {
             listener.notify(event);
         }

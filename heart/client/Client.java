@@ -31,14 +31,14 @@ public class Client {
 		serverPort = port;
 
 		JTextField playerNameField = new JTextField(playerName, 10);
-		JPanel playerNamePanel = new JPanel();
+		/*JPanel playerNamePanel = new JPanel();
 		playerNamePanel.add(new JLabel("Type your name here:"));
 		playerNamePanel.add(playerNameField);
 		JOptionPane.showConfirmDialog(null, playerNamePanel, "Welcome to HeartStone", JOptionPane.YES_NO_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.PLAIN_MESSAGE);*/
 
-		this.playerName = playerNameField.getText();
-
+		//this.playerName = playerNameField.getText();
+		this.playerName = "philly";
 		ClientEventManager eventManager = new ClientEventManager();
 
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);
@@ -90,13 +90,12 @@ public class Client {
 			try {
 				while ((receiveObj = (Message) oistream.readObject()) != null) {
 					// =====Do something=====
-					System.out.println(receiveObj.getType());
 					switch (receiveObj.getType()) {
 						case Message.JOIN:
 							playerID = (Integer) receiveObj.getObj();
 							System.out.println("My ID is " + playerID);
 							eManager.localPost(new EventClientInitalize(playerID));
-							System.out.println("Child: " + eManager.getListenerslen());
+							//System.out.println("Child: " + eManager.getListenerslen());
 							break;
 						case Message.EVENT:
 							eManager.localPost((Event) receiveObj.getObj());
