@@ -2,18 +2,15 @@ package heart.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 import heart.model.minion.*;
 import heart.model.spell.*;
-public class DeckLoader implements Serializable {
+public abstract class DeckLoader implements Serializable {
     private static final long serialVersionUID = 1L;
-    private ArrayList<ArrayList<Card>> library;
-    private static final int[] cardNumber = {1,1,2,2,2,6,6,1,1,2,3,3};
-    private static final int shuffleThresHold = 4;
-    private static final int shuffleCard = 4;
-    private static final int shuffleTime = 3;
+    protected static ArrayList<ArrayList<Card>> library;
+    protected static final int shuffleThresHold = 4;
+    protected static final int shuffleCard = 4;
+    protected static final int shuffleTime = 3;
     public DeckLoader(){
         library = new ArrayList<ArrayList<Card>>();
         this.library.add(minionType0());
@@ -29,54 +26,8 @@ public class DeckLoader implements Serializable {
         this.library.add(spellType3());
         this.library.add(spellType4());
     }
-    public  ArrayList<ArrayList<Card>> loadDecks() {
-        ArrayList<ArrayList<Card>> decks = new  ArrayList<ArrayList<Card>>();
-        decks.add(new ArrayList<Card>());
-        decks.add(new ArrayList<Card>());
-        ArrayList<Card> cards;
-        for(int i = 0; i < this.library.size(); i++){
-            cards = this.pickCards(library.get(i), 2 * cardNumber[i]);
-            decks.get(0).addAll(cards.subList(0, cardNumber[i]));
-            decks.get(1).addAll(cards.subList(cardNumber[i], 2 * cardNumber[i]));
-        }
-        Collections.shuffle(decks.get(0), new Random());
-        Collections.shuffle(decks.get(1), new Random());
-        this.balanceCost(decks.get(0));
-        this.balanceCost(decks.get(1));/*
-        decks.add(this.customDeck());
-        decks.add(this.customDeck());*/
-        return decks;
-    }
-    private void balanceCost(ArrayList<Card> input){
-        for(int j = 0;j < shuffleTime; j++){
-            for(int i = 0; i < shuffleCard; i++){
-                if(input.get(i).getCost() < shuffleThresHold) continue;
-                input.add(input.get(i));
-                input.remove(i);
-            }
-        }
-        Collections.shuffle(input.subList(shuffleCard, input.size()), new Random());
-    }
-    private ArrayList<Card> pickCards(ArrayList<Card> input, int num){
-        ArrayList<Card> cards = new ArrayList<Card>();
-        for(Card card : input)
-            cards.add(card);
-        Collections.shuffle(cards,new Random());
-        for(int i = cards.size() - 1 ; i >= num;i--)
-            cards.remove(i);
-        return cards;
-    }
-    private static ArrayList<Card> customDeck(){
-        ArrayList<Card> cards = new ArrayList<Card>();
-        cards.add(new ManaTideTotem());
-        cards.add(new ManaTideTotem());
-        cards.add(new Intellect());
-        cards.add(new Intellect());
-        cards.add(new ManaTideTotem());
-        cards.add(new ManaTideTotem());
-        cards.add(new LanternFish());;
-        return cards;
-    }
+    public  abstract ArrayList<ArrayList<Card>> loadDecks();    
+
     private static ArrayList<Card> minionType0(){
         ArrayList<Card> cards = new ArrayList<Card>();
         //10

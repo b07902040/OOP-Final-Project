@@ -61,8 +61,8 @@ public class Const {
     public static final int[] OP_BOARD_REGION = { 0, 330, 1200, 125 };
     public static final int[] HERO = { 525, 690, 150, 150 };
     public static final int[] OP_HERO = { 525, 120, 150, 150 };
-    public static final int[] DECK = { 1150, 190, 79, 125 };
-    public static final int[] OP_DECK = { 1150, 590, 79, 125 };
+    public static final int[] DECK = { 1150, 590, 79, 125 };
+    public static final int[] OP_DECK = { 1150, 190, 79, 125 };
 
     public static final int MANA_X = 770;
     public static final int MANA_Y = 815;
