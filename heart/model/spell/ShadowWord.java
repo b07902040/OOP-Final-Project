@@ -20,15 +20,15 @@ public class ShadowWord extends AbstractSpell implements Targeting {
     }
 
     @Override
-    public List<Minion> getCandidates(Player player) {
+    public List<Minion> getCandidates(List<Minion> ally, List<Minion> enemy) {
         List<Minion> candidates = new ArrayList<Minion>();
-        for (Minion minion : player.getAlly()) {
+        for (Minion minion : ally) {
             if (minion.canTargeted() && !(minion instanceof Hero)) {
                 if (minion.getATK() >= 5)
                     candidates.add(minion);
             }
         }
-        for (Minion minion : player.getEnemy()) {
+        for (Minion minion : enemy) {
             if (minion.canTargeted() && !(minion instanceof Hero)) {
                 if (minion.getATK() >= 5)
                     candidates.add(minion);
