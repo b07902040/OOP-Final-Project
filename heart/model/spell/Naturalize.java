@@ -36,7 +36,8 @@ public class Naturalize extends AbstractSpell implements Targeting {
     @Override
     public void takeEffect(Player user, Minion target) {
         target.setAlive(false);
-        user.getOpponent().drawCards(2);
+        for(int t = 0; t < 2;t++)
+            user.getOpponent().drawCards();
     }
 
 }

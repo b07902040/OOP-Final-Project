@@ -35,7 +35,7 @@ public class VarianWrynn extends AbstractMinion implements BattleCry {
                     }
                 }
             }
-            this.master.drawCards(1);
+            this.master.drawCards();
         }
 
     }

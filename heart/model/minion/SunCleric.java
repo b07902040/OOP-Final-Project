@@ -32,6 +32,7 @@ public class SunCleric extends AbstractMinion implements BattleCry, Targeting {
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null) return;
         target.setBuffHP(target.getBuffHP() + 1);
         target.setHP(target.getHP() + 1);
         target.setATK(target.getATK() + 1);

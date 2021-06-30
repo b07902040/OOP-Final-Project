@@ -27,7 +27,7 @@ public class KnivesFan extends AbstractSpell {
         }
         for (Minion minion : targets)
             minion.setHP(minion.getHP() - 1);
-        user.drawCards(1);
+        user.drawCards();
 
     }
 

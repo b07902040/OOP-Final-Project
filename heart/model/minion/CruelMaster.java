@@ -36,6 +36,7 @@ public class CruelMaster extends AbstractMinion implements BattleCry, Targeting 
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null) return;
         target.setHP(target.getHP() - 1);
         target.setATK(target.getATK() + 1);
     }

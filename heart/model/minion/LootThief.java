@@ -17,7 +17,7 @@ public class LootThief extends AbstractMinion implements DeathRattle {
 
     @Override
     public void doDeathRattleEffect() {
-        this.master.drawCards(1);
+        this.master.drawCards();
     }
 
 }

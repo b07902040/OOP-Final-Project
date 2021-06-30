@@ -31,7 +31,8 @@ public class Doom extends AbstractSpell {
         }
         for (Minion minion : targets)
             minion.setAlive(false);
-        user.drawCards(targets.size());
+        for(int t = 0; t < targets.size();t++)
+            user.drawCards();
     }
 
 }

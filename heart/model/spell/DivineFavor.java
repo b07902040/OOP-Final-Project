@@ -19,7 +19,8 @@ public class DivineFavor extends AbstractSpell {
         int drawNum = user.getOpponent().getHandCards().size() - user.getHandCards().size();
         if (drawNum <= 0)
             return;
-        user.drawCards(drawNum);
+        for(int t = 0; t < drawNum;t++)
+            user.drawCards();
     }
 
 }

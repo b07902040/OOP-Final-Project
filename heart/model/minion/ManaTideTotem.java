@@ -16,7 +16,7 @@ public class ManaTideTotem extends AbstractMinion {
 
     @Override
     public void doTurnEnd() {
-        this.master.drawCards(1);
+        this.master.drawCards();
     }
 
 }

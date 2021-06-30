@@ -12,14 +12,18 @@ import heart.model.Spell;
 
 public class DrawCardAnimation implements Animation {
     private int timer = 0;
-    private static final int endTime = Const.FPS;
+    private static final int endTime = Const.FPS/3;
 
     @Override
     public void draw(GameInfo game, BufferedImage screenImg){
-        
+        if(game.getDrawedPlayerId() != game.getPlayerId()){
+            this.stop();
+            return;
+        }
         Graphics g = screenImg.getGraphics();
         Card card = game.getDrawedCard();
-        System.out.printf("GET : %s\n",card.getName());
+        if(card == null) return;
+        //System.out.printf("GET : %s\n",card.getName());
         if(this.timer < endTime){
             // draw card image
             View.drawCardImage(g, card, Const.DRAW_SHOW[0] + (int)(Const.CARD_IMG_X_RATIO*Const.DRAW_SHOW[2]),

@@ -35,7 +35,8 @@ public class DivineHeal extends AbstractSpell implements Targeting {
     @Override
     public void takeEffect(Player user, Minion target) {
         target.setHP(target.getHP() + 8);
-        user.drawCards(3);
+        for(int t = 0; t < 3;t++)
+            user.drawCards();
     }
 
 }

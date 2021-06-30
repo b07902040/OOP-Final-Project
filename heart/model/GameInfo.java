@@ -35,6 +35,7 @@ public class GameInfo implements EventListener {
     private int attackedPlayerIndex;
     private Card effectingCard;
     private Card drawedCard;
+    public  int drawedPlayerId;
     public GameInfo(EventManager eventManager) {
         this.eventManager = eventManager;
         this.eventManager.register(this);
@@ -120,13 +121,19 @@ public class GameInfo implements EventListener {
     private void cardDraw(int id, boolean fatigue, boolean full, Card card) {
         if (fatigue){
             this.drawedCard = null;
+            this.drawedPlayerId = -1;
             return;
         }
         if (full)
             this.deckSize[id]--;
         else
             this.deckSize[id]--;
-        this.drawedCard = card;
+            this.drawedCard = card;
+            this.drawedPlayerId = id;
+    }
+
+    public int getDrawedPlayerId() {
+        return this.drawedPlayerId;
     }
 
     public Card getDrawedCard(){

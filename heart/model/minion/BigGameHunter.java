@@ -41,6 +41,7 @@ public class BigGameHunter extends AbstractMinion implements BattleCry, Targetin
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null) return;
         target.setAlive(false);
     }
 

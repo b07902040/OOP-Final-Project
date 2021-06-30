@@ -111,6 +111,7 @@ public class View implements EventListener{
                     else if(animations.get(i) == this.cardDrawAnimation){
                         this.drawingCard = false;
                         this.model.pauseState();
+                        System.out.printf("END DRAWING!\n");
                         this.eventManager.post(new EventCardDrawed());
                     }
                     animations.remove(i);
@@ -129,6 +130,7 @@ public class View implements EventListener{
                 this.effecting = true;
             }
             if(this.model.getState() == Const.STATE_DRAWING && !this.drawingCard){
+                System.out.printf("START DRAWING!\n");
                 this.cardDrawAnimation = new DrawCardAnimation();
                 this.painters.add((Painter) this.cardDrawAnimation);
                 this.animations.add(this.cardDrawAnimation);

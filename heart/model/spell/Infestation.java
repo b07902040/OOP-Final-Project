@@ -36,7 +36,8 @@ public class Infestation extends AbstractSpell implements Targeting {
     @Override
     public void takeEffect(Player user, Minion target) {
         target.setHP(target.getHP() - 5);
-        user.drawCards(5);
+        for(int t = 0; t < 5;t++)
+            user.drawCards();
         user.getHero().setHP(user.getHero().getHP() + 5);
         user.summonAlly(new Ghoul(), user.getAlly().size());
     }

@@ -78,7 +78,7 @@ public class Game implements EventListener, Serializable {
         } else if (event instanceof EventTurnStart) {
             this.turnStart();
             this.stateChange(Const.STATE_PENDING);
-            this.currentPlayer.drawCards(1);
+            this.currentPlayer.drawCards();
         } else if (event instanceof EventCardDraw) {
             ;
         } 
@@ -122,21 +122,23 @@ public class Game implements EventListener, Serializable {
                     if (this.selectedCard instanceof BattleCry && candidates.size() == 0) {
                         System.out.printf("BattleCry no target!\n");
                         this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
-                        ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                        this.selectedMinion = null;
+                        /*((Minion) this.selectedCard).setMaster(this.currentPlayer);
                         this.stateChange(Const.STATE_NULL);
-                        this.playedMinion(this.selectedCard);          
+                        this.playedMinion(this.selectedCard);*/          
                         this.stateChange(Const.STATE_EFFECTING);              
                         this.eventManager.post(new EventEffecting(this.selectedCard));
-                        this.reset();
+                        //this.reset();
                     } else
                         this.stateChange(Const.STATE_CARD_TARGETING);
                 } else {
                     this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
-                    if (this.selectedCard instanceof Minion) {
+                    this.selectedMinion = null;
+                    /*if (this.selectedCard instanceof Minion) {
                         if (this.selectedCard instanceof BattleCry) {
                             ((Minion) this.selectedCard).setMaster(this.currentPlayer);
                             this.stateChange(Const.STATE_NULL);
-                            this.playedMinion(this.selectedCard);
+                            //this.playedMinion(this.selectedCard);
                             ((BattleCry) this.selectedCard).doBattleCryEffect(null);
                         } else{
                             this.stateChange(Const.STATE_NULL);
@@ -146,10 +148,10 @@ public class Game implements EventListener, Serializable {
                         this.stateChange(Const.STATE_NULL);
                         this.playedSpell(this.selectedCard);
                         ((Spell) this.selectedCard).takeEffect(this.currentPlayer, null);
-                    }
+                    }*/
                     this.stateChange(Const.STATE_EFFECTING);
                     this.eventManager.post(new EventEffecting(this.selectedCard));
-                    this.reset();
+                    //this.reset();
                 }
             }
         } else if (event instanceof EventMinionClicked) {
@@ -199,19 +201,9 @@ public class Game implements EventListener, Serializable {
             if (this.isState(Const.STATE_VALID_TARGET)) {
                 this.selectedMinion = this.players.get(this.clickedPlayerId).getAlly().get(this.clickedMinionIndex);
                 this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
-                if (this.selectedCard instanceof BattleCry) {
-                    ((Minion) this.selectedCard).setMaster(this.currentPlayer);
-                    this.stateChange(Const.STATE_NULL);
-                    this.playedMinion(this.selectedCard);
-                    ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);
-                } else if (this.selectedCard instanceof Spell) {
-                    this.stateChange(Const.STATE_NULL);
-                    this.playedSpell(this.selectedCard);
-                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer, this.selectedMinion);
-                }
                 this.stateChange(Const.STATE_EFFECTING);
                 this.eventManager.post(new EventEffecting(this.selectedCard));
-                this.reset();
+               // this.reset();
             } else if (this.isState(Const.STATE_VALID_ATTACKER)) {
                 this.selectedAttacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);
                 this.stateChange(Const.STATE_ATTACKER_TARGETING);
@@ -223,12 +215,26 @@ public class Game implements EventListener, Serializable {
                 int attackedPlayerId = (this.currentPlayerid + 1) % 2;
                 this.eventManager.post(new EventAttacking(attackerPlayerId, this.clickedAttackerIndex, attackedPlayerId,
                         this.clickedAttackedIndex));
-                this.reset();
+                //this.reset();
             }
         } 
         else if (event instanceof EventCardEffected) {
             this.effectedCount++;
             if (this.isState(Const.STATE_EFFECTING) && this.effectedCount >= 2) {
+                if (this.selectedCard instanceof BattleCry) {
+                    ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                    this.stateChange(Const.STATE_NULL);
+                    this.playedMinion(this.selectedCard);
+                    ((BattleCry) this.selectedCard).doBattleCryEffect(this.selectedMinion);
+                } else if (this.selectedCard instanceof Spell) {
+                    this.stateChange(Const.STATE_NULL);
+                    this.playedSpell(this.selectedCard);
+                    ((Spell) this.selectedCard).takeEffect(this.currentPlayer, this.selectedMinion);
+                } else{
+                    ((Minion) this.selectedCard).setMaster(this.currentPlayer);
+                    this.stateChange(Const.STATE_NULL);
+                    this.playedMinion(this.selectedCard);
+                }
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if (winner > 0) {
@@ -237,6 +243,7 @@ public class Game implements EventListener, Serializable {
                 } else
                     this.stateChange(Const.STATE_PENDING);
                 this.effectedCount = 0;
+                this.reset();
             }   
         } else if (event instanceof EventMinionAttacked) {
             this.attackedCount++;
@@ -249,6 +256,7 @@ public class Game implements EventListener, Serializable {
                 } else
                     this.stateChange(Const.STATE_PENDING);
                 this.attackedCount = 0;
+                this.reset();
             }
         } else if (event instanceof EventDeathRattleTriggered) {
             System.out.printf("DeathRattle!!!!!!!!\n");
@@ -290,7 +298,9 @@ public class Game implements EventListener, Serializable {
 
     private void gameStart() {
         for (int i = 0; i < 2; i++) {
-            this.players.get(i).drawCards(Const.STARTING_HAND_SIZE + i);
+            for(int t = 0; t < Const.STARTING_HAND_SIZE + i;t++){
+                this.players.get(i).drawCards();
+            }
         }
         this.players.get(1).addHandCards(new Coin());
     }

@@ -18,7 +18,7 @@ public class DancingSwords extends AbstractMinion implements DeathRattle {
 
     @Override
     public void doDeathRattleEffect() {
-        this.master.getOpponent().drawCards(1);
+        this.master.getOpponent().drawCards();
     }
 
 }

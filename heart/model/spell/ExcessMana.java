@@ -16,7 +16,7 @@ public class ExcessMana extends AbstractSpell {
 
     @Override
     public void takeEffect(Player user, Minion target) {
-        user.drawCards(1);
+        user.drawCards();
     }
 
 }

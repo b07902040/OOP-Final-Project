@@ -37,7 +37,7 @@ public class PowerShield extends AbstractSpell implements Targeting {
     public void takeEffect(Player user, Minion target) {
         target.setBuffHP(target.getBuffHP() + 2);
         target.setHP(target.getHP() + 2);
-        user.drawCards(1);
+        user.drawCards();
     }
 
 }

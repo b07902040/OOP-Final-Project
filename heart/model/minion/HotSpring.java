@@ -37,6 +37,7 @@ public class HotSpring extends AbstractMinion implements BattleCry, Targeting, T
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null) return;
         target.setHP(target.getHP() + 3);
     }
 

@@ -30,6 +30,8 @@ public class AlexStrasza extends AbstractMinion implements BattleCry, Targeting 
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null)
+            return;
         target.reWriteHP(15);
     }
 

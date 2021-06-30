@@ -37,6 +37,7 @@ public class UldmanKeeper extends AbstractMinion implements BattleCry, Targeting
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null) return;
         System.out.printf("%s BattleCry!\n", name);
         target.setATK(3);
         target.setBuffHP(3);

@@ -17,10 +17,10 @@ public class LanternFish extends AbstractMinion implements BattleCry {
 
     @Override
     public void doBattleCryEffect(Minion target) {
-        this.master.drawCards(1);
-        this.master.getOpponent().drawCards(1);
-        this.master.drawCards(1);
-        this.master.getOpponent().drawCards(1);
+        this.master.drawCards();
+        this.master.getOpponent().drawCards();
+        this.master.drawCards();
+        this.master.getOpponent().drawCards();
     }
 
 }

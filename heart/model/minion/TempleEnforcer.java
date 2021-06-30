@@ -33,6 +33,7 @@ public class TempleEnforcer extends AbstractMinion implements BattleCry, Targeti
 
     @Override
     public void doBattleCryEffect(Minion target) {
+        if(target == null) return;
         target.setBuffHP(target.getBuffHP() + 3);
         target.setHP(target.getHP() + 3);
     }

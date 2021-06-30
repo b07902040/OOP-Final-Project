@@ -151,9 +151,8 @@ public class Player implements Serializable {
     public List<Minion> getEnemy() {
         return this.enemy;
     }
-
-    public void drawCards(int cardNum) {
-        for (int i = 0; i < cardNum; i++) {
+    public void drawCards() {      
+        //for (int i = 0; i < cardNum; i++) {
             if (this.deck.size() > 0) {
                 Card newCard = this.deck.get(0);
                 this.deck.remove(0);
@@ -171,7 +170,8 @@ public class Player implements Serializable {
                 this.fatigueDamge += 1;
                 this.game.cardDrew(this.playerId, true, false, null);
             }
-        }
+
+        //}
     }
 
     public boolean checkValidCard(int index) {

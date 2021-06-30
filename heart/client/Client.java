@@ -100,7 +100,7 @@ public class Client {
 						case Message.EVENT:
 							if(receiveObj.getObj() instanceof EventMinionChange){
 								Minion minion = ((EventMinionChange) receiveObj.getObj()).getMinion();
-								System.out.printf("RECV:%s %d\n",((Card)minion).getName(),minion.getHP());
+								//System.out.printf("RECV:%s %d\n",((Card)minion).getName(),minion.getHP());
 							}
 							eManager.localPost((Event) receiveObj.getObj());
 							break;
