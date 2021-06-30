@@ -5,7 +5,6 @@ import java.util.List;
 
 import heart.model.BattleCry;
 import heart.model.Minion;
-import heart.model.Player;
 import heart.model.Targeting;
 
 //Complete
@@ -22,13 +21,13 @@ public class CruelMaster extends AbstractMinion implements BattleCry, Targeting 
     }
 
     @Override
-    public List<Minion> getCandidates(Player player) {
+    public List<Minion> getCandidates(List<Minion> ally, List<Minion> enemy) {
         List<Minion> candidates = new ArrayList<Minion>();
-        for (Minion minion : player.getAlly()) {
+        for (Minion minion : ally) {
             if (!(minion instanceof Hero) && minion.canTargeted())
                 candidates.add(minion);
         }
-        for (Minion minion : player.getEnemy()) {
+        for (Minion minion : enemy) {
             if (!(minion instanceof Hero) && minion.canTargeted())
                 candidates.add(minion);
         }
