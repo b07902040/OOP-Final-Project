@@ -5,7 +5,6 @@ import java.util.List;
 
 import heart.model.BattleCry;
 import heart.model.Minion;
-import heart.model.Player;
 import heart.model.Targeting;
 
 //Complete
@@ -22,10 +21,10 @@ public class AlexStrasza extends AbstractMinion implements BattleCry, Targeting 
     }
 
     @Override
-    public List<Minion> getCandidates(Player player) {
+    public List<Minion> getCandidates(List<Minion> ally, List<Minion> enemy) {
         List<Minion> candidates = new ArrayList<Minion>();
-        candidates.add(player.getHero());
-        candidates.add(player.getOpponent().getHero());
+        candidates.add(ally.get(0));
+        candidates.add(ally.get(1));
         return candidates;
     }
 
