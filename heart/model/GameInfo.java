@@ -100,7 +100,7 @@ public class GameInfo implements EventListener {
         this.handCards = new ArrayList<Card>();
         this.state = Const.STATE_INITIALIZED;
     }
-
+    
     private void turnStart() {
         this.myTurn = !this.myTurn;
         if (this.playerId == 0 && this.myTurn)        
@@ -306,4 +306,43 @@ public class GameInfo implements EventListener {
             minions.add(index, minion);
     }
 
+    public boolean checkValidCard(int index){
+        return true;
+        /*Card card = this.handCards.get(index);
+        if (card.getCost() > this.mana)
+            return false;
+        if (card instanceof Minion) {
+            if (this.ally.size() >= Const.BOARD_SPACE + 1)// ADD FOR HERO
+                return false;
+        }
+        if (card instanceof Spell && card instanceof Targeting) {
+            if (((Targeting) card).getCandidates(this).size() == 0) {
+                if (card instanceof BattleCry)
+                    return true;
+                else
+                    return false;
+            }
+        }
+        return true;*/
+    }
+
+    public boolean canAttacked(int playerId, int index){
+        List <Minion> ally;
+        if(this.playerId == playerId)
+            ally = this.ally;
+        else
+            ally = this.enemy;
+        Minion minion = ally.get(index);
+
+        if (minion instanceof Stealth && ((Stealth) minion).getStealth())
+            return false;
+        if (minion instanceof Taunt)
+            return true;
+        
+        for (Minion allyMinion : ally) {
+            if (allyMinion instanceof Taunt)
+                return false;
+        }
+        return true;
+    }
 }

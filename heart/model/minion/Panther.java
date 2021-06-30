@@ -19,6 +19,11 @@ public class Panther extends AbstractMinion implements Stealth {
     public Panther() {
         super(Panther.name, Panther.description, Panther.baseCost, Panther.baseHP, Panther.baseATK);
     }
+    
+    @Override
+    public boolean getStealth(){
+        return this.stealth;
+    }
 
     @Override
     public boolean canAttacked() {

@@ -39,6 +39,9 @@ public class Game implements EventListener, Serializable {
     private Minion selectedAttacker = null;
     private Minion selectedAttacked = null;
 
+    private int attackedCount = 0;
+    private int effectedCount = 0;
+
     public Game(EventManager eventManager) {
         this.eventManager = eventManager;
         this.eventManager.register(this);
@@ -209,7 +212,8 @@ public class Game implements EventListener, Serializable {
                 this.reset();
             }
         } else if (event instanceof EventCardEffected) {
-            if (this.isState(Const.STATE_EFFECTING)) {
+            this.effectedCount++;
+            if (this.isState(Const.STATE_EFFECTING) && this.effectedCount >= 2) {
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if (winner > 0) {
@@ -217,9 +221,12 @@ public class Game implements EventListener, Serializable {
                     this.eventManager.post(new EventGameEnd(winner - 1));
                 } else
                     this.stateChange(Const.STATE_PENDING);
+                this.effectedCount = 0;
             }
+            
         } else if (event instanceof EventMinionAttacked) {
-            if (this.isState(Const.STATE_ATTACKING)) {
+            this.attackedCount++;
+            if (this.isState(Const.STATE_ATTACKING) && this.attackedCount >= 2) {
                 this.checkDeadStatus();
                 this.currentPlayer.printPlayerStatus();
                 if (winner > 0) {
@@ -227,6 +234,7 @@ public class Game implements EventListener, Serializable {
                     this.eventManager.post(new EventGameEnd(winner - 1));
                 } else
                     this.stateChange(Const.STATE_PENDING);
+                this.attackedCount = 0;
             }
         } else if (event instanceof EventDeathRattleTriggered) {
             System.out.printf("DeathRattle!!!!!!!!\n");

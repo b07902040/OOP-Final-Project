@@ -20,6 +20,11 @@ public class PatientAssassin extends AbstractMinion implements Poisonous, Stealt
         super(PatientAssassin.name, PatientAssassin.description, PatientAssassin.baseCost, PatientAssassin.baseHP,
                 PatientAssassin.baseATK);
     }
+    
+    @Override
+    public boolean getStealth(){
+        return this.stealth;
+    }
 
     @Override
     public boolean canAttacked() {

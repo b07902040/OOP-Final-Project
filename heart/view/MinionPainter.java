@@ -41,7 +41,7 @@ public class MinionPainter implements Painter {
             minion = enemy.get(i);
             x = game.getMinionPosition(opponentId, i)[0];
             y = game.getMinionPosition(opponentId, i)[1];
-            if ((game.isMyTurn() && minion.canAttacked() && game.getState() == Const.STATE_ATTACKER_TARGETING) ||
+            if ((game.isMyTurn() && game.canAttacked(opponentId, i) && game.getState() == Const.STATE_ATTACKER_TARGETING) ||
                 (game.isMyTurn() && minion.canTargeted() && game.getState() == Const.STATE_CARD_TARGETING && ((Targeting) game.getLastShowedCard()).getCandidates(game.getHero().getMaster()).contains(minion)))
                 View.drawValidMinionEffect(g, x, y, Const.MINION_W, Const.MINION_H);
             View.drawMinion(g, minion, x, y, 1);

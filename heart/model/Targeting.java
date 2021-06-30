@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface Targeting {
 
-    List<Minion> getCandidates(Player player);
+    List<Minion> getCandidates(List<Minion> ally, List<Minion> enemy);
 
 }

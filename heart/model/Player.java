@@ -175,7 +175,6 @@ public class Player implements Serializable {
     }
 
     public boolean checkValidCard(int index) {
-        if(index >= this.handCards.size()) return false;
         Card card = this.handCards.get(index);
         if (card.getCost() > this.mana)
             return false;

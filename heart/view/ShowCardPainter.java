@@ -17,8 +17,7 @@ public class ShowCardPainter implements Painter {
         Card card;
         if(state == Const.STATE_VALID_CARD || state == Const.STATE_INVALID_CARD){
             int index = game.getShowedCardIndex();
-            card = game.getHandCards().get(index);
-            
+            card = game.getHandCards().get(index);            
         }
         else if(state == Const.STATE_VALID_ATTACKER || state == Const.STATE_VALID_ATTACKED || state == Const.STATE_VALID_TARGET || 
                 state == Const.STATE_INVALID_ATTACKER || state == Const.STATE_INVALID_ATTACKED || state == Const.STATE_INVALID_TARGET){

@@ -18,9 +18,9 @@ public class HandCardPainter implements Painter {
         int shiftedX = Const.HANDCARD_REGION[0] + (Const.HANDCARD_REGION[2] - (handCards.size()-1)*Const.HANDCARD_GAP - handCards.size()*Const.CARD_W)/2;
         for(int i = 0; i < handCards.size(); i++){
             card = handCards.get(i);
-                        
+
             if(card instanceof Minion){
-                if(game.isMyTurn() && game.getState() == Const.STATE_PENDING && game.getHero().getMaster().checkValidCard(i))
+                if(game.isMyTurn() && game.getState() == Const.STATE_PENDING /*&& game.getHero().getMaster().checkValidCard(i)*/)
                     g.drawImage(View.loadImage(Const.VALID_MINION_CARD_EFFECT_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.VALID_MINION_CARD_X_RATIO*Const.CARD_W),
                                 Const.HANDCARD_REGION[1] + (int)(Const.VALID_MINION_CARD_Y_RATIO*Const.CARD_H), (int)(Const.VALID_MINION_CARD_W_RATIO*Const.CARD_W), (int)(Const.VALID_MINION_CARD_H_RATIO*Const.CARD_H), null);
                 View.drawCardImage(g, card, shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_W),
@@ -28,7 +28,7 @@ public class HandCardPainter implements Painter {
                 g.drawImage(View.loadImage(Const.MINION_CARD_FRAME_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
             }
             else if(card instanceof Spell){
-                if(game.isMyTurn() && game.getState() == Const.STATE_PENDING && game.getHero().getMaster().checkValidCard(i))
+                if(game.isMyTurn() && game.getState() == Const.STATE_PENDING /*&& game.getHero().getMaster().checkValidCard(i)*/)
                     g.drawImage(View.loadImage(Const.VALID_SPELL_CARD_EFFECT_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.VALID_SPELL_CARD_X_RATIO*Const.CARD_W),
                                 Const.HANDCARD_REGION[1] + (int)(Const.VALID_SPELL_CARD_Y_RATIO*Const.CARD_H), (int)(Const.VALID_SPELL_CARD_W_RATIO*Const.CARD_W), (int)(Const.VALID_SPELL_CARD_H_RATIO*Const.CARD_H), null);
                 View.drawCardImage(g, card, shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.CARD_IMG_X_RATIO*Const.CARD_W),
