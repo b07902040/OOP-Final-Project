@@ -74,6 +74,7 @@ public class Const {
 
     // font size
     public static final int MANA_FONT_SIZE = 26;
+    public static final int HANDCARD_MANA_FONT_SIZE = 18;
     public static final int HANDCARD_NAME_FONT_SIZE = 10;
     public static final int SHOWEDCARD_NAME_FONT_SIZE = 36;
     public static final int TURN_MESSAGE_FONT_SIZE = 26;
@@ -114,7 +115,7 @@ public class Const {
     public static final double CARD_HEALTH_X_RATIO = 0.87;
     public static final double CARD_HEALTH_Y_RATIO = 0.93;
     public static final double CARD_MANA_X_RATIO = 0.17;
-    public static final double CARD_MANA_Y_RATIO = 0.1;
+    public static final double CARD_MANA_Y_RATIO = 0.115;
     public static final double CARD_IMG_X_RATIO = 0.1;
     public static final double CARD_IMG_Y_RATIO = 0.06;
     public static final double CARD_IMG_W_RATIO = 0.82;
