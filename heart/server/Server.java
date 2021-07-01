@@ -62,7 +62,6 @@ public class Server {
 	}
 
 	private class Listener extends Thread {
-		private int uniqueId = -1;
 		private Socket cs;
 		private ObjectInputStream oistream;
 
@@ -88,7 +87,11 @@ public class Server {
 							if (nowPlayerNum >= 2) {
 								System.out.println("Too More Clients");
 							}
-							uniqueId = (uniqueId < 0)? ((int) (Math.random() * 2) ):( 1 - uniqueId);						
+							System.out.printf("RANDOM: %d\n",uniqueId);
+							if(uniqueId == -1)
+								uniqueId = ((int) (Math.random() * 2) );
+							else 
+								uniqueId = ( 1 - uniqueId);					
 							System.out.printf("RANDOM: %d\n",uniqueId);
 							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, uniqueId));
 							nowPlayerNum++;
