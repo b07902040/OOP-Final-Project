@@ -123,36 +123,16 @@ public class Game implements EventListener, Serializable {
                     if (this.selectedCard instanceof BattleCry && candidates.size() == 0) {
                         System.out.printf("BattleCry no target!\n");
                         this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
-                        this.selectedMinion = null;
-                        /*((Minion) this.selectedCard).setMaster(this.currentPlayer);
-                        this.stateChange(Const.STATE_NULL);
-                        this.playedMinion(this.selectedCard);*/          
+                        this.selectedMinion = null; 
                         this.stateChange(Const.STATE_EFFECTING);              
                         this.eventManager.post(new EventEffecting(this.selectedCard));
-                        //this.reset();
                     } else
                         this.stateChange(Const.STATE_CARD_TARGETING);
                 } else {
                     this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                     this.selectedMinion = null;
-                    /*if (this.selectedCard instanceof Minion) {
-                        if (this.selectedCard instanceof BattleCry) {
-                            ((Minion) this.selectedCard).setMaster(this.currentPlayer);
-                            this.stateChange(Const.STATE_NULL);
-                            //this.playedMinion(this.selectedCard);
-                            ((BattleCry) this.selectedCard).doBattleCryEffect(null);
-                        } else{
-                            this.stateChange(Const.STATE_NULL);
-                            this.playedMinion(this.selectedCard);
-                        }
-                    } else if (this.selectedCard instanceof Spell) {
-                        this.stateChange(Const.STATE_NULL);
-                        this.playedSpell(this.selectedCard);
-                        ((Spell) this.selectedCard).takeEffect(this.currentPlayer, null);
-                    }*/
                     this.stateChange(Const.STATE_EFFECTING);
                     this.eventManager.post(new EventEffecting(this.selectedCard));
-                    //this.reset();
                 }
             }
         } else if (event instanceof EventMinionClicked) {

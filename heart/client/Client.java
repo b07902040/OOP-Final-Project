@@ -5,23 +5,23 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-//import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import heart.controller.Controller;
 import heart.event.ClientEventManager;
 import heart.event.Event;
 import heart.event.EventClientInitalize;
-import heart.event.EventMinionChange;
 import heart.event.Message;
 import heart.model.GameInfo;
-import heart.model.Minion;
-import heart.view.AudioPlayer;
 import heart.view.View;
 
 
 public class Client {
 
-	//private String playerName = "";
+	private String playerName = "";
 	private static int playerID = -2;
 	private String serverIP;
 	private int serverPort;
@@ -31,15 +31,15 @@ public class Client {
 		serverIP = IP;
 		serverPort = port;
 
-		/*JTextField playerNameField = new JTextField(playerName, 10);
+		JTextField playerNameField = new JTextField(playerName, 10);
 		JPanel playerNamePanel = new JPanel();
 		playerNamePanel.add(new JLabel("Type your name here:"));
 		playerNamePanel.add(playerNameField);
 		JOptionPane.showConfirmDialog(null, playerNamePanel, "Welcome to HeartStone", JOptionPane.YES_NO_OPTION,
-				JOptionPane.PLAIN_MESSAGE);*/
+				JOptionPane.PLAIN_MESSAGE);
 
-		//this.playerName = playerNameField.getText();
-		//this.playerName = "philly";
+		this.playerName = playerNameField.getText();
+
 		ClientEventManager eventManager = new ClientEventManager();
 
 		System.out.format("IP: %s Port: %s%n", serverIP, serverPort);
@@ -49,7 +49,6 @@ public class Client {
 		View view = new View(eventManager, gameinfo, controller);
 		System.out.println("MAIN: " + eventManager.getListenerslen());
 		this.makeConnection(eventManager);
-		System.out.println("!!!!!!!!!!!!!");
 	}
 
 	public void makeConnection(ClientEventManager eventManager) {
@@ -96,13 +95,8 @@ public class Client {
 							playerID = (Integer) receiveObj.getObj();
 							System.out.println("My ID is " + playerID);
 							eManager.localPost(new EventClientInitalize(playerID));
-							//System.out.println("Child: " + eManager.getListenerslen());
 							break;
 						case Message.EVENT:
-							if(receiveObj.getObj() instanceof EventMinionChange){
-								Minion minion = ((EventMinionChange) receiveObj.getObj()).getMinion();
-								//System.out.printf("RECV:%s %d\n",((Card)minion).getName(),minion.getHP());
-							}
 							eManager.localPost((Event) receiveObj.getObj());
 							break;
 					}

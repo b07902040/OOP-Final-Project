@@ -39,9 +39,11 @@ public class HandCardPainter implements Painter {
                                 Const.HANDCARD_REGION[1] + (int)(Const.CARD_IMG_Y_RATIO*Const.CARD_H), (int)(Const.CARD_IMG_W_RATIO*Const.CARD_W), (int)(Const.CARD_IMG_H_RATIO*Const.CARD_H));
                 g.drawImage(View.loadImage(Const.SPELL_CARD_FRAME_PATH), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W), Const.HANDCARD_REGION[1], Const.CARD_W, Const.CARD_H, null);
             }
+            // draw mana cost
             g.setColor(new Color(25, 70, 130));
             View.drawCenteredString(g, Integer.toString(card.getCost()), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int)(Const.CARD_MANA_X_RATIO*Const.CARD_W),
                                 Const.HANDCARD_REGION[1] + (int)(Const.CARD_MANA_Y_RATIO*Const.CARD_H), new Font("Consolas", Font.BOLD, Const.HANDCARD_MANA_FONT_SIZE));
+            // draw description
             g.setColor(Color.WHITE);
             View.drawCenteredString(g, card.getName(), shiftedX + i*(Const.HANDCARD_GAP + Const.CARD_W) + (int) (Const.CARD_NAME_X_RATIO*Const.CARD_W),
                                     Const.HANDCARD_REGION[1] + (int) (Const.CARD_NAME_Y_RATIO*Const.CARD_H), new Font("Consolas", Font.PLAIN, Const.HANDCARD_NAME_FONT_SIZE));

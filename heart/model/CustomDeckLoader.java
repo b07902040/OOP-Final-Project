@@ -65,15 +65,6 @@ public class CustomDeckLoader extends DeckLoader {
         }
         Collections.shuffle(input.subList(shuffleCard, input.size()), new Random());
     }
-    private ArrayList<Card> pickCards(ArrayList<Card> input, int num){
-        ArrayList<Card> cards = new ArrayList<Card>();
-        for(Card card : input)
-            cards.add(card);
-        Collections.shuffle(cards,new Random());
-        for(int i = cards.size() - 1 ; i >= num;i--)
-            cards.remove(i);
-        return cards;
-    }
 }
 
 

@@ -13,18 +13,18 @@ public abstract class DeckLoader implements Serializable {
     protected static final int shuffleTime = 3;
     public DeckLoader(){
         library = new ArrayList<ArrayList<Card>>();
-        this.library.add(minionType0());
-        this.library.add(minionType1());
-        this.library.add(minionType2());
-        this.library.add(minionType3());
-        this.library.add(minionType4());
-        this.library.add(minionType5());
-        this.library.add(minionType6());
-        this.library.add(spellType0());
-        this.library.add(spellType1());
-        this.library.add(spellType2());
-        this.library.add(spellType3());
-        this.library.add(spellType4());
+        library.add(minionType0());
+        library.add(minionType1());
+        library.add(minionType2());
+        library.add(minionType3());
+        library.add(minionType4());
+        library.add(minionType5());
+        library.add(minionType6());
+        library.add(spellType0());
+        library.add(spellType1());
+        library.add(spellType2());
+        library.add(spellType3());
+        library.add(spellType4());
     }
     public  abstract ArrayList<ArrayList<Card>> loadDecks();    
 

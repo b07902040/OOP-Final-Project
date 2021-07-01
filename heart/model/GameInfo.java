@@ -108,6 +108,7 @@ public class GameInfo implements EventListener {
         this.enemy = new ArrayList<Minion>();
         this.handCards = new ArrayList<Card>();
         this.state = Const.STATE_INITIALIZED;
+        this.drawedPlayerId = -1;
     }
 
     private void turnStart() {
@@ -354,22 +355,6 @@ public class GameInfo implements EventListener {
         }
         return true;
     }
-    
-    /*public boolean canAttack(int playerId, int index){
-        List<Minion> ally;
-        Minion minion = ally.get(index);
-        if (minion.getATK == 0)
-        return false;
-        if (minion.getAttackCount() < minion.getAttackLimit()) {
-            if (minion.getAliveTime() == 0) {
-                if (this instanceof Charge)
-                    return true;
-                return false;
-            } else
-                return true;
-        }
-        return false;
-    }*/
 
     public boolean canAttacked(int playerId, int index) {
         List<Minion> ally;
@@ -390,41 +375,4 @@ public class GameInfo implements EventListener {
         }
         return true;
     }
-
-    /*private void printState() {
-        String state = "STATE_INITIALIZED";
-        if (this.isState(Const.STATE_PENDING))
-            state = "STATE_PENDING";
-        else if (this.isState(Const.STATE_GAME_END))
-            state = "STATE_GAME_END";
-        else if (this.isState(Const.STATE_VALID_CARD))
-            state = "STATE_VALID_CARD";
-        else if (this.isState(Const.STATE_INVALID_CARD))
-            state = "STATE_INVALID_CARD";
-        else if (this.isState(Const.STATE_CARD_TARGETING))
-            state = "STATE_CARD_TARGETING";
-        else if (this.isState(Const.STATE_VALID_TARGET))
-            state = "STATE_VALID_TARGET";
-        else if (this.isState(Const.STATE_INVALID_TARGET))
-            state = "STATE_INVALID_TARGET";
-        else if (this.isState(Const.STATE_EFFECTING))
-            state = "STATE_EFFECTING";
-        else if (this.isState(Const.STATE_VALID_ATTACKER))
-            state = "STATE_VALID_ATTACKER";
-        else if (this.isState(Const.STATE_INVALID_ATTACKER))
-            state = "STATE_INVALID_ATTACKER";
-        else if (this.isState(Const.STATE_ATTACKER_TARGETING))
-            state = "STATE_ATTACKER_TARGETING";
-        else if (this.isState(Const.STATE_VALID_ATTACKED))
-            state = "STATE_VALID_ATTACKED";
-        else if (this.isState(Const.STATE_INVALID_ATTACKED))
-            state = "STATE_INVALID_ATTACKED";
-        else if (this.isState(Const.STATE_ATTACKING))
-            state = "STATE_ATTACKING";
-        System.out.println(state);
-    }
-
-    private boolean isState(int state) {
-        return (this.state == state);
-    }*/
 }

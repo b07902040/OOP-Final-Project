@@ -8,9 +8,9 @@ import heart.view.View;
 public class LocalMain {
   public static void main(String[] args) {
     LocalEventManager eventManager = new LocalEventManager();
+    Game model = new Game(eventManager);
     GameInfo game0 = new GameInfo(eventManager);
     GameInfo game1 = new GameInfo(eventManager);
-    Game model = new Game(eventManager);
     Controller controller0 = new Controller(eventManager, game0);
     Controller controller1 = new Controller(eventManager, game1);
     View view0 = new View(eventManager, game0, controller0);

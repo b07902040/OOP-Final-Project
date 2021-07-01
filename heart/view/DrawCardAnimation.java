@@ -1,14 +1,13 @@
 package heart.view;
 
-import java.awt.Font;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import heart.constant.Const;
 import heart.model.Card;
 import heart.model.GameInfo;
-import heart.model.Spell;
 
 public class DrawCardAnimation implements Animation {
     private int timer = 0;

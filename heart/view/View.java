@@ -19,20 +19,8 @@ import javax.swing.JPanel;
 
 import heart.constant.Const;
 import heart.controller.Controller;
-import heart.event.Event;
-import heart.event.EventCardDrawed;
-import heart.event.EventCardEffected;
-import heart.event.EventEveryTick;
-import heart.event.EventInitialize;
-import heart.event.EventListener;
-import heart.event.EventManager;
-import heart.event.EventMinionAttacked;
-import heart.model.Card;
-import heart.model.DeathRattle;
-import heart.model.DivineShield;
-import heart.model.GameInfo;
-import heart.model.Minion;
-import heart.model.Taunt;
+import heart.event.*;
+import heart.model.*;
 
 
 public class View implements EventListener{
