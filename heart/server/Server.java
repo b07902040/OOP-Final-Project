@@ -2,25 +2,21 @@ package heart.server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
-import java.util.Collections;
 
 import heart.event.Event;
-import heart.event.EventMinionChange;
 import heart.event.Message;
 import heart.event.ServerEventManager;
 import heart.model.Game;
-import heart.model.Minion;
 
 public class Server {
-
+	
 	private static Socket[] clientSockets = new Socket[2];
 	private String[] clientNames = new String[2];
 	private static ObjectOutputStream[] clientOOStreams = new ObjectOutputStream[2];
 	private int nowPlayerNum = 0;
+	private int uniqueId = -1;
 	public ServerEventManager eventManager = new ServerEventManager();
 
 	public void start(int port) {
@@ -91,10 +87,9 @@ public class Server {
 							if (nowPlayerNum >= 2) {
 								System.out.println("Too More Clients");
 							}
-							int id = (int) (Math.random() * 2);
-							System.out.printf("RANDOM: %d\n",id);
-							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, id));
-							id = (id + 1) % 2;
+							uniqueId = (uniqueId < 0)? ((int) (Math.random() * 2) ):( 1 - uniqueId);						
+							System.out.printf("RANDOM: %d\n",uniqueId);
+							sendMessage(nowPlayerNum, new Message(Message.JOIN, -1, uniqueId));
 							nowPlayerNum++;
 							break;
 						case Message.EVENT:

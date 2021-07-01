@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Random;
 
 public class RandomDeckLoader extends DeckLoader {
-    private static final long serialVersionUID = 1L;
     private static final int[] cardNumber = {1,2,3,2,2,5,5,1,2,2,3,2};
     
     @Override
