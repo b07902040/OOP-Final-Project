@@ -1,4 +1,4 @@
 
 rm -r out/
-javac -cp . -sourcepath heart -d ./out  heart/*.java heart/*/*.java heart/*/*/*.java
+javac -cp . -sourcepath ./src/hearthclone -d ./out  ./src/hearthclone/*.java ./src/hearthclone/*/*.java ./src/hearthclone/*/*/*.java
 java -cp out/ ServerMain
