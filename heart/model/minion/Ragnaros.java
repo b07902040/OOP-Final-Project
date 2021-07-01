@@ -9,7 +9,7 @@ import heart.model.Minion;
 public class Ragnaros extends AbstractMinion {
 
     private static String name = "Ragnaros";
-    private static String description = "At the end of your turn, deal 8 damge to a random enemy";
+    private static String description = "Can't Attack. At the end of your turn, deal 8 damge to a random enemy";
     private static int baseCost = 8;
     private static int baseATK = 8;
     private static int baseHP = 8;

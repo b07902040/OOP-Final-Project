@@ -283,8 +283,8 @@ public class Game implements EventListener, Serializable {
     }
 
     private void initialize() {
-        this.deckLoader = new RandomDeckLoader();
-        //this.deckLoader = new CustomDeckLoader();
+        //this.deckLoader = new RandomDeckLoader();
+        this.deckLoader = new CustomDeckLoader();
         this.players = new ArrayList<Player>();
         this.players.add(new Player(new Jaina(), this, true));
         this.players.add(new Player(new Guldan(), this, false));
