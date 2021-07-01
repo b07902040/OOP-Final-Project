@@ -2,7 +2,7 @@ package heart.model.spell;
 
 import heart.model.*;
 
-public abstract class AbstractSpell implements Spell, Card {
+public abstract class AbstractSpell implements Spell{
     // spell property
 
     // card property

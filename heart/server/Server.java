@@ -62,6 +62,7 @@ public class Server {
 	}
 
 	private class Listener extends Thread {
+		private int uniqueId = -1;
 		private Socket cs;
 		private ObjectInputStream oistream;
 
