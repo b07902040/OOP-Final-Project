@@ -94,7 +94,6 @@ public class View implements EventListener{
                         this.eventManager.post(new EventMinionAttacked());
                     }
                     else if(animations.get(i) == this.effectAnimation){
-                        System.out.println("effect ends");
                         this.effecting = false;
                         this.model.pauseState();
                         this.eventManager.post(new EventCardEffected());

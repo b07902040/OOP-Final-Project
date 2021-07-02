@@ -33,7 +33,6 @@ public class Server {
 			System.out.println("Game run start.");
 			Game game = new Game(eventManager);
 			game.run();
-			System.out.println("GGGGGGGGGG");
 			serverSocket.close();
 		} catch (Exception ex) {
 			System.out.println("Server start error on port:" + port);
@@ -87,7 +86,6 @@ public class Server {
 							if (nowPlayerNum >= 2) {
 								System.out.println("Too More Clients");
 							}
-							System.out.printf("RANDOM: %d\n",uniqueId);
 							if(uniqueId == -1)
 								uniqueId = ((int) (Math.random() * 2) );
 							else 
@@ -114,16 +112,6 @@ public class Server {
 	}
 
 	public static synchronized void sendMessage(int i, Message message) {
-		/*if(message.getObj() instanceof EventMinionChange){
-			Minion minion = ((EventMinionChange) message.getObj()).getMinion();
-			//Minion newMinion = ((AbstractMinion) minion).clone();
-			//System.out.printf("Send from server: %d\n",newMinion.getHP());
-			System.out.printf("Send from server: %d\n",minion.getHP());
-			//EventMinionChange e = (EventMinionChange) message.getObj();
-			//message = new Message(Message.EVENT, -2, new EventMinionChange(e.getPlayerId(),e.getIndex(),newMinion));
-		}*/
-	
-		// System.out.printf("%s %d\n",((Card)minion).getName(),minion.getHP());
 		if (clientSockets[i] != null && clientOOStreams[i] != null) {
 			try {
 				clientOOStreams[i].writeObject(message);

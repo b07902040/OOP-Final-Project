@@ -6,7 +6,7 @@ import hearthclone.model.DeathRattle;
 public class LootThief extends AbstractMinion implements DeathRattle {
 
     private static String name = "LootThief";
-    private static String description = "DeathRattle: Deal 2 damage to the enemy Hero";
+    private static String description = "DeathRattle: Draw a card";
     private static int baseCost = 2;
     private static int baseATK = 2;
     private static int baseHP = 1;

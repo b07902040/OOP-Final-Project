@@ -24,7 +24,6 @@ public class Game implements EventListener, Serializable {
     private int currentPlayerid;
     private int turn = 0;
     private boolean firstPlayerTurn = true;
-    // private float timer = 0;
     private int minionSummoned = 0;
 
     // play card
@@ -57,18 +56,14 @@ public class Game implements EventListener, Serializable {
             try {
                 Thread.sleep(1000 / Const.FPS);
             } catch (Exception e) {
-            }
-            ;
+                e.printStackTrace();
+            };
         }
     }
 
     @Override
     public void notify(Event event) {
         // ADD FOR TEST
-        if (event instanceof EventEveryTick)
-            return;
-        System.out.printf("Get event: %s.\n", event.getName());
-        System.out.printf("Current state: %s.\n", this.getState());
         if (event instanceof EventInitialize) {
             this.initialize();
             this.eventManager.post(new EventGameStart());
@@ -79,10 +74,7 @@ public class Game implements EventListener, Serializable {
             this.turnStart();
             this.stateChange(Const.STATE_PENDING);
             this.currentPlayer.drawCards();
-        } else if (event instanceof EventCardDraw) {
-            ;
-        } 
-        else if (event instanceof EventCardDrawed) {
+        } else if (event instanceof EventCardDrawed) {
             this.drawedCount++;
             if (this.isState(Const.STATE_DRAWING) && this.drawedCount >= 2) {
                 System.out.println();
@@ -94,8 +86,8 @@ public class Game implements EventListener, Serializable {
                 } else
                     this.stateChange(Const.STATE_PENDING);
                 this.drawedCount = 0;
-        }   
-        }else if (event instanceof EventClickedEmpty) {
+            }
+        } else if (event instanceof EventClickedEmpty) {
             if (this.isState(Const.STATE_VALID_CARD) || this.isState(Const.STATE_INVALID_CARD))
                 this.stateChange(Const.STATE_PENDING);
             else if (this.isState(Const.STATE_VALID_TARGET) || this.isState(Const.STATE_INVALID_TARGET))
@@ -119,12 +111,13 @@ public class Game implements EventListener, Serializable {
             if (this.isState(Const.STATE_VALID_CARD)) {
                 this.selectedCard = this.currentPlayer.getHandCards().get(this.clickedCardIndex);
                 if (this.selectedCard instanceof Targeting) {
-                    List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer.getAlly(), this.currentPlayer.getEnemy());
+                    List<Minion> candidates = ((Targeting) this.selectedCard)
+                            .getCandidates(this.currentPlayer.getAlly(), this.currentPlayer.getEnemy());
                     if (this.selectedCard instanceof BattleCry && candidates.size() == 0) {
                         System.out.printf("BattleCry no target!\n");
                         this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
-                        this.selectedMinion = null; 
-                        this.stateChange(Const.STATE_EFFECTING);              
+                        this.selectedMinion = null;
+                        this.stateChange(Const.STATE_EFFECTING);
                         this.eventManager.post(new EventEffecting(this.selectedCard));
                     } else
                         this.stateChange(Const.STATE_CARD_TARGETING);
@@ -184,7 +177,7 @@ public class Game implements EventListener, Serializable {
                 this.currentPlayer.setMana(this.currentPlayer.getMana() - this.selectedCard.getCost());
                 this.stateChange(Const.STATE_EFFECTING);
                 this.eventManager.post(new EventEffecting(this.selectedCard));
-               // this.reset();
+                // this.reset();
             } else if (this.isState(Const.STATE_VALID_ATTACKER)) {
                 this.selectedAttacker = this.currentPlayer.getAlly().get(this.clickedAttackerIndex);
                 this.stateChange(Const.STATE_ATTACKER_TARGETING);
@@ -196,10 +189,9 @@ public class Game implements EventListener, Serializable {
                 int attackedPlayerId = (this.currentPlayerid + 1) % 2;
                 this.eventManager.post(new EventAttacking(attackerPlayerId, this.clickedAttackerIndex, attackedPlayerId,
                         this.clickedAttackedIndex));
-                //this.reset();
+                // this.reset();
             }
-        } 
-        else if (event instanceof EventCardEffected) {
+        } else if (event instanceof EventCardEffected) {
             this.effectedCount++;
             if (this.isState(Const.STATE_EFFECTING) && this.effectedCount >= 2) {
                 if (this.selectedCard instanceof BattleCry) {
@@ -211,7 +203,7 @@ public class Game implements EventListener, Serializable {
                     this.stateChange(Const.STATE_NULL);
                     this.playedSpell(this.selectedCard);
                     ((Spell) this.selectedCard).takeEffect(this.currentPlayer, this.selectedMinion);
-                } else{
+                } else {
                     ((Minion) this.selectedCard).setMaster(this.currentPlayer);
                     this.stateChange(Const.STATE_NULL);
                     this.playedMinion(this.selectedCard);
@@ -225,7 +217,7 @@ public class Game implements EventListener, Serializable {
                     this.stateChange(Const.STATE_PENDING);
                 this.effectedCount = 0;
                 this.reset();
-            }   
+            }
         } else if (event instanceof EventMinionAttacked) {
             this.attackedCount++;
             if (this.isState(Const.STATE_ATTACKING) && this.attackedCount >= 2) {
@@ -263,8 +255,10 @@ public class Game implements EventListener, Serializable {
     }
 
     private void initialize() {
-        //this.deckLoader = new RandomDeckLoader();
-        this.deckLoader = new CustomDeckLoader();
+        if(Const.DECK_TYPE == "RANDOM")
+            this.deckLoader = new RandomDeckLoader();
+        else
+            this.deckLoader = new CustomDeckLoader();
         this.players = new ArrayList<Player>();
         this.players.add(new Player(new Jaina(), this, true));
         this.players.add(new Player(new Guldan(), this, false));
@@ -280,7 +274,7 @@ public class Game implements EventListener, Serializable {
 
     private void gameStart() {
         for (int i = 0; i < 2; i++) {
-            for(int t = 0; t < Const.STARTING_HAND_SIZE + i;t++){
+            for (int t = 0; t < Const.STARTING_HAND_SIZE + i; t++) {
                 this.players.get(i).drawCards();
             }
         }
@@ -313,7 +307,8 @@ public class Game implements EventListener, Serializable {
     private boolean checkValidMinion() {
         Minion target = this.players.get(this.clickedPlayerId).getAlly().get(this.clickedMinionIndex);
         if (this.selectedCard instanceof Targeting) {
-            List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer.getAlly(), this.currentPlayer.getEnemy());
+            List<Minion> candidates = ((Targeting) this.selectedCard).getCandidates(this.currentPlayer.getAlly(),
+                    this.currentPlayer.getEnemy());
             return candidates.contains(target);
         } else
             return false;
@@ -434,47 +429,11 @@ public class Game implements EventListener, Serializable {
 
     public void minionChange(int playerId, int id, Minion minion) {
         Minion newMinion = ((AbstractMinion) minion).clone();
-        System.out.printf("game send :%s %d\n",((Card) newMinion).getName(),minion.getHP());
         this.eventManager.post(new EventMinionChange(playerId, id, newMinion));
     }
 
     public static int getRandom(int range) {
         return ((int) (Math.random() * range + 1));
-    }
-
-    private String getState() {
-        String state = "STATE_INITIALIZED";
-        if (this.isState(Const.STATE_PENDING))
-            state = "STATE_PENDING";
-        else if (this.isState(Const.STATE_GAME_END))
-            state = "STATE_GAME_END";
-        else if (this.isState(Const.STATE_VALID_CARD))
-            state = "STATE_VALID_CARD";
-        else if (this.isState(Const.STATE_INVALID_CARD))
-            state = "STATE_INVALID_CARD";
-        else if (this.isState(Const.STATE_CARD_TARGETING))
-            state = "STATE_CARD_TARGETING";
-        else if (this.isState(Const.STATE_VALID_TARGET))
-            state = "STATE_VALID_TARGET";
-        else if (this.isState(Const.STATE_INVALID_TARGET))
-            state = "STATE_INVALID_TARGET";
-        else if (this.isState(Const.STATE_EFFECTING))
-            state = "STATE_EFFECTING";
-        else if (this.isState(Const.STATE_VALID_ATTACKER))
-            state = "STATE_VALID_ATTACKER";
-        else if (this.isState(Const.STATE_INVALID_ATTACKER))
-            state = "STATE_INVALID_ATTACKER";
-        else if (this.isState(Const.STATE_ATTACKER_TARGETING))
-            state = "STATE_ATTACKER_TARGETING";
-        else if (this.isState(Const.STATE_VALID_ATTACKED))
-            state = "STATE_VALID_ATTACKED";
-        else if (this.isState(Const.STATE_INVALID_ATTACKED))
-            state = "STATE_INVALID_ATTACKED";
-        else if (this.isState(Const.STATE_ATTACKING))
-            state = "STATE_ATTACKING";
-        else if (this.isState(Const.STATE_DRAWING))
-            state = "STATE_DRAWING";
-        return state;
     }
 }
 

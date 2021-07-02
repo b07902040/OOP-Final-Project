@@ -206,9 +206,7 @@ public class Player implements Serializable {
     public void printHandCards() {
         System.out.printf("handCard:(%d / %d): ", this.handCards.size(), Const.MAX_HAND_SIZE);
         for (Card card : this.handCards) {
-            // System.out.printf("%s ",((AbstractMinion)card).getName());
-            // System.out.println(card);
-            System.out.printf("%s ", card.getName());
+            System.out.printf("%s ",card.getName());
         }
         System.out.printf("\n");
     }

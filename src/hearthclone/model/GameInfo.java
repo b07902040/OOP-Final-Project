@@ -45,7 +45,6 @@ public class GameInfo implements EventListener {
     public void notify(Event event) {
         if (event instanceof EventEveryTick)
             return;
-        //System.out.println(event.getName());
         if (event instanceof EventClientInitalize) {
             this.initialize(((EventClientInitalize) event).getClientId());
         } else if (event instanceof EventStateChange) {
@@ -68,7 +67,6 @@ public class GameInfo implements EventListener {
             EventMinionChange e = (EventMinionChange) event;
             this.minionChange(e.getPlayerId(), e.getIndex(), e.getMinion());
             Card m = (Card) e.getMinion();
-            System.out.printf("%s %d\n", m.getName(), ((Minion) m).getHP());
         } else if (event instanceof EventAttacking) {
             EventAttacking e = (EventAttacking) event;
             this.attackerIndex = e.getAttackerIndex();

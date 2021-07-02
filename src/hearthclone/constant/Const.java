@@ -35,6 +35,7 @@ public class Const {
     public static final int PLAYER1_WIN = 1;
     public static final int PLAYER2_WIN = 2;
     public static final int PLAYER_DRAW = 3;
+    public static final String DECK_TYPE = "RANDOM";
 
     // FOR TESTING
     public static final int INIT_MANA = 0;

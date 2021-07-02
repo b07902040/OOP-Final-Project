@@ -96,7 +96,6 @@ public class AudioPlayer implements LineListener, Runnable{
             String audioFilePath = path;
             AudioPlayer player = new AudioPlayer();
             player.play(audioFilePath);
-            System.out.println("end");
         }
     }
 

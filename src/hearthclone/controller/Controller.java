@@ -40,7 +40,7 @@ public class Controller extends MouseAdapter implements EventListener {
          */
         int x = e.getX();
         int y = e.getY();
-        System.out.printf("Mouse clicked at (%d, %d)\n", e.getX(), e.getY());
+        //System.out.printf("Mouse clicked at (%d, %d)\n", e.getX(), e.getY());
         int index, id;
 
         // skip any mouse click if it is not my turn
@@ -58,7 +58,7 @@ public class Controller extends MouseAdapter implements EventListener {
         // click on minion
         else if ((id = position2MinionPlayerId(x, y)) >= 0) {
             index = position2MinionIndex(x, y);
-            System.out.printf("Clicked on Minion with player id: %d, index: %d\n", id, index);
+            //System.out.printf("Clicked on Minion with player id: %d, index: %d\n", id, index);
             this.eventManager.post(new EventMinionClicked(id, index));
         }
 

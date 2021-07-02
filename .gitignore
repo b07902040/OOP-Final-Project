@@ -5,3 +5,4 @@ mytest.sh
 /src/*.iml
 .idea
 .iml
+out
